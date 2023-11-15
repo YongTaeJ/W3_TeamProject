@@ -4,11 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace W3_TeamProject.Items.BaseScripts
+namespace W3_TeamProject
 {
-	// 장착 개선을 위한 enum입니다.
+
 	enum ItemType
 	{
+		// 장착 개선을 위한 enum입니다.
 		None,
 		Weapon,
 		Armor
@@ -22,7 +23,6 @@ namespace W3_TeamProject.Items.BaseScripts
 		private ItemType itemType = ItemType.None;
 		#endregion
 
-		// 변수에 해당하는 프로퍼티입니다.
 		#region properties
 		public string Name { get { return name; } }
 		public string Description { get { return description; } }

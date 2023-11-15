@@ -18,7 +18,6 @@ namespace W3_TeamProject
 		#endregion
 
 		#region Properties
-		// 각 변수에 대응하는 프로퍼티입니다.
 		public string Name {  get { return name; } }
 		public int Level { get { return level; } }
 		public int Health { get { return health; } }

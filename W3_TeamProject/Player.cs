@@ -35,9 +35,9 @@ namespace W3_TeamProject
 		private static int gold;
 		#endregion
 
+		#region Properties
 		// 프로퍼티는 getter만 설정해둬, 값을 가져가는 행위만 가능하도록 했습니다.
 		// 별도의 setter가 필요하신 경우에는, 꼭 필요한 것이 아닌 이상 별도의 메서드를 작성해주시면 감사하겠습니다!
-		#region Properties
 		public static int Level { get { return level; } }
 		public static string PlayerName { get {  return playerName; } }
 		public static Job Job { get { return job; } }
@@ -50,11 +50,10 @@ namespace W3_TeamProject
 		public static int EquipHealth {  get { return equipHealth; } }
 		public static int Gold { get {  return gold; } }
 		#endregion
-
-		// 플레이어를 초기화하기 위한 함수입니다. 게임 시작 전에 호출해주세요!
-		// 추후에 이름, 직업을 받아서 스탯을 변경할 수 있도록 임시로 만들어둔 함수입니다.
 		public static void Init()
 		{
+			// 플레이어를 초기화하기 위한 함수입니다. 게임 시작 전에 호출해주세요!
+			// 추후에 이름, 직업을 받아서 스탯을 변경할 수 있도록 임시로 만들어둔 함수입니다.
 			playerName = "나";
 			job = Job.Warrior;
 			baseAttack = 10;
