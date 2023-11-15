@@ -9,12 +9,12 @@ namespace W3_TeamProject
 	internal abstract class BaseEnemy
 	{
 		#region variables
-		private string name;
-		private int level;
-		private int health;
-		private int attack;
-		private int currentHealth;
-		private bool isDie = false;
+		protected string name;
+		protected int level;
+		protected int health;
+		protected int attack;
+		protected int currentHealth;
+		protected bool isDie = false;
 		#endregion
 
 		#region Properties
@@ -27,7 +27,7 @@ namespace W3_TeamProject
 		#endregion
 
 
-		public BaseEnemy(int level)
+		public BaseEnemy(int level = 1)
 		{
 			Init(level);
 		}
