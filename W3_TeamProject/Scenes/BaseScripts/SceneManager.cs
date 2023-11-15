@@ -1,5 +1,4 @@
-﻿using SpartaDungeon.Scenes;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -9,24 +8,24 @@ using System.Threading.Tasks;
 
 namespace SpartaDungeon
 {
-	enum State
+	/// <summary>
+	/// Scene의 이름에 맞춰 추가해주시면 됩니다.
+	/// </summary>
+	enum SceneState
 	{
 		None,
-		End,
-		Main,
-		Town,
-		Status,
-		Inventory,
-		Shop,
-		Dungeon
+		Start,
 	}
 
 	internal class SceneManager
 	{
-		Dictionary<State, BaseScene> Scenes = new Dictionary<State, BaseScene>();
-		State currentState, beforeState;
+		// Scene을 저장하기 위한 변수입니다.
+		Dictionary<SceneState, BaseScene> Scenes = new Dictionary<SceneState, BaseScene>();
 
-		public void ProcessScene(State state)
+		// beforeState는 뒤로가기만을 위한 변수이며, currentState는 현재 게임 상태를 나타냅니다(Start, Battle etc.).
+		SceneState currentState, beforeState;
+
+		public void ProcessScene(SceneState state)
 		{
 			Scenes[state].ClearKey();
 			Scenes[state].beforeState = beforeState;
@@ -37,16 +36,11 @@ namespace SpartaDungeon
 
 		public void Init()
 		{
-			// Scenes.Add(State.End, new EndScene() ); 추후 구현 필요!!
-			Scenes.Add(State.Main, new MainScene() );
-			Scenes.Add(State.Town, new TownScene() );
-			Scenes.Add(State.Status, new StatusScene() );
-			Scenes.Add(State.Inventory, new InventoryScene());
-			Scenes.Add(State.Shop, new ShopScene() );
-			Scenes.Add(State.Dungeon, new DungeonScene());
+			// 생성한 Scene을 이곳에 연결해주세요.
+			// ex) Scenes.Add(State.None, new NoneState() );
 		}
 
-		public State Update()
+		public SceneState Update()
 		{
 			return currentState;
 		}
