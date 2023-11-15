@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace W3_TeamProject.Items
+namespace W3_TeamProject
 {
 	internal class TestItem : BaseItem
 	{
