@@ -23,6 +23,16 @@ namespace W3_TeamProject
 		{
 			return ItemList[index];
 		}
+
+		public static void RemoveItem(int index)
+		{
+			ItemList.RemoveAt(index);
+		}
+
+		public static int GetListCount()
+		{
+			return ItemList.Count;
+		}
 		
 	}
 }
