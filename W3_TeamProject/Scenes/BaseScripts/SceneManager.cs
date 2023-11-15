@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 
-namespace SpartaDungeon
+namespace W3_TeamProject
 {
 	/// <summary>
 	/// Scene의 이름에 맞춰 추가해주시면 됩니다.

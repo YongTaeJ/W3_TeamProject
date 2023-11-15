@@ -1,6 +1,4 @@
-﻿using SpartaDungeon;
-
-namespace W3_TeamProject
+﻿namespace W3_TeamProject
 {
 	internal class Program
 	{
