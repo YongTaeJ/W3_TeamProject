@@ -8,7 +8,7 @@
 			sceneManager.Init();
 
 			// 맨 처음 시작화면은 StartScene으로 만들어주세요!
-			SceneState sceneState = SceneState.Start;
+			SceneState sceneState = SceneState.Inventory;
 
 			// SceneManager를 통해 게임 루프를 구현합니다.
 			while(sceneState != SceneState.None)
