@@ -35,12 +35,20 @@ namespace W3_TeamProject
 		private static int gold;
 		#endregion
 
-		// base, equip 변수에 대한 프로퍼티는 없습니다.
+		// 프로퍼티는 getter만 설정해둬, 값을 가져가는 행위만 가능하도록 했습니다.
+		// 별도의 setter가 필요하신 경우에는, 꼭 필요한 것이 아닌 이상 별도의 메서드를 작성해주시면 감사하겠습니다!
 		#region Properties
 		public static int Level { get { return level; } }
 		public static string PlayerName { get {  return playerName; } }
 		public static Job Job { get { return job; } }
 		public static int CurrentHealth { get { return currentHeatlh; } }
+		public static int BaseAttack { get { return baseAttack; } }
+		public static int BaseDefense { get {  return baseDefense; } }
+		public static int BaseHealth { get { return baseHealth; } }
+		public static int EquipAttack { get { return equipAttack; } }
+		public static int EquipDefense {  get { return equipDefense; } }
+		public static int EquipHealth {  get { return equipHealth; } }
+		public static int Gold { get {  return gold; } }
 		#endregion
 
 		// 플레이어를 초기화하기 위한 함수입니다. 게임 시작 전에 호출해주세요!

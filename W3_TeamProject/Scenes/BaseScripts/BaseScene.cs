@@ -17,7 +17,7 @@ namespace W3_TeamProject
 		public abstract void EnterScene();
 
 		// nextState를 반환하시면 됩니다.
-		// return nextState
+		// return nextState;
 		public abstract SceneState ExitScene();
 
 		// 상태를 초기화하는 메서드입니다.
