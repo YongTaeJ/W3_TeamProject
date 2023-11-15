@@ -37,7 +37,7 @@ namespace W3_TeamProject
 		public void Init()
 		{
 			// 생성한 Scene을 이곳에 연결해주세요.
-			// ex) Scenes.Add(State.None, new NoneState() );
+			// ex) Scenes.Add(State.None, new NoneScene() );
 		}
 
 		public SceneState Update()
