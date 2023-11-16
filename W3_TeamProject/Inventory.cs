@@ -53,16 +53,12 @@ namespace W3_TeamProject
             }
         }
         //아이템을 ture인지 확인하기
-        public static void IsItemEquip(int _index)
+        public static void ChangeItemEquip(int _index)
         {
 			if (ItemList[_index].IsEquip == true)
-			{ 
 				ItemList[_index].IsEquip = false;
-            }
             else if (ItemList[_index].IsEquip == false)
-			{ 
 				ItemList[_index].IsEquip = true;
-            }
         }
         public static void WordColor(string _text) //이 함수를 사용하면 초록색 넣어주기
         {
