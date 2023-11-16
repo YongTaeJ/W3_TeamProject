@@ -22,7 +22,7 @@ namespace W3_TeamProject
 			{
 				// SceneManager를 통해 게임 루프를 구현합니다.
 				sceneManager.ProcessScene(sceneState);
-				sceneState = sceneManager.Update();
+				sceneManager.Update();
 			}
 		}
 	}
