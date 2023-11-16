@@ -20,7 +20,8 @@ namespace W3_TeamProject
 		None,
 		Attack,
 		Defense,
-		Health
+		Health,
+		Mana
 	}
 	internal abstract class BaseItem
 	{

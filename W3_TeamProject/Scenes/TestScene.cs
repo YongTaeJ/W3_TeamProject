@@ -12,7 +12,7 @@ namespace W3_TeamProject
 		{
 			/*
 			 * 장면에 대해 연출을 하고, 해당 장면에 대한 연출이 끝나면 nextState로 넘깁니다.
-			 * 예를 들어, 0을 눌러서 기존 화면을 간다고 하면
+			 * 예를 들어, 0을 눌러서 뒤로가기 기능을 구현한다고 하면
 			 * switch 혹은 if문을 이용해 0이라는 값을 입력받았을 때, nextState = beforeState로 설정합니다.
 			 * 그리고 특정한 화면(ex. BattleScene으로 전환이 필요하다.)으로 넘어간다고 하면
 			 * SceneManager에 있는 enum을 참고해서 사용하시면 됩니다.
