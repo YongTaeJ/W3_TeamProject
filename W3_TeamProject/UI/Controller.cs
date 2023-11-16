@@ -10,6 +10,7 @@ namespace W3_TeamProject
 	internal class Controller
 	{
 		int index = 0;
+		// 원하는 x, y좌표를 설정
 		List<int> xList = new List<int>();
 		List<int> yList = new List<int>();
 
@@ -21,13 +22,14 @@ namespace W3_TeamProject
 
 		public int InputLoop()
 		{
-			Console.SetCursorPosition(xList[0], yList[0]);
-			Console.ForegroundColor = ConsoleColor.Red;
-			Console.Write('▶');
-			Console.ResetColor();
 			// 키보드로 이동, 엔터 누르면 해당 위치의 정보를 인출
 			while(true)
 			{
+				Console.SetCursorPosition(xList[index], yList[index]);
+				Console.ForegroundColor = ConsoleColor.Red;
+				Console.Write('▶');
+				Console.ResetColor();
+
 				ConsoleKeyInfo key = Console.ReadKey();
 
 				switch(key.Key)
