@@ -11,6 +11,9 @@ namespace W3_TeamProject
 	/// </summary>
 	internal static class UnderUI
 	{
-		// 회의 이후에 제작할지 말지 결정!!
+		public static void MakeBorder()
+		{
+
+		}
 	}
 }
