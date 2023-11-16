@@ -1,4 +1,9 @@
 ﻿using System.Runtime.InteropServices;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace W3_TeamProject
 {
@@ -17,7 +22,7 @@ namespace W3_TeamProject
 
 		static void Main(string[] args)
 		{
-			Init();
+			Console.SetWindowSize(120, 30);
 			SceneManager sceneManager = new SceneManager();
 			sceneManager.Init();
 
