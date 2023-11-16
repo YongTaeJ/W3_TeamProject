@@ -22,8 +22,9 @@ namespace W3_TeamProject
 
 		public int InputLoop()
 		{
-			// 키보드로 이동, 엔터 누르면 해당 위치의 정보를 인출
-			while(true)
+			ConsoleKeyInfo key;
+            // 키보드로 이동, 엔터 누르면 해당 위치의 정보를 인출
+            while (true)
 			{
 				Console.SetCursorPosition(xList[beforeIndex], yList[beforeIndex]);
 				Console.ForegroundColor = ConsoleColor.Red;
@@ -35,8 +36,8 @@ namespace W3_TeamProject
 				Console.Write('▶');
 				Console.ResetColor();
 
-				ConsoleKeyInfo key = Console.ReadKey();
-
+                //Console.CursorVisible = false;//커서 깜빡임 없어지게 하기 - 박정혁
+                key = Console.ReadKey(true); // 입력값 안보이게 하기 - 박정혁
 				switch(key.Key)
 				{
 					case ConsoleKey.A:
@@ -59,7 +60,7 @@ namespace W3_TeamProject
 					case ConsoleKey.S:
 					case ConsoleKey.DownArrow :
 						{
-							if (index <= 0)
+                            if (index <= 0)
 								break;
 							else
 							{
@@ -74,7 +75,5 @@ namespace W3_TeamProject
 				}
 			}
 		}
-
-
 	}
 }

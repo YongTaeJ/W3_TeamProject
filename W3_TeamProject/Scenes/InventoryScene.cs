@@ -9,37 +9,41 @@ namespace W3_TeamProject
     internal class InventoryScene : BaseScene
     {
         ConsoleKeyInfo _inputKey; //플레이어 입력
-        bool isInvenEquip;
+        bool isInvenEquip; // 장착관리 확인
+        Controller controller = new Controller();
+        int userinput = 0;
         public override void EnterScene()
         {
             Inventory.AddItem(new TestItem());
             isInvenEquip = false; //장착관리가 아니면 
+            controller.AddRotation(0, 7);
+            controller.AddRotation(0, 8);
+
             while (true)
             {
+                
                 Console.Clear();
-                WordColor("인벤토리");       
+                WordColor("인벤토리");
                 Console.WriteLine();
                 Console.WriteLine("보유 중인 아이템을 관리할 수 있습니다.");
                 Console.WriteLine();
                 Console.WriteLine("[아이템 목록]");
                 Inventory.InventoryConsole(isInvenEquip);
                 Console.WriteLine();
-                Console.WriteLine("1. 장착관리");
-                Console.WriteLine("0. 뒤로가기");
+                Console.WriteLine("  장착관리");
+                Console.WriteLine("  뒤로가기");
                 Console.WriteLine();
                 Console.WriteLine("원하시는 행동을 입력해주세요.");
                 Console.Write(">>");
-
-                _inputKey = Console.ReadKey(true); //플레이어 입력, true로 설정하여 입력 값 안보이게 하기
-
-                switch (_inputKey.Key)
+                userinput = controller.InputLoop();
+                switch (userinput)
                 {
-                    case ConsoleKey.D1:
+                    case 5:
                         Console.WriteLine("장착관리로 넘어갑니다.");
                         Thread.Sleep(1000);
                         InvenEquip();
                         break;
-                    case ConsoleKey.D0:
+                    case 1:
                         nextState = beforeState;
                         break;
                 }
