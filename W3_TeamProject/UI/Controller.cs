@@ -39,7 +39,7 @@ namespace W3_TeamProject
 					case ConsoleKey.W:
 					case ConsoleKey.UpArrow:
 						{
-							if (index <= 0)
+							if (index >= xList.Count - 1)
 								break;
 							else
 								index++;
@@ -50,7 +50,7 @@ namespace W3_TeamProject
 					case ConsoleKey.S:
 					case ConsoleKey.DownArrow :
 						{
-							if (index > xList.Count - 1)
+							if (index <= 0)
 								break;
 							else
 								index--;
