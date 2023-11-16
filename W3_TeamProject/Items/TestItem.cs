@@ -17,6 +17,7 @@ namespace W3_TeamProject
 			status = Status.Defense;
 			effectValue = 5;
 			itemType = ItemType.Armor;
+			isEquip = false;
 		}
 	}
 }

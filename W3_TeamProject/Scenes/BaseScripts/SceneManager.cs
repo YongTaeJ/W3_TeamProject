@@ -14,7 +14,7 @@ namespace W3_TeamProject
 	{
 		None,
         Start,
-		Inventory,
+		InventoryScene,
     }
 
 	internal class SceneManager
@@ -38,7 +38,7 @@ namespace W3_TeamProject
 		{
             // 생성한 Scene을 이곳에 연결해주세요.
             // ex) Scenes.Add(SceneState.None, new NoneScene() );
-            Scenes.Add(SceneState.Inventory, new Inventory()); //인벤토리
+            Scenes.Add(SceneState.InventoryScene, new InventoryScene()); //인벤토리
 		}
 
 		public SceneState Update()
