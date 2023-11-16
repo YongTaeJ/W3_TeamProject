@@ -33,7 +33,7 @@ namespace W3_TeamProject
 		{
 			return ItemList.Count;
 		}
-		public static void InventoryItem(int _index)//아이템의 정보를 출력을 담당하는 함수
+		public static void InventoryItem(int _index)//아이템의 정보의 출력을 담당하는 함수
 		{
 			if (ItemList[_index].IsEquip)
 				WordColor($"{((ItemList[_index].IsEquip == true) ? "[E]" : "")} {ItemList[_index].Name} | {ItemList[_index].Status} + {ItemList[_index].EffectValue} | {ItemList[_index].Description}");
@@ -45,7 +45,7 @@ namespace W3_TeamProject
             for (int i = 0; i < ItemList.Count; i++)
             {	//장착관리 시스템으로 들어가면 숫자가 보여진다.
 				if (_isInventoryEquipScene)
-                    Console.Write($"- {i + 1} ");
+                    Console.Write($"   - {i + 1} ");
 				else
                     Console.Write($"- ");
                 InventoryItem(i);
