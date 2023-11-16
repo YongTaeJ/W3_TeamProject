@@ -27,16 +27,14 @@ namespace W3_TeamProject
             while (true)
 			{
 				Console.SetCursorPosition(xList[beforeIndex], yList[beforeIndex]);
-				Console.ForegroundColor = ConsoleColor.Red;
-				Console.Write(' ');
-				Console.ResetColor();
+				Console.Write("  ");
 
 				Console.SetCursorPosition(xList[index], yList[index]);
 				Console.ForegroundColor = ConsoleColor.Red;
 				Console.Write('▶');
 				Console.ResetColor();
 
-                //Console.CursorVisible = false;//커서 깜빡임 없어지게 하기 - 박정혁
+                Console.CursorVisible = false;//커서 깜빡임 없어지게 하기 - 박정혁
                 key = Console.ReadKey(true); // 입력값 안보이게 하기 - 박정혁
 				switch(key.Key)
 				{
