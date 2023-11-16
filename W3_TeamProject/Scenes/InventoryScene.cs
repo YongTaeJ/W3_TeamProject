@@ -12,6 +12,7 @@ namespace W3_TeamProject
         bool isInvenEquip;
         public override void EnterScene()
         {
+            Inventory.AddItem(new TestItem());
             isInvenEquip = false; //장착관리가 아니면 
             while (true)
             {
@@ -21,7 +22,6 @@ namespace W3_TeamProject
                 Console.WriteLine("보유 중인 아이템을 관리할 수 있습니다.");
                 Console.WriteLine();
                 Console.WriteLine("[아이템 목록]");
-                Inventory.AddItem(new TestItem());
                 Inventory.InventoryConsole(isInvenEquip);
                 Console.WriteLine();
                 Console.WriteLine("1. 장착관리");
