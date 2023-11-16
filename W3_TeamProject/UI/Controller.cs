@@ -21,7 +21,7 @@ namespace W3_TeamProject
 
 		public int InputLoop()
 		{
-			Console.SetCursorPosition(xList[index], yList[index]);
+			Console.SetCursorPosition(xList[0], yList[0]);
 			Console.ForegroundColor = ConsoleColor.Red;
 			Console.Write('▶');
 			Console.ResetColor();
@@ -54,8 +54,10 @@ namespace W3_TeamProject
 								index--;
                         }
 							break;
+
+					case ConsoleKey.Enter:
+						return index;
 				}
-				return index;
 			}
 		}
 
