@@ -15,6 +15,7 @@ namespace W3_TeamProject
 		None,
         Start,
         Inventory,
+		Status,
     }
 
 	internal class SceneManager
@@ -40,6 +41,7 @@ namespace W3_TeamProject
             // ex) Scenes.Add(SceneState.None, new NoneScene() );
             Scenes.Add(SceneState.Inventory, new InventoryScene()); //인벤토리
             Scenes.Add(SceneState.Start, new StartScene()); //시작화면
+			Scenes.Add(SceneState.Status, new StatusScene()); //상태보기
         }
 
 		public SceneState Update()
