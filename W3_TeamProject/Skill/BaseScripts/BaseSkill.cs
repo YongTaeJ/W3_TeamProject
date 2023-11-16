@@ -35,6 +35,11 @@ namespace W3_TeamProject
 		public bool IsCooldown { get { return isCooldown; } }
 		#endregion
 
+		public BaseSkill()
+		{
+			Init();
+		}
+
 		protected abstract void Init();
 	}
 }

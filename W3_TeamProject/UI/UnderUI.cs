@@ -11,6 +11,11 @@ namespace W3_TeamProject
 	/// </summary>
 	internal static class UnderUI
 	{
+		public static void MakeUnderUI()
+		{
+			MakeBorder();
+			MakeHPMPPart();
+		}
 		public static void MakeBorder()
 		{
 			Console.SetCursorPosition(0, 20);

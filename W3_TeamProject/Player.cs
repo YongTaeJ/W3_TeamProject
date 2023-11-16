@@ -62,6 +62,12 @@ namespace W3_TeamProject
 		public static int EquipMana {  get { return equipMana; } }
 		public static int Gold { get {  return gold; } }
 		#endregion
+
+		public static void ChangeHP(int value)
+		{
+			currentHeatlh += value;
+			UnderUI.UpdateHPbar();
+		}
 		public static void Init()
 		{
 			// 플레이어를 초기화하기 위한 함수입니다. 게임 시작 전에 호출해주세요!
