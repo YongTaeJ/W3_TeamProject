@@ -22,7 +22,7 @@ namespace W3_TeamProject
 			sceneManager.Init();
 
 			// 맨 처음 시작화면은 StartScene으로 만들어주세요!
-			SceneState sceneState = SceneState.InventoryScene;
+			SceneState sceneState = SceneState.Start;
 
 			while(sceneState != SceneState.None)
 			{
