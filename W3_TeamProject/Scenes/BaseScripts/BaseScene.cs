@@ -25,5 +25,11 @@ namespace W3_TeamProject
 		{
 			nextState = SceneState.None;
 		}
-	}
+        public static void WordColor(string _text) //색 지정해주기 - 박정혁
+        {
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.WriteLine(_text);
+            Console.ResetColor();
+        }
+    }
 }
