@@ -8,6 +8,7 @@ namespace W3_TeamProject
 {
     internal class StartScene : BaseScene
     {
+
         public override void EnterScene()
         {
             firstScene();
@@ -15,27 +16,60 @@ namespace W3_TeamProject
 
         private void firstScene()
         {
-            //임시 제목 : 이봐! 뭐가 문제야 ?
-            // 120 x 30 영문 사이즈 기준
+            Console.OutputEncoding = System.Text.Encoding.UTF8; //문자변환코드
+            
             Console.Clear();
-            Console.WriteLine("");
-            Console.WriteLine("");
-            Console.WriteLine("");
-            Console.WriteLine("");
-            Console.WriteLine("");
-            Console.WriteLine("");
-            Console.WriteLine("");
-            Console.WriteLine("이봐 !! 뭐가 문제야?");
-            Console.WriteLine("");
-            Console.WriteLine("");
-            Console.WriteLine("");
-            Console.WriteLine("");
-            Console.WriteLine("");
-            Console.WriteLine("");
-            Console.WriteLine("");
+            Console.SetCursorPosition(0, 0);
+            for (int i = 0; i < 60; i++)
+            {
+                Console.Write('■');
+            }
+            
+            for (int i = 0; i < 29; i++)
+            {
+                Console.SetCursorPosition(0, i + 1);
+                Console.Write('■');
+                Console.SetCursorPosition(118, i + 1);
+                Console.Write('■');
+                //Console.SetCursorPosition(30, i+1);
+                //Console.Write('|');
+            }
+            Console.SetCursorPosition(0, 29); // 가장 테두기 첫줄 가로선
+            for (int i = 0; i < 60; i++)
+            {
+                Console.Write('■');
+            }
+            // Hey !!  문구
+            Console.SetCursorPosition(43, 5);
+            Console.WriteLine("██   ██ ███████ ██    ██     ██ ██ ");
+            Console.SetCursorPosition(43, 6);
+            Console.WriteLine("██   ██ ██       ██  ██      ██ ██ ");
+            Console.SetCursorPosition(43, 7);
+            Console.WriteLine("███████ █████     ████       ██ ██ ");
+            Console.SetCursorPosition(43, 8);
+            Console.WriteLine("██   ██ ██         ██              ");
+            Console.SetCursorPosition(43, 9);
+            Console.WriteLine("██   ██ ███████    ██        ██ ██ ");
+            // What's wrong ? 문구
+            Console.SetCursorPosition(8, 15);
+            Console.WriteLine("██     ██ ██   ██  █████  ████████ ███████     ██     ██ ██████   ██████  ███    ██  ██████      ██████  ");
+            Console.SetCursorPosition(8, 16);
+            Console.WriteLine("██     ██ ██   ██ ██   ██    ██    ██          ██     ██ ██   ██ ██    ██ ████   ██ ██                ██ ");
+            Console.SetCursorPosition(8, 17);
+            Console.WriteLine("██  █  ██ ███████ ███████    ██    ███████     ██  █  ██ ██████  ██    ██ ██ ██  ██ ██   ███       ▄███  ");
+            Console.SetCursorPosition(8, 18);
+            Console.WriteLine("██ ███ ██ ██   ██ ██   ██    ██         ██     ██ ███ ██ ██   ██ ██    ██ ██  ██ ██ ██    ██       ▀▀   ");
+            Console.SetCursorPosition(8, 19);
+            Console.WriteLine(" ███ ███  ██   ██ ██   ██    ██    ███████      ███ ███  ██   ██  ██████  ██   ████  ██████        ██   ");
+
+
+
+
+            Console.SetCursorPosition(52, 25);
             Console.WriteLine("Press to anykey");
             Console.ReadKey();
-            
+
+
             //int userInput;
             //userInput = int.Parse(Console.ReadLine());
 
