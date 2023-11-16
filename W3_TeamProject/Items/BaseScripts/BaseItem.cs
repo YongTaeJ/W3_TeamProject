@@ -20,7 +20,8 @@ namespace W3_TeamProject
 		None,
 		Attack,
 		Defense,
-		Health
+		Health,
+		Mana
 	}
 	internal abstract class BaseItem
 	{
@@ -50,5 +51,7 @@ namespace W3_TeamProject
 		// 이 함수를 통해 각 아이템의 값을 지정해주시면 됩니다.
 		// Staus.Attack이고 effectValue가 10이면, 공격력을 10 증가시킨다는 개념으로 우선 만들어뒀습니다.
 		protected abstract void Init();
+
+
 	}
 }
