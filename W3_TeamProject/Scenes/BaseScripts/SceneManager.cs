@@ -39,7 +39,8 @@ namespace W3_TeamProject
             // 생성한 Scene을 이곳에 연결해주세요.
             // ex) Scenes.Add(SceneState.None, new NoneScene() );
             Scenes.Add(SceneState.Inventory, new InventoryScene()); //인벤토리
-		}
+            Scenes.Add(SceneState.Start, new StartScene()); //시작화면
+        }
 
 		public SceneState Update()
 		{

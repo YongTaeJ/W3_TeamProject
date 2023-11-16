@@ -9,7 +9,7 @@ namespace W3_TeamProject
 {
 	internal class Controller
 	{
-		int index = 0;
+		int index = 0, beforeIndex = 0;
 		// 원하는 x, y좌표를 설정
 		List<int> xList = new List<int>();
 		List<int> yList = new List<int>();
@@ -26,6 +26,11 @@ namespace W3_TeamProject
             // 키보드로 이동, 엔터 누르면 해당 위치의 정보를 인출
             while (true)
 			{
+				Console.SetCursorPosition(xList[beforeIndex], yList[beforeIndex]);
+				Console.ForegroundColor = ConsoleColor.Red;
+				Console.Write(' ');
+				Console.ResetColor();
+
 				Console.SetCursorPosition(xList[index], yList[index]);
 				Console.ForegroundColor = ConsoleColor.Red;
 				Console.Write('▶');
@@ -42,8 +47,12 @@ namespace W3_TeamProject
 						{
 							if (index >= xList.Count - 1)
 								break;
-                            else
+							else
+							{
+								beforeIndex = index;
 								index++;
+							}
+								
 						}
 						break;
 					case ConsoleKey.RightArrow:
@@ -54,7 +63,10 @@ namespace W3_TeamProject
                             if (index <= 0)
 								break;
 							else
+							{
+								beforeIndex = index;
 								index--;
+							}
                         }
 							break;
 
@@ -63,7 +75,5 @@ namespace W3_TeamProject
 				}
 			}
 		}
-
-
 	}
 }

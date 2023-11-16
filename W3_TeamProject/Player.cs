@@ -37,6 +37,7 @@ namespace W3_TeamProject
 
 		// 총 체력과 현재 체력을 구분하기 위해 만들었습니다.
 		private static int currentHeatlh = 0;
+		private static int currentMana = 0;
 
 		private static int gold;
 		#endregion
@@ -50,6 +51,7 @@ namespace W3_TeamProject
 		public static string PlayerName { get {  return playerName; } }
 		public static Job Job { get { return job; } }
 		public static int CurrentHealth { get { return currentHeatlh; } }
+		public static int CurrentMana {  get { return currentMana; } }
 		public static int BaseAttack { get { return baseAttack; } }
 		public static int BaseDefense { get {  return baseDefense; } }
 		public static int BaseHealth { get { return baseHealth; } }
@@ -60,6 +62,12 @@ namespace W3_TeamProject
 		public static int EquipMana {  get { return equipMana; } }
 		public static int Gold { get {  return gold; } }
 		#endregion
+
+		public static void ChangeHP(int value)
+		{
+			currentHeatlh += value;
+			UnderUI.UpdateHPbar();
+		}
 		public static void Init()
 		{
 			// 플레이어를 초기화하기 위한 함수입니다. 게임 시작 전에 호출해주세요!
