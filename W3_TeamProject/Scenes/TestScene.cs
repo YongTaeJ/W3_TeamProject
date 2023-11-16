@@ -20,6 +20,34 @@ namespace W3_TeamProject
 			 * 단, EnterScene을 완전히 빠져나오지 못하는 상태가 지속되면 무한루프에 빠지거나 게임이 꼬일 수 있으니
 			 * 이 점에 대해서는 주의가 필요합니다.
 			 */
+
+			// 이하는 컨트롤러 클래스 사용 예시입니다!
+			/*
+			Controller controller = new Controller();
+			controller.AddRotation(1, 0);
+			controller.AddRotation(5, 0);
+			controller.AddRotation(9, 0);
+
+			Console.WriteLine("~~~~~ 텍스트");
+			Console.WriteLine("다음 행동 or 목적지를 선택해주세요.");
+
+			int userInput;
+			userInput = controller.InputLoop();
+
+			switch (userInput)
+			{
+				case 0:
+					nextState = beforeState;
+					break;
+				case 1:
+					nextState = SceneState.Battle;
+					break;
+				case 2:
+					nextState = SceneState.Status;
+					break;
+			}
+			*/
+
 		}
 
 		public override SceneState ExitScene()

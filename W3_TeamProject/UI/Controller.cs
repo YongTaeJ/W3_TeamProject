@@ -14,7 +14,7 @@ namespace W3_TeamProject
 		List<int> xList = new List<int>();
 		List<int> yList = new List<int>();
 
-		public void GetRotation(int x, int y)
+		public void AddRotation(int x, int y)
 		{
 			xList.Add(x);
 			yList.Add(y);
