@@ -46,7 +46,11 @@ namespace W3_TeamProject
 					case ConsoleKey.UpArrow:
 						{
 							if (index >= xList.Count - 1)
+							{
+								beforeIndex = index;
+								index = 0;
 								break;
+							}
 							else
 							{
 								beforeIndex = index;
@@ -61,7 +65,11 @@ namespace W3_TeamProject
 					case ConsoleKey.DownArrow :
 						{
                             if (index <= 0)
+							{
+								beforeIndex = index;
+								index = xList.Count - 1;
 								break;
+							}
 							else
 							{
 								beforeIndex = index;

@@ -93,7 +93,6 @@ namespace W3_TeamProject
 
 		public void availableCheck(int level)
 		{
-			// 제대로 돌아가는지 확인이 필요합니다!
 			for(int i=0; i<skillData.Count; i++)
 			{
 				if (skillData[i].RequiredLevel <= level)
