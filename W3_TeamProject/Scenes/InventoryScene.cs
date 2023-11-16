@@ -66,7 +66,7 @@ namespace W3_TeamProject
             switch (_inputKey.Key)
             {
                 case ConsoleKey.D1:
-                    Inventory.IsItemEquip(0);
+                    Inventory.ChangeItemEquip(0);
                     InvenEquip();
                     break;
                 case ConsoleKey.D0:

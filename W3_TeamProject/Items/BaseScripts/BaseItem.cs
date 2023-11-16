@@ -40,7 +40,7 @@ namespace W3_TeamProject
 		public string Description { get { return description; } }
 		public int Cost { get { return cost; } }
 		public int EffectValue { get { return effectValue; } }
-		public bool IsEquip {  get { return isEquip; } set { isEquip = IsEquip; } } //장착확인 - 박정혁
+		public bool IsEquip {  get { return isEquip; } set { isEquip = value; } } //장착확인 - 박정혁
 		public Status Status { get { return status; } }	
 		public ItemType ItemType { get { return itemType; } }
 		#endregion
