@@ -18,6 +18,7 @@ namespace W3_TeamProject
         Inventory,
 		Status,
 		Battle,
+		Store,
 		Boss
     }
 
@@ -47,6 +48,7 @@ namespace W3_TeamProject
 			Scenes.Add(SceneState.Status, new StatusScene()); //상태보기
 			Scenes.Add(SceneState.Battle, new BattleScene()); //전투화면
 			Scenes.Add(SceneState.Boss, new BossScene()); // 보스전
+            Scenes.Add(SceneState.Store, new StoreScene()); // 상점 장면
         }
 
 		public SceneState Update()
