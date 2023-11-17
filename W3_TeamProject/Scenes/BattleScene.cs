@@ -209,19 +209,19 @@
 
         private static void ShowEnemy1()
         {
-            Console.SetCursorPosition(70, 0);
-            Console.WriteLine("---------------");
             Console.SetCursorPosition(70, 1);
-            Console.WriteLine("     ENEMY1    ");
+            Console.WriteLine("---------------");
             Console.SetCursorPosition(70, 2);
-            Console.WriteLine("---------------");
+            Console.WriteLine("     ENEMY1    ");
             Console.SetCursorPosition(70, 3);
-            Console.WriteLine(" 공:    방:    ");
-            Console.SetCursorPosition(70, 4);
             Console.WriteLine("---------------");
+            Console.SetCursorPosition(70, 4);
+            Console.WriteLine(" 공:    방:    ");
             Console.SetCursorPosition(70, 5);
-            Console.WriteLine(" HP |          ");
+            Console.WriteLine("---------------");
             Console.SetCursorPosition(70, 6);
+            Console.WriteLine(" HP |          ");
+            Console.SetCursorPosition(70, 7);
             Console.WriteLine("---------------");
         }
 
