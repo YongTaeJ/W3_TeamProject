@@ -20,7 +20,6 @@ namespace W3_TeamProject
             Console.WriteLine("상태보기 창입니다");
             ViewStatus();
             StatusSelection();
-
         }
 
         public override SceneState ExitScene()
