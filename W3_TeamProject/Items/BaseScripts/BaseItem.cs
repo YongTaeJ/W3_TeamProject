@@ -12,7 +12,8 @@ namespace W3_TeamProject
 		// 장착 개선을 위한 enum입니다.
 		None,
 		Weapon,
-		Armor
+		Armor,
+		Accessory
 	}
 	enum Status
 	{
