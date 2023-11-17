@@ -14,10 +14,21 @@ namespace W3_TeamProject
     /// </summary>
     internal class StatusScene : BaseScene
     {
-        int userinput = 0;
-
         public override void EnterScene()
         {
+            StatusMain();
+        }
+
+        public override SceneState ExitScene()
+        {
+            return nextState;
+        }
+
+        private void StatusMain()
+        {
+            int userinput = 0;
+
+            Console.Clear();
             // UI, Controller 초기화
             UI.MakeUI();
             Player.Init();
@@ -47,7 +58,7 @@ namespace W3_TeamProject
             {
                 userinput = controller.InputLoop();
 
-                switch (userinput)  // 각 스테이터스에 대한 설명 추가할 예정
+                switch (userinput)  // 각 스테이터스에 대한 설명 표시
                 {
                     case 0:
                         Thread.Sleep(300);
@@ -89,16 +100,10 @@ namespace W3_TeamProject
             }
         }
 
-        public override SceneState ExitScene()
-        {
-            return nextState;
-        }
-
-
         /// <summary>
         /// 플레이어의 상태를 확인하는 함수입니다 / 시작 x좌표, 시작 y좌표, 너비, 높이
         /// </summary>
-        public void ViewStatus(int startXpos, int startYpos, int width, int height)
+        public static void ViewStatus(int startXpos, int startYpos, int width, int height)
         {
             MakeBorder(startXpos, startYpos, width, height);
             StatusData(startXpos + 2, startYpos + 1);
@@ -231,12 +236,20 @@ namespace W3_TeamProject
             LeftHiText(Blue, $"{Player.CurrentMana} ", $"/ {totalMana} ");
         }
 
-        public static void DetailLevel()
+        private void DetailLevel()
         {
             MakeInnerBorder();
             Console.SetCursorPosition(58, 7);
             Console.WriteLine("레벨에 대한 상세한 설명입니다.");
+            Console.SetCursorPosition(58, 9);
+            Console.WriteLine("설명 설명");
+            Console.SetCursorPosition(58, 10);
+            Console.WriteLine("설명 설명");
 
+            Console.SetCursorPosition(67, 13);
+            Console.WriteLine("▶ 돌아가기");
+            if(key.Key == ConsoleKey.Enter)
+            StatusMain();
         }
 
         /// <summary>
