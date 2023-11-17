@@ -309,7 +309,7 @@ namespace W3_TeamProject
                 else if (playerItem.ItemType == ItemType.Accessory && playerItem.IsEquip == true) //아이템 타입이 방어구이고 장착이 완료일 때 
                 {
                     Player.EquipHealth += playerItem.EffectValue; //장착 체력 증가
-                    Player.CurrentHealth += playerItem.EffectValue; // 베이스 체력 증가
+                    Player.BaseHealth += playerItem.EffectValue; // 베이스 체력 증가
                 }
             }
             else
@@ -321,7 +321,7 @@ namespace W3_TeamProject
                 else if (playerItem.ItemType == ItemType.Accessory && playerItem.IsEquip == true) //아이템 타입이 방어구이고 장착이 완료일 때 
                 {
                     Player.EquipHealth -= playerItem.EffectValue;//장착 체력 감소
-                    Player.CurrentHealth -= playerItem.EffectValue;// 베이스 체력 감소
+                    Player.BaseHealth -= playerItem.EffectValue;// 베이스 체력 감소
                 }
             }
         }

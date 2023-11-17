@@ -18,7 +18,7 @@ namespace W3_TeamProject
         {
             Console.Clear();
             Console.SetCursorPosition(0, 0); // 테두리_가로선 맨 윗줄
-            for (int i = 0; i < 60; i++)
+            for (int i = 0; i < 120; i++)
             {
                 Console.Write('■');
             }
@@ -31,7 +31,7 @@ namespace W3_TeamProject
                 Console.Write('■');
             }
             Console.SetCursorPosition(0, 29); // 테두리_가로선 맨 밑줄
-            for (int i = 0; i < 60; i++)
+            for (int i = 0; i < 120; i++)
             {
                 Console.Write('■');
             }
