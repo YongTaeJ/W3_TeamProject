@@ -14,26 +14,26 @@ namespace W3_TeamProject
 		private static List<BaseItem> WeaponItemList = new List<BaseItem>();
         private static List<BaseItem> ArmorItemList = new List<BaseItem>();
 
-        public static void AddWeaponItem(BaseItem item) //무기를 받을 때
-		{
+        public static void AddWeaponItem(BaseItem item) //무기를 WeaponItemList에 추가
+        {
             // 참조 형식으로 item을 받는 점을 유의해야합니다.
             WeaponItemList.Add(item);
 		}
-        public static void AddArmorItem(BaseItem item) //방어구를 ArimorItem리스트에 추가
+        public static void AddArmorItem(BaseItem item) //방어구를 ArmorItemList에 추가
         {
             // 참조 형식으로 item을 받는 점을 유의해야합니다.
             ArmorItemList.Add(item);
         }
 
-        public static BaseItem GetItem(int index, ItemType itemType)
-		{
+        public static BaseItem GetItem(int index, ItemType itemType)//아이템 타입과 반환 받고싶은 아이템의 위치를 적으면 return
+        {
 			if (itemType == ItemType.Weapon)
 				return WeaponItemList[index];
 			else 
 				return ArmorItemList[index];
         }
 
-		public static void RemoveItem(int index, ItemType itemType)
+		public static void RemoveItem(int index, ItemType itemType) //아이템 타입과 삭제하고 싶은 아이템의 위치를 적으면 RemoveAt 작동
 		{
             if (itemType == ItemType.Weapon)
                 WeaponItemList.RemoveAt(index);
@@ -41,7 +41,7 @@ namespace W3_TeamProject
                 ArmorItemList.RemoveAt(index);
         }
 
-		public static int GetListCount(ItemType itemType)
+		public static int GetListCount(ItemType itemType) //방어구, 무기 List의 크기를 따로 받고 Inven의 메인씬에서는 2개의 크기를 합친 값을 받음
 		{
             if (itemType == ItemType.Weapon)
                 return WeaponItemList.Count;

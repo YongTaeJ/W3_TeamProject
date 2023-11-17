@@ -149,18 +149,11 @@ namespace W3_TeamProject
         }
         public void InventoryItem(int _index, ItemType _itemType) //인벤토리의 아이템 출력을 나타냄
         {
-            if (ItemType.None != _itemType)
-            {
-                playerItem = Inventory.GetItem(_index, _itemType);
-                if (playerItem.IsEquip)
-                    WordColor($"{((playerItem.IsEquip == true) ? "[E]" : "")} {playerItem.Name} | {playerItem.Status} + {playerItem.EffectValue} | {playerItem.Description}");
-                else
-                    Console.WriteLine($"{((playerItem.IsEquip == true) ? "[E]" : "")} {playerItem.Name} | {playerItem.Status} + {playerItem.EffectValue} | {playerItem.Description}");
-            }
+            playerItem = Inventory.GetItem(_index, _itemType);
+            if (playerItem.IsEquip)
+                WordColor($"{((playerItem.IsEquip == true) ? "[E]" : "")} {playerItem.Name} | {playerItem.Status} + {playerItem.EffectValue} | {playerItem.Description}");
             else
-            {
-                
-            }
+                Console.WriteLine($"{((playerItem.IsEquip == true) ? "[E]" : "")} {playerItem.Name} | {playerItem.Status} + {playerItem.EffectValue} | {playerItem.Description}");
         }
         public void InventoryConsole(bool _isInventoryEquipScene, ItemType _itemType)//인벤토리에 플레이어가 현재 가지고 있는 모든 아이템을 보여준다.
         {
