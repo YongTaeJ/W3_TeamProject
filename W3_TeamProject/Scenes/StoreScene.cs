@@ -44,79 +44,74 @@ namespace W3_TeamProject
 					break;
 			}
 			*/
-            Console.WriteLine("상점에 오신걸 환영합니다.");
-            Console.WriteLine("\n무엇을 찾으시나요? \n1.공격 아이템 \n2.방어 아이템 \n3.악세서리 아이템 \n4.특수 아이템 \n\n0.돌아가기");
-
+            Console.WriteLine("상점에 온걸 환영합니다.");
             while (true)
-            {
+            { 
+                Console.WriteLine("무엇을 찾으시나요? \n1.공격 아이템 \n2.방어 아이템 \n3.악세서리 아이템 \n4.특수 아이템 \n\n0.돌아가기");
                 Console.Write(">> ");
                 if (int.TryParse(Console.ReadLine(), out int select))
-                {
+                { 
                     if (select == 1)
                     {
                         Console.Clear();
-                        BuyList.Clear();
-                        ArmorAddInList();
+                        BuyList.Clear(); //BuyList를 싹 비워줌
+                        ArmorAddInList(); //방어구 목록
                         ShowItem();
-                        break;
                     }
                     else if (select == 2)
                     {
                         Console.Clear();
                         BuyList.Clear();
-                        WeaponAddInList();
+                        WeaponAddInList(); //무기 목록
                         ShowItem();
-                        break;
                     }
                     else if (select == 3)
                     {
                         Console.Clear();
                         BuyList.Clear();
-                        AccessoryAddInList();
+                        AccessoryAddInList(); //장신구 목록
                         ShowItem();
-                        break;
                     }
                     else if (select == 4)
                     {
                         Console.Clear();
                         BuyList.Clear();
-                        SpecialAddInList();
+                        SpecialAddInList(); //포션? 잡다한 아이템 목록
                         ShowItem();
-                        break;
                     }
                     else if (select == 0)
                     {
-                        nextState = beforeState;
+                        nextState = SceneState.Inventory;
                         break;
                     }
                     else
                     {
                         Console.Clear();
                         Console.WriteLine("다시 입력해 주세요");
-                        Console.WriteLine();
                     }
                 }
             }
 
         }
         private static List<BaseItem> BuyList = new List<BaseItem>();
-        public void ArmorAddInList()
+        // BuyList.Add로 목록 추가
+        public void ArmorAddInList() //방어구
         {
             BuyList.Add(new SteelArmor());
             BuyList.Add(new SpartaArmor());
         }
 
-        public void WeaponAddInList()
+        public void WeaponAddInList() //무기
         {
             BuyList.Add(new SteelSword());
             BuyList.Add(new SpartaSword());
         }
-        public void AccessoryAddInList()
+        public void AccessoryAddInList() //장신구
         {
             BuyList.Add(new HealthRing());
             BuyList.Add(new ManaRing());
         }
-        public void SpecialAddInList()
+        public void SpecialAddInList() //특수
         {
             BuyList.Add(new HealthPotion());
         }
@@ -126,33 +121,31 @@ namespace W3_TeamProject
         }
         private void ShowItem()
         {
-            Console.Clear();
-            for (int i = 0; i < BuyList.Count; i++)
-            {
-                Console.WriteLine($"{i+1} | {BuyList[i].Name} | {BuyList[i].Status} + {BuyList[i].EffectValue} | {BuyList[i].Description}");
-            }
             while (true)
-            {
+            {  
+                for (int i = 0; i < BuyList.Count; i++)
+                {
+                    if (BuyList[i].Cost > Player.Gold) { Console.ForegroundColor = ConsoleColor.DarkRed; } //돈이 부족하면 빨간색으로
+                    Console.WriteLine($"{i + 1}. {BuyList[i].Name} | {BuyList[i].Status} + {BuyList[i].EffectValue} | {BuyList[i].Description}"); //아이템 목록
+                    Console.ResetColor(); //색 리셋
+                }
+                Console.WriteLine("0. 돌아가기");
                 Console.Write("입력해라:");
                 int.TryParse(Console.ReadLine(), out int num);
-                if (num <= BuyList.Count)
+                if (num == 0) { Console.Clear(); break; }
+                else if (num <= BuyList.Count)
                 {
-                    if (num == 1)
+                    if (BuyList[num - 1].Cost < Player.Gold)
                     {
-                        if (BuyList[0].ItemType == ItemType.Armor)
-                        {
-                            Inventory.AddArmorItem(BuyList[num-1]);
-                        }
-                        else if (BuyList[0].ItemType == ItemType.Weapon)
-                        {
-                            Inventory.AddWeaponItem(BuyList[num - 1]);
-                        }
-                        else if (BuyList[0].ItemType == ItemType.Accessory)
-                        {
-                            Inventory.AddAccessory(BuyList[num - 1]);
-                        }
+                        Console.Clear() ;
+                        Player.Gold -= BuyList[num - 1].Cost;
+                        if (BuyList[0].ItemType == ItemType.Armor) { Inventory.AddArmorItem(BuyList[num - 1]); } //방어구 상점에서 샀으면 방어구 인벤토리로
+                        else if (BuyList[0].ItemType == ItemType.Weapon) { Inventory.AddWeaponItem(BuyList[num - 1]); } //무기 상점에서 샀으면 무기 인벤토리로
+                        else if (BuyList[0].ItemType == ItemType.Accessory) { Inventory.AddAccessory(BuyList[num - 1]); } //장신구 상점에서 샀으면 장신구 인벤토리로
                     }
+                    else {Console.Clear(); Console.WriteLine("다시"); }
                 }
+
             }
         }
     }

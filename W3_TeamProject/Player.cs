@@ -17,10 +17,10 @@ namespace W3_TeamProject
 		private static string playerName;
 
 		// 장비 아이템으로 인한 스탯 상승과 구분하기 위해 나누었습니다.
-		private static int baseAttack;
-		private static int baseDefense;
-		private static int baseHealth;
-		private static int baseMana;
+		private static int baseAttack = 0;
+		private static int baseDefense = 0;
+		private static int baseHealth = 1; 
+		private static int baseMana = 1; // div0 방지용;;
 
 		private static int equipAttack = 0;
 		private static int equipDefense = 0;
@@ -51,13 +51,13 @@ namespace W3_TeamProject
 		public static int EquipDefense {  get { return equipDefense; } set { equipDefense = value; } }
 		public static int EquipHealth {  get { return equipHealth; } set { equipHealth = value; } }
 		public static int EquipMana {  get { return equipMana; } }
-		public static int Gold { get {  return gold; } }
+		public static int Gold { get { return gold;  } set { gold = value; } }
 		#endregion
 
 		public static void ChangeHP(int value)
 		{
 			currentHeatlh += value;
-			UnderUI.UpdateHPbar();
+			UI.UpdateHPbar();
 		}
 		public static void Init()
 		{

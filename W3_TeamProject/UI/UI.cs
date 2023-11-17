@@ -9,17 +9,34 @@ namespace W3_TeamProject
 	/// <summary>
 	/// 아래에 여러가지 정보를 나타내기 위한 클래스입니다.
 	/// </summary>
-	internal static class UnderUI
+	internal static class UI
 	{
-		public static void MakeUnderUI()
+		public static void MakeUI()
 		{
+			// 아래쪽 테두리와 캐릭터의 HP, MP를 그리는 기능입니다.
+			Console.Clear();
 			MakeBorder();
 			MakeHPMPPart();
-			// UpdateHPbar();
-			// UpdateMPBar();
+			UpdateHPbar();
+			UpdateMPBar();
 		}
 		public static void MakeBorder()
 		{
+			// UI의 전체적인 테두리를 그리는 기능입니다.
+			Console.SetCursorPosition(0, 0);
+			for (int i = 0; i < 60; i++)
+			{
+				Console.Write('ㅡ');
+			}
+
+			for(int i=1; i < 20; i++)
+			{
+				Console.SetCursorPosition(0,i);
+				Console.Write('|');
+				Console.SetCursorPosition(119,i);
+				Console.Write('|');
+			}
+
 			Console.SetCursorPosition(0, 20);
 			for (int i = 0; i < 60; i++)
 			{
