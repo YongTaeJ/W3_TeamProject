@@ -44,7 +44,8 @@ namespace W3_TeamProject
 					break;
 			}
 			*/
-            Console.WriteLine("상점에 온걸 환영해~!! \n무엇을 사려고 하니? \n1.공격 아이템 \n2.방어 아이템 \n3.특수 아이템 \n\n0.돌아가기");
+            Console.WriteLine("상점에 온걸 환영합니다.");
+            Console.WriteLine("\n무엇을 찾으시나요? \n1.공격 아이템 \n2.방어 아이템 \n3.악세서리 아이템 \n4.특수 아이템 \n\n0.돌아가기");
 
             while (true)
             {
@@ -53,18 +54,34 @@ namespace W3_TeamProject
                 {
                     if (select == 1)
                     {
+                        Console.Clear();
+                        BuyList.Clear();
                         ArmorAddInList();
                         ShowItem();
                         break;
                     }
                     else if (select == 2)
                     {
-                        Console.WriteLine("2번 선택함");
+                        Console.Clear();
+                        BuyList.Clear();
+                        WeaponAddInList();
+                        ShowItem();
                         break;
                     }
                     else if (select == 3)
                     {
-                        Console.WriteLine("3번 선택함");
+                        Console.Clear();
+                        BuyList.Clear();
+                        AccessoryAddInList();
+                        ShowItem();
+                        break;
+                    }
+                    else if (select == 4)
+                    {
+                        Console.Clear();
+                        BuyList.Clear();
+                        SpecialAddInList();
+                        ShowItem();
                         break;
                     }
                     else if (select == 0)
@@ -88,9 +105,23 @@ namespace W3_TeamProject
             BuyList.Add(new SteelArmor());
             BuyList.Add(new SpartaArmor());
         }
+
+        public void WeaponAddInList()
+        {
+            BuyList.Add(new SteelSword());
+            BuyList.Add(new SpartaSword());
+        }
+        public void AccessoryAddInList()
+        {
+            BuyList.Add(new HealthRing());
+            BuyList.Add(new ManaRing());
+        }
+        public void SpecialAddInList()
+        {
+            BuyList.Add(new TestItem());
+        }
         public override SceneState ExitScene()
         {
-            // EnterScene에서 바꾼 nextState를 SceneManager에게 반환하는 작업이라고 보시면 됩니다.
             return nextState;
         }
         private void ShowItem()
@@ -98,8 +129,32 @@ namespace W3_TeamProject
             Console.Clear();
             for (int i = 0; i < BuyList.Count; i++)
             {
-                Console.WriteLine($"{BuyList[i].Name} | {BuyList[i].Status} + {BuyList[i].EffectValue} | {BuyList[i].Description}");
+                Console.WriteLine($"{i+1} | {BuyList[i].Name} | {BuyList[i].Status} + {BuyList[i].EffectValue} | {BuyList[i].Description}");
+            }
+            while (true)
+            {
+                Console.Write("입력해라:");
+                int.TryParse(Console.ReadLine(), out int num);
+                if (num <= BuyList.Count)
+                {
+                    if (num == 1)
+                    {
+                        if (BuyList[0].ItemType == ItemType.Armor)
+                        {
+                            Inventory.AddArmorItem(BuyList[num-1]);
+                        }
+                        else if (BuyList[0].ItemType == ItemType.Weapon)
+                        {
+                            Inventory.AddWeaponItem(BuyList[num - 1]);
+                        }
+                        else if (BuyList[0].ItemType == ItemType.Accessory)
+                        {
+                            Inventory.AddAccessory(BuyList[num - 1]);
+                        }
+                    }
+                }
             }
         }
     }
 }
+
