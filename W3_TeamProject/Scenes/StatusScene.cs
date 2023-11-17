@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Emit;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
+using static System.ConsoleColor;
 
 namespace W3_TeamProject
 {
@@ -11,16 +14,19 @@ namespace W3_TeamProject
     /// </summary>
     internal class StatusScene : BaseScene
     {
+        int userinput = 0;
 
         public override void EnterScene()
         {
+            Console.SetWindowSize(120, 30);
+            Player.Init();
 
             // 꾸밀 수 있는 요소
             // 상태보기 창 -> 디자인을 추가
-            Console.WriteLine("상태보기 창입니다");
+
+            Console.WriteLine(new string('ㅁ', 60));
             ViewStatus();
             StatusSelection();
-
         }
 
         public override SceneState ExitScene()
@@ -34,22 +40,12 @@ namespace W3_TeamProject
         /// </summary>
         public void ViewStatus()
         {
-            // Player class의 정보를 받아와서 출력해주는 함수
-            // 출력해주는 정보
-            // 레벨
-            // 이름 (직업)
-            // 공격력 -> 전체 공격력 (+ 추가 공격력)
-            // 방어력 -> 전체 방어력 (+ 추가 방어력)
-            // HP -> 현재 체력 / 전체 체력
-            // MP -> 현재 마나 / 전체 마나
-            // 골드
-
             Console.WriteLine($"레 벨 : {Player.Level}");
             Console.WriteLine($"이 름 : {Player.PlayerName}");
-            Console.WriteLine($"공격력 : {Player.EquipAttack}");
-            Console.WriteLine($"방어력 : {Player.EquipDefense}");
-            Console.WriteLine($"H P : {Player.CurrentHealth} / {Player.EquipHealth}");
-            Console.WriteLine($"M P : {Player.CurrentMana} / {Player.EquipMana}");
+            ViewAtk();
+            ViewDef();
+            ViewHP();
+            ViewMP();
             Console.WriteLine($"소지금 : {Player.Gold}");
         }
 
@@ -59,6 +55,7 @@ namespace W3_TeamProject
         /// </summary>
         public void StatusSelection()
         {
+
             while (true)
             {
                 // 플레이어의 입력을 기다리는 상태
@@ -82,5 +79,82 @@ namespace W3_TeamProject
                 }
             }
         }
+
+
+        /// <summary>
+        /// Atk 상승 시 상승량 표기
+        /// </summary>
+        public static void ViewAtk()
+        {
+            int totalAttack = Player.EquipAttack + Player.BaseAttack;
+
+            if (Player.EquipAttack != 0)
+            {
+                RightHiText(Red, $"공격력 : {totalAttack} ", $"(+{Player.BaseAttack})");
+            }
+            else
+                Console.WriteLine($"공격력 : {Player.BaseAttack}");
+        }
+
+        /// <summary>
+        /// Def 상승 시 상승량 표기
+        /// </summary>
+        public static void ViewDef()
+        {
+            int totalDefense = Player.EquipDefense + Player.BaseDefense;
+
+            if (Player.EquipAttack != 0)
+            {
+                RightHiText(Red, $"방어력 : {totalDefense} ", $"(+{Player.BaseDefense})");
+            }
+            else
+                Console.WriteLine($"방어력 : {Player.BaseDefense}");
+        }
+
+
+        public static void ViewHP()
+        {
+            int totalHealth = Player.EquipHealth + Player.BaseHealth;
+            Console.Write("H P : ");
+            LeftHiText(Red, $"{Player.CurrentHealth} ", $"/ {totalHealth}");
+        }
+
+
+        public static void ViewMP()
+        {
+            int totalMana = Player.EquipMana + Player.BaseMana;
+            Console.Write("M P : ");
+            LeftHiText(Blue, $"{Player.CurrentMana} ", $"/ {totalMana}");
+        }
+
+
+        /// <summary>
+        /// 선택한 color로 text1를 표시합니다. / using static System.ConsoleColor;
+        /// </summary>
+        /// <param name="color"></param> 
+        /// <param name="text1"></param>
+        /// <param name="text2"></param>
+        public static void LeftHiText(ConsoleColor col, string text1, string text2)
+        {
+            Console.ForegroundColor = col;
+            Console.Write(text1);
+            Console.ResetColor();
+            Console.WriteLine(text2);
+        }
+
+        /// <summary>
+        /// 선택한 color로 text2를 표시합니다.
+        /// </summary>
+        /// <param name="color"></param>
+        /// <param name="text1"></param>
+        /// <param name="text2"></param>
+        public static void RightHiText(ConsoleColor col, string text1, string text2)
+        {
+            Console.Write(text1);
+            Console.ForegroundColor = col;
+            Console.WriteLine(text2);
+            Console.ResetColor();
+        }
+
     }
 }
