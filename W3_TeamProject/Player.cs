@@ -41,7 +41,7 @@ namespace W3_TeamProject
 		// 필드에 값 할당이 필요하신 경우에는 이야기해주세요!!
 		public static int Level { get { return level; } }
 		public static string PlayerName { get {  return playerName; } }
-		public static int CurrentHealth { get { return currentHeatlh; } }
+		public static int CurrentHealth { get { return currentHeatlh; } set { currentHeatlh = value; } }
 		public static int CurrentMana {  get { return currentMana; } }
 		public static int BaseAttack { get { return baseAttack; } }
 		public static int BaseDefense { get {  return baseDefense; } }
@@ -49,7 +49,7 @@ namespace W3_TeamProject
 		public static int BaseMana {  get { return baseMana; } }
 		public static int EquipAttack { get { return equipAttack; } set { equipAttack = value; } }
 		public static int EquipDefense {  get { return equipDefense; } set { equipDefense = value; } }
-		public static int EquipHealth {  get { return equipHealth; } }
+		public static int EquipHealth {  get { return equipHealth; } set { equipHealth = value; } }
 		public static int EquipMana {  get { return equipMana; } }
 		public static int Gold { get {  return gold; } }
 		#endregion
