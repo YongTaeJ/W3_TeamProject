@@ -1,61 +1,99 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace W3_TeamProject
+﻿namespace W3_TeamProject
 {
-	internal class BattleScene : BaseScene
-	{
-		public override void EnterScene()
-		{
-			/*
-			 * 장면에 대해 연출을 하고, 해당 장면에 대한 연출이 끝나면 nextState로 넘깁니다.
-			 * 예를 들어, 0을 눌러서 뒤로가기 기능을 구현한다고 하면
-			 * switch 혹은 if문을 이용해 0이라는 값을 입력받았을 때, nextState = beforeState로 설정합니다.
-			 * 그리고 특정한 화면(ex. BattleScene으로 전환이 필요하다.)으로 넘어간다고 하면
-			 * SceneManager에 있는 enum을 참고해서 사용하시면 됩니다.
-			 * nextState = SceneState.Battle; 이런 식으로 state의 상태를 바꾼 다음 곧바로 함수를 빠져나오시면 됩니다.
-			 * 단, EnterScene을 완전히 빠져나오지 못하는 상태가 지속되면 무한루프에 빠지거나 게임이 꼬일 수 있으니
-			 * 이 점에 대해서는 주의가 필요합니다.
-			 */
+    internal class BattleScene : BaseScene
+    {
+        public override void EnterScene()
+        {
+            Controller controller = new Controller();
 
-			// 이하는 컨트롤러 클래스 사용 예시입니다!
-			/*
-			Controller controller = new Controller();
-			controller.AddRotation(1, 0);
-			controller.AddRotation(5, 0);
-			controller.AddRotation(9, 0);
+            /* 
+             * BattleScene 의 흐름
+             * 
+             * 마을에서 던전입구로 온다.
+             * 던전입구에서 던전 / 나가기(마을로 돌아감) 선택.
+             * 
+             * 던전 입장하면 스테이지 / 나가기 선택.
+             * 
+             * 스테이지 클리어 하면 던전 입장 파트로 가고, (클리어한 스테이지 에 대해서는 표시하기)
+             * 죽으면 어디선가 부활..? 마을에서 부활 ? 던전입구에서 부활 ?
+            */
+            Console.Clear();
 
-			Console.WriteLine("~~~~~ 텍스트");
-			Console.WriteLine("다음 행동 or 목적지를 선택해주세요.");
+            Console.WriteLine("던전입구로 왔따.");
+            Console.WriteLine();
+            // 던전입구에서 던전입장할지 다시 나갈지 선택
+            Console.WriteLine("  1던전 입장");
+            Console.WriteLine("  2마을로 돌아가기");
+            Console.WriteLine();
+            Console.Write(">> ");
 
-			int userInput;
-			userInput = controller.InputLoop();
+            // 컨트롤러 사용 예정
+            int userInput = int.Parse(Console.ReadLine());
+            switch (userInput)
+            {
+                case 1:
+                    EnterDungeon();
+                    break;
+                case 2:
+                    // 마을로 돌아가기
+                    // nextState = beforeState ?
+                    break;
+            }
 
-			switch (userInput)
-			{
-				case 0:
-					nextState = beforeState;
-					break;
-				case 1:
-					nextState = SceneState.Battle;
-					break;
-				case 2:
-					nextState = SceneState.Status;
-					break;
-			}
-			*/
+        }
 
-		}
+        public override SceneState ExitScene()
+        {
+            return nextState;
+        }
 
-		public override SceneState ExitScene()
-		{
-			// EnterScene에서 바꾼 nextState를 SceneManager에게 반환하는 작업이라고 보시면 됩니다.
-			return nextState;
-		}
 
-		// 추가적으로 해당 장면에 필요한 메서드나 클래스 등이 있다면 자유롭게 작성하시면 됩니다.
-	}
+        private void EnterDungeon()
+        {
+            Controller controller = new Controller();
+
+            // 던전에 들어와서는 무엇을 해야할까
+
+            /* 스테이지들이 여럿 있다고 가정.
+             * e.g. 1층, 2층, 3층(=보스, BossScene 과 연결)
+             * 
+             * 3층 = final stage BOSS
+             * 2층 stage
+             * 1층 stage
+            */
+            Console.Clear();
+
+            Console.WriteLine("스테이지를 선택하시라 !");
+            Console.WriteLine();
+            Console.WriteLine("  3층 (최종)");
+            Console.WriteLine("  2층");
+            Console.WriteLine("  1층");
+            Console.WriteLine();
+            Console.WriteLine("  0나가기");
+
+            Console.Write(">> ");
+            // 컨트롤러 사용 예정
+            int userInput = int.Parse(Console.ReadLine());
+            switch (userInput)
+            {
+                case 0:
+                    EnterDungeon();
+                    break;
+                case 1:
+                    EnterFirstStage();
+                    break;
+                case 2:
+                    // 마을로 돌아가기
+                    // nextState = beforeState ?
+                    break;
+            }
+
+        }
+
+        private void EnterFirstStage()
+        {
+            // UI 델꼬오기
+            Console.WriteLine("[1층]");
+        }
+    }
 }
