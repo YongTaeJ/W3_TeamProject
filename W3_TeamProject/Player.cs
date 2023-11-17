@@ -57,7 +57,7 @@ namespace W3_TeamProject
 		public static void ChangeHP(int value)
 		{
 			currentHeatlh += value;
-			UnderUI.UpdateHPbar();
+			UI.UpdateHPbar();
 		}
 		public static void Init()
 		{

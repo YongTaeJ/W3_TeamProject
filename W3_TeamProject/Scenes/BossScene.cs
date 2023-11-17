@@ -75,7 +75,7 @@ namespace W3_TeamProject.Scenes
 		public void Init()
 		{
 			// 기초 UI 생성 + Main, Skill Controller 초기화!!
-			UnderUI.MakeUnderUI();
+			UI.MakeUI();
 			MakeCommentBorder();
 			MakeBossHPMP();
 			boss.UpdateHPbar();
@@ -159,12 +159,12 @@ namespace W3_TeamProject.Scenes
 			Console.SetCursorPosition(92, 21);
 			Console.Write("HP - ");
 
-			UnderUI.MakeBar(94, 22);
+			UI.MakeBar(94, 22);
 
 			Console.SetCursorPosition(92, 25);
 			Console.Write("MP - ");
 
-			UnderUI.MakeBar(94, 26);
+			UI.MakeBar(94, 26);
 
 			Console.SetCursorPosition(0, 0);
 		}
@@ -173,19 +173,19 @@ namespace W3_TeamProject.Scenes
 		{
 			ClearChoosePanel();
 
-			UnderUI.MakeBar(36, 22);
+			UI.MakeBar(36, 22);
 			Console.SetCursorPosition(38, 23);
 			Console.Write("       공격");
 
-			UnderUI.MakeBar(64, 22);
+			UI.MakeBar(64, 22);
 			Console.SetCursorPosition(66, 23);
 			Console.Write("       방어");
 
-			UnderUI.MakeBar(36, 25);
+			UI.MakeBar(36, 25);
 			Console.SetCursorPosition(38, 26);
 			Console.Write("     스킬 목록");
 
-			UnderUI.MakeBar(64, 25);
+			UI.MakeBar(64, 25);
 			Console.SetCursorPosition(66, 26);
 			Console.Write("    아이템 목록");
 		}
