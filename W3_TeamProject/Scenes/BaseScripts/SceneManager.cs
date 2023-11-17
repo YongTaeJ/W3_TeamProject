@@ -16,6 +16,7 @@ namespace W3_TeamProject
         Start,
         Inventory,
 		Status,
+		Battle,
     }
 
 	internal class SceneManager
@@ -42,6 +43,7 @@ namespace W3_TeamProject
             Scenes.Add(SceneState.Inventory, new InventoryScene()); //인벤토리
             Scenes.Add(SceneState.Start, new StartScene()); //시작화면
 			Scenes.Add(SceneState.Status, new StatusScene()); //상태보기
+			Scenes.Add(SceneState.Status, new BattleScene()); //상태보기
         }
 
 		public SceneState Update()
