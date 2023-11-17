@@ -50,34 +50,35 @@ namespace W3_TeamProject
                 switch (userinput)  // 각 스테이터스에 대한 설명 추가할 예정
                 {
                     case 0:
-                        Thread.Sleep(400);
-                        DeatilLevel();
+                        Thread.Sleep(300);
+                        DetailLevel();
                         break;
                     case 1:
-                        Thread.Sleep(400);
+                        Thread.Sleep(300);
                         CyanText("이  름");
                         break;
                     case 2:
-                        Thread.Sleep(400);
+                        Thread.Sleep(300);
                         CyanText("공격력");
                         break;
                     case 3:
-                        Thread.Sleep(400);
+                        Thread.Sleep(300);
                         CyanText("방어력");
                         break;
                     case 4:
-                        Thread.Sleep(400);
+                        Thread.Sleep(300);
                         CyanText("체  력");
                         break;
                     case 5:
-                        Thread.Sleep(400);
+                        Thread.Sleep(300);
                         CyanText("마  력");
                         break;
                     case 6:
-                        Thread.Sleep(400);
+                        Thread.Sleep(300);
                         CyanText("소지금");
                         break;
                     case 7:
+                        Thread.Sleep(200);
                         nextState = SceneState.Town;
                         Console.Clear();
                         break;
@@ -230,11 +231,12 @@ namespace W3_TeamProject
             LeftHiText(Blue, $"{Player.CurrentMana} ", $"/ {totalMana} ");
         }
 
-        public static void DeatilLevel()
+        public static void DetailLevel()
         {
             MakeInnerBorder();
-            Console.SetCursorPosition(54, 7);
+            Console.SetCursorPosition(58, 7);
             Console.WriteLine("레벨에 대한 상세한 설명입니다.");
+
         }
 
         /// <summary>
