@@ -107,11 +107,11 @@ namespace W3_TeamProject
         public void InvenArmorEquip()
         {
             Controller controller = new Controller();
+            controller.AddRotation(0, 5 + Inventory.GetListCount(ItemType.Armor));
             for (int i = 0; i < Inventory.GetListCount(ItemType.Armor); i++)
             {
                 controller.AddRotation(0, 4 + i);
             }
-            controller.AddRotation(0, 5 + Inventory.GetListCount(ItemType.Armor));
             isInvenEquip = true; //장착관리 들어갈 시
 
             Console.Clear();

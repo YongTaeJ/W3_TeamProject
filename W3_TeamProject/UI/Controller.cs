@@ -38,10 +38,10 @@ namespace W3_TeamProject
                 key = Console.ReadKey(true); // 입력값 안보이게 하기 - 박정혁
 				switch(key.Key)
 				{
-					case ConsoleKey.A:
-					case ConsoleKey.LeftArrow:
-					case ConsoleKey.W:
-					case ConsoleKey.UpArrow:
+					case ConsoleKey.D:
+					case ConsoleKey.RightArrow:
+					case ConsoleKey.S:
+					case ConsoleKey.DownArrow:
 						{
 							if (index >= xList.Count - 1)
 							{
@@ -57,10 +57,10 @@ namespace W3_TeamProject
 								
 						}
 						break;
-					case ConsoleKey.RightArrow:
-					case ConsoleKey.D:
-					case ConsoleKey.S:
-					case ConsoleKey.DownArrow :
+					case ConsoleKey.LeftArrow:
+					case ConsoleKey.A:
+					case ConsoleKey.W:
+					case ConsoleKey.UpArrow:
 						{
                             if (index <= 0)
 							{
