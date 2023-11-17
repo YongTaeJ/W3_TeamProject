@@ -78,7 +78,9 @@ namespace W3_TeamProject
 
 		public static void UpdateHPbar()
 		{
-			int portion = Player.CurrentHealth / (Player.BaseHealth + Player.EquipHealth) * 20 ;
+			int portion = Player.CurrentHealth * 20  / (Player.BaseHealth + Player.EquipHealth) ;
+
+			if (portion <= 0) portion = 0;
 
 			Console.SetCursorPosition(7, 21);
 			Console.Write($"{Player.CurrentHealth} / {Player.BaseHealth + Player.EquipHealth}");
@@ -89,7 +91,7 @@ namespace W3_TeamProject
 			{
 				Console.Write('/');
 			}
-			for(int i=0; i<20-portion; i++)
+			for(int i=0; i <20-portion; i++)
 			{
 				Console.Write(' ');
 			}
@@ -100,7 +102,8 @@ namespace W3_TeamProject
 
 		public static void UpdateMPBar()
 		{
-			int portion = Player.CurrentMana / (Player.BaseMana + Player.EquipMana) * 20;
+			int portion = Player.CurrentMana * 20  / (Player.BaseMana + Player.EquipMana) ;
+			if (portion <= 0) portion = 0;
 
 			Console.SetCursorPosition(7, 25);
 			Console.Write("                 ");

@@ -26,10 +26,12 @@ namespace W3_TeamProject.Scenes
 
 		public override void EnterScene()
 		{
-			Init();
-
-			while(endPoint == 0)
+			int bias;
+			bool isTurn = false;
+			while (endPoint == 0)
 			{
+				bias = 1;
+				Init();
 				MakeMainChoicePanel();
 				int input = mainController.InputLoop();
 				switch(input)
@@ -37,11 +39,14 @@ namespace W3_TeamProject.Scenes
 					case 0: // 공격
 						{
 							NormalAttack(); // 보스 때리고, 연출하고, 끝!!
+							isTurn = true;
 						}
 						break;
 					case 1: // 방어
 						{
 							NormalDefense(); // 방어 연출하고 끝!!
+							isTurn= true;
+							bias = 3;
 						}
 						break;
 					case 2: // 스킬창
@@ -62,8 +67,15 @@ namespace W3_TeamProject.Scenes
 						}
 						break;
 				}
+
+				// 선택이 끝나면 여기서 보스의 행동
+				if(isTurn)
+				{
+					isTurn = false;
+					boss.BossAttack(bias, ref endPoint);
+					boss.UpdateCooldown();
+				}
 			}
-			// 선택이 끝나면 보스의 행동
 
 			// 계산상 이상이 없으면 endPoint는 계속 0. 루프 발생
 			// 둘 중 한 명이 죽으면 1 혹은 2. 루프 탈출
@@ -88,6 +100,7 @@ namespace W3_TeamProject.Scenes
 			//Thread.Sleep(1700);
 			//WriteComment("순간, 당신은 격렬한 언쟁을 예감합니다....");
 			//Thread.Sleep(2000);
+			//WriteComment();
 		}
 
 		private void InitMainController()
@@ -113,12 +126,16 @@ namespace W3_TeamProject.Scenes
 
 		public void NormalAttack()
 		{
-
+			int damage = 10 + Player.EquipAttack + Player.BaseAttack;
+			endPoint = boss.GetDamage(damage);
+			WriteComment($"사장님을 설득해 {damage} 만큼의 데미지를 입혔습니다!!!");
+			Thread.Sleep(1000);
 		}
 
 		public void NormalDefense()
 		{
-
+			WriteComment("사장님의 질문 공세에 대비해 단단히 마음을 먹습니다.");
+			Thread.Sleep(1000);
 		}
 
 		private void WriteComment(string comment = "")
@@ -205,28 +222,35 @@ namespace W3_TeamProject.Scenes
 			}
 		}
 	}
-
 	class Boss
 	{
 		int HP = 1000;
 		int MP = 100;
+		bool isDelayTriggered = false;
+		int delaySkillIndex = 0;
 		public List<BossSkill> skillList = new List<BossSkill>();
+		Random random = new Random();
 
 		public Boss()
 		{
 			skillList.Add(new BossSkill("연봉 동결", 50, 10, "사장님의 뜻이 너무나도 단호합니다."));
+			skillList.Add(new BossSkill("호통치기", 100, 20, "갑작스러운 호통에 크게 당황했습니다." , 2));
+			skillList.Add(new BossSkill("실적 조사", 150, 30, "예상치도 못한 곳에서 질문이 들어옵니다.", 3));
+			skillList.Add(new BossSkill("필살기", 500, 0, "사장님이 너 없어도 할 사람 많아를 시전합니다." , 5, true));
 		}
 
-		public void GetDamage(int damage)
+		public int GetDamage(int damage)
 		{
 			HP -= damage;
 			UpdateHPbar();
-			CheckDie();
-			// HP, MP 다루는 바와 연동하여 보스 체력 변경
+			if (HP <= 0)
+				return 1;
+			return 0;
 		}
 		public void UpdateHPbar()
 		{
-			int portion = HP / 1000 * 20;
+			int portion = HP * 20 / 1000;
+			if (portion <= 0) portion = 0;
 
 			Console.SetCursorPosition(97, 21);
 			Console.Write("                 ");
@@ -250,7 +274,8 @@ namespace W3_TeamProject.Scenes
 
 		public void UpdateMPbar()
 		{
-			int portion = MP / 100 * 20;
+			int portion = MP * 20 / 100;
+			if (portion <= 0) portion = 0;
 
 			Console.SetCursorPosition(97, 25);
 			Console.Write("                 ");
@@ -272,29 +297,106 @@ namespace W3_TeamProject.Scenes
 			Console.SetCursorPosition(0, 0);
 		}
 
-		public void CheckDie()
+		public void BossAttack(int bias, ref int endPoint)
 		{
-			if (HP <= 0)
-				; // 게임 승리 함수 호출
-			return;
+			// 딜레이가 발생했으면 딜레이 스킬 사용!!
+			if(isDelayTriggered)
+			{
+				isDelayTriggered = false;
+				// 스킬 사용 후 return
+				UseSkill(delaySkillIndex, bias);
+				return;
+			}
+
+			int temp = random.Next(0, 2);
+			// 스킬을 사용할 수 있는 최소 마나 체크
+			if (MP < 10)
+			{
+				temp = 0;
+			}
+
+			// 일반 공격과 스킬중에 무엇을 선택할 것인가?
+			if (temp == 0)
+			{
+				// 일반 공격
+				int damage = 30 / bias; // 계산식 필요!
+				Player.ChangeHP(-damage);
+				WriteComment($"사장님의 공격에 {damage} 만큼의 타격을 입었습니다!!");
+				Thread.Sleep(1000);
+			}
+			else
+			{
+				// 스킬 공격
+				while(true)
+				{
+					int choose = random.Next(0, skillList.Count);
+
+					// 쿨타임이 끝나지 않았거나, MP가 부족하면
+					if (skillList[choose].currentcooldown != 0)
+						continue;
+					if (skillList[choose].cost > MP)
+						continue;
+
+					if (skillList[choose].isDelay)
+					{
+						isDelayTriggered = true;
+						delaySkillIndex = choose;
+						break;
+					}
+
+					UseSkill(choose, bias);
+					break;
+					// 이하는 스킬 사용 후 break
+				}
+			}
+		}
+		private void WriteComment(string comment = "")
+		{
+			Console.SetCursorPosition(11, 17);
+			Console.Write("                                                                                                ");
+			Console.SetCursorPosition(11, 17);
+			Console.Write(comment);
+		}
+
+		public void UpdateCooldown()
+		{
+			for (int i = 0; i < skillList.Count; i++)
+			{
+				if (skillList[i].currentcooldown > 0)
+				{
+					skillList[i].currentcooldown -= 1;
+				}
+			}
+		}
+
+		public void UseSkill(int index, int bias)
+		{
+			int damage = skillList[index].damage / bias;
+			Player.ChangeHP(-damage);
+			WriteComment($"{skillList[index].description} {damage}만큼의 타격을 입었습니다!");
+			Thread.Sleep(1000);
 		}
 	}
 
-	struct BossSkill
+	class BossSkill
 	{
 		public string skillName;
 		public int damage;
 		public int cost;
+		public int cooldown;
 		public bool isDelay;
 		public string description;
+		public int currentcooldown;
 
-		public BossSkill(string skillName, int damage, int cost, string description , bool isDelay = false)
+		public BossSkill(string skillName, int damage, int cost, string description , int cooldown = 0 ,bool isDelay = false)
 		{
 			this.skillName = skillName;
 			this.damage = damage;
 			this.cost = cost;
 			this.description = description;
+			this.cooldown = cooldown;
 			this.isDelay = isDelay;
+			currentcooldown = cooldown;
 		}
 	}
 }
