@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace W3_TeamProject
 {
-    internal class StartScene : BaseScene
+    internal class StartScene : BaseScene // 시작 화면입니다.
     {
 
         public override void EnterScene()
@@ -16,25 +16,21 @@ namespace W3_TeamProject
 
         private void firstScene()
         {
-            Console.OutputEncoding = System.Text.Encoding.UTF8; //문자변환코드
-            
             Console.Clear();
-            Console.SetCursorPosition(0, 0);
+            Console.SetCursorPosition(0, 0); // 테두리_가로선 맨 윗줄
             for (int i = 0; i < 60; i++)
             {
                 Console.Write('■');
             }
             
-            for (int i = 0; i < 29; i++)
+            for (int i = 0; i < 29; i++) // 테두리_세로선 양쪽
             {
                 Console.SetCursorPosition(0, i + 1);
                 Console.Write('■');
                 Console.SetCursorPosition(118, i + 1);
                 Console.Write('■');
-                //Console.SetCursorPosition(30, i+1);
-                //Console.Write('|');
             }
-            Console.SetCursorPosition(0, 29); // 가장 테두기 첫줄 가로선
+            Console.SetCursorPosition(0, 29); // 테두리_가로선 맨 밑줄
             for (int i = 0; i < 60; i++)
             {
                 Console.Write('■');
@@ -61,20 +57,13 @@ namespace W3_TeamProject
             Console.WriteLine("██ ███ ██ ██   ██ ██   ██    ██         ██     ██ ███ ██ ██   ██ ██    ██ ██  ██ ██ ██    ██       ▀▀   ");
             Console.SetCursorPosition(8, 19);
             Console.WriteLine(" ███ ███  ██   ██ ██   ██    ██    ███████      ███ ███  ██   ██  ██████  ██   ████  ██████        ██   ");
-
-
-
-
             Console.SetCursorPosition(52, 25);
             Console.WriteLine("Press to anykey");
-            Console.ReadKey();
 
-
-            //int userInput;
-            //userInput = int.Parse(Console.ReadLine());
-
+            ConsoleKeyInfo key = Console.ReadKey(); //아무키나 눌렀을때
+            nextState = SceneState.Explain; // 다음스테이지(캐릭터 설명화면)으로 넘어갑니다.
+            
         }
-
         public override SceneState ExitScene()
         {
             // EnterScene에서 바꾼 nextState를 SceneManager에게 반환하는 작업이라고 보시면 됩니다.
