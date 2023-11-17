@@ -47,8 +47,8 @@ namespace W3_TeamProject
 		public static int BaseDefense { get {  return baseDefense; } }
 		public static int BaseHealth { get { return baseHealth; } }
 		public static int BaseMana {  get { return baseMana; } }
-		public static int EquipAttack { get { return equipAttack; } }
-		public static int EquipDefense {  get { return equipDefense; } }
+		public static int EquipAttack { get { return equipAttack; } set { equipAttack = value; } }
+		public static int EquipDefense {  get { return equipDefense; } set { equipDefense = value; } }
 		public static int EquipHealth {  get { return equipHealth; } }
 		public static int EquipMana {  get { return equipMana; } }
 		public static int Gold { get {  return gold; } }
