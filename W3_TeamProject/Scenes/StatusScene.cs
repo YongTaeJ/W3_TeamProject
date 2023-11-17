@@ -17,7 +17,7 @@ namespace W3_TeamProject
 
         public override void EnterScene()
         {
-            Console.SetWindowSize(120, 30);
+            UnderUI.MakeUnderUI();
             Player.Init();
 
             // 꾸밀 수 있는 요소
@@ -25,8 +25,9 @@ namespace W3_TeamProject
             LeftHiText(Cyan, "상태보기");
             Console.WriteLine();
             Console.WriteLine("플레이어의 상태를 확인할 수 있습니다.");
-            ViewStatus(0, 4, 20, 9);
-            StatusSelection();
+            Console.WriteLine("각 항목을 선택하면 자세한 정보를 볼 수 있습니다.");
+            ViewStatus(30, 5, 60, 11);
+            StatusSelection(45, 7);
         }
 
         public override SceneState ExitScene()
@@ -48,7 +49,7 @@ namespace W3_TeamProject
         /// <summary>
         /// 상태보기에서 주어지는 선택지
         /// </summary>
-        public void StatusSelection()
+        public void StatusSelection(int startXpos, int startYpos)
         {
 
             while (true)
@@ -58,10 +59,14 @@ namespace W3_TeamProject
                 // 플레이어의 입력을 받았다면
                 // 해당하는 입력에 대한 리액션을 리턴하고 break;
 
-                Console.SetCursorPosition(1, 14);
-                Console.WriteLine("0. 뒤로가기");
-                Console.SetCursorPosition(1, 15);
+                
+                Console.SetCursorPosition(47, 16);
+                Console.WriteLine("뒤로가기");
+                Console.SetCursorPosition(47, 17);
+                Console.WriteLine("원하시는 행동을 입력해주세요.");
+                Console.SetCursorPosition(47, 18);
                 Console.Write(">> ");
+                Console.SetCursorPosition(startXpos, startYpos);
                 string input = Console.ReadLine();
 
                 if (int.TryParse(input, out int userInput) && userInput == 0)
@@ -91,7 +96,7 @@ namespace W3_TeamProject
 
             if (Player.EquipAttack != 0)
             {
-                RightHiText(Red, $"공격력 : {totalAttack} ", $"(+{Player.BaseAttack})");
+                RightHiText(Red, $"공격력 : {totalAttack}  ", $" (+{Player.BaseAttack}) ");
             }
             else
                 Console.WriteLine($"공격력 : {Player.BaseAttack}");
@@ -106,7 +111,7 @@ namespace W3_TeamProject
 
             if (Player.EquipAttack != 0)
             {
-                RightHiText(Red, $"방어력 : {totalDefense} ", $"(+{Player.BaseDefense})");
+                RightHiText(Red, $"방어력 : {totalDefense}  ", $" (+{Player.BaseDefense}) ");
             }
             else
                 Console.WriteLine($"방어력 : {Player.BaseDefense}");
@@ -116,15 +121,15 @@ namespace W3_TeamProject
         public static void ViewHP()
         {
             int totalHealth = Player.EquipHealth + Player.BaseHealth;
-            Console.Write("H  P : ");
-            LeftHiText(Red, $"{Player.CurrentHealth} ", $"/ {totalHealth}");
+            Console.Write("체  력 : ");
+            LeftHiText(Red, $"{Player.CurrentHealth }", $"/ {totalHealth} ");
         }
 
         public static void ViewMP()
         {
             int totalMana = Player.EquipMana + Player.BaseMana;
-            Console.Write("M  P : ");
-            LeftHiText(Blue, $"{Player.CurrentMana} ", $"/ {totalMana}");
+            Console.Write("마  력 : ");
+            LeftHiText(Blue, $"{Player.CurrentMana} ", $"/ {totalMana} ");
         }
 
         /// <summary>
@@ -160,19 +165,19 @@ namespace W3_TeamProject
         /// <param name="startYpos"></param>
         public static void StatusData(int startXpos, int startYpos)
         {
-            Console.SetCursorPosition(startXpos, startYpos);
-            Console.WriteLine($"레 벨 : {Player.Level}");
-            Console.SetCursorPosition(startXpos, startYpos + 1);
-            Console.WriteLine($"이 름 : {Player.PlayerName}");
-            Console.SetCursorPosition(startXpos, startYpos + 2);
+            Console.SetCursorPosition(startXpos + 15, startYpos + 1);
+            Console.WriteLine($"레  벨 : {Player.Level}");
+            Console.SetCursorPosition(startXpos + 15, startYpos + 2);
+            Console.WriteLine($"이  름 : {Player.PlayerName}");
+            Console.SetCursorPosition(startXpos + 15, startYpos + 3);
             ViewAtk();
-            Console.SetCursorPosition(startXpos, startYpos + 3);
+            Console.SetCursorPosition(startXpos + 15, startYpos + 4);
             ViewDef();
-            Console.SetCursorPosition(startXpos, startYpos + 4);
+            Console.SetCursorPosition(startXpos + 15, startYpos + 5);
             ViewHP();
-            Console.SetCursorPosition(startXpos, startYpos + 5);
+            Console.SetCursorPosition(startXpos + 15, startYpos + 6);
             ViewMP();
-            Console.SetCursorPosition(startXpos, startYpos + 6);
+            Console.SetCursorPosition(startXpos + 15, startYpos + 7);
             Console.WriteLine($"소지금 : {Player.Gold}");
             Console.WriteLine();
         }
