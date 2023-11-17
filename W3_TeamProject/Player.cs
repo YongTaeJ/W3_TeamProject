@@ -51,7 +51,7 @@ namespace W3_TeamProject
 		public static int EquipDefense {  get { return equipDefense; } set { equipDefense = value; } }
 		public static int EquipHealth {  get { return equipHealth; } set { equipHealth = value; } }
 		public static int EquipMana {  get { return equipMana; } }
-		public static int Gold { get {  return gold; } }
+		public static int Gold { get { return gold;  } set { gold = value; } }
 		#endregion
 
 		public static void ChangeHP(int value)
