@@ -10,9 +10,9 @@ namespace W3_TeamProject.Scenes
 	{
 		string clearCommentString = "                                                                                                ";
 		string clearChoosePanelString = "                                                           ";
-		// 아직 제작중
 
 		int endPoint = 0; // 0 계속, 1 플레이어 승리, 2 플레이어 패배. 일회용 기믹이라 enum 안썼습니다.
+
 		Controller mainController = new Controller();
 		Controller itemController = new Controller();
 		Controller skillController = new Controller();
@@ -36,12 +36,12 @@ namespace W3_TeamProject.Scenes
 				{
 					case 0: // 공격
 						{
-							// 데미지만큼 입히고, Death 체크하고, 상태 반환하고
+							NormalAttack(); // 보스 때리고, 연출하고, 끝!!
 						}
 						break;
 					case 1: // 방어
 						{
-							// 데미지 경감!!
+							NormalDefense(); // 방어 연출하고 끝!!
 						}
 						break;
 					case 2: // 스킬창
@@ -63,8 +63,6 @@ namespace W3_TeamProject.Scenes
 						break;
 				}
 			}
-
-
 			// 선택이 끝나면 보스의 행동
 
 			// 계산상 이상이 없으면 endPoint는 계속 0. 루프 발생
@@ -80,6 +78,8 @@ namespace W3_TeamProject.Scenes
 			Console.Clear();
 			MakeCommentBorder();
 			MakeBossHPMP();
+			boss.UpdateHPbar();
+			boss.UpdateMPbar();
 			UnderUI.MakeUnderUI();
 			//WriteComment("당신은 사장실의 문 앞에 도달했습니다.");
 			//Thread.Sleep(1700);
@@ -110,6 +110,16 @@ namespace W3_TeamProject.Scenes
 		public override SceneState ExitScene()
 		{
 			return nextState;
+		}
+
+		public void NormalAttack()
+		{
+
+		}
+
+		public void NormalDefense()
+		{
+
 		}
 
 		private void WriteComment(string comment = "")
@@ -201,18 +211,17 @@ namespace W3_TeamProject.Scenes
 	{
 		int HP = 1000;
 		int MP = 100;
-		List<BossSkill> skillList = new List<BossSkill>();
+		public List<BossSkill> skillList = new List<BossSkill>();
 
 		public Boss()
 		{
-			UpdateHPbar();
-			UpdateMPbar();
 			skillList.Add(new BossSkill("연봉 동결", 50, 10, "사장님의 뜻이 너무나도 단호합니다."));
 		}
 
 		public void GetDamage(int damage)
 		{
 			HP -= damage;
+			UpdateHPbar();
 			CheckDie();
 			// HP, MP 다루는 바와 연동하여 보스 체력 변경
 		}
@@ -220,11 +229,13 @@ namespace W3_TeamProject.Scenes
 		{
 			int portion = HP / 1000 * 20;
 
-			Console.SetCursorPosition(7, 21);
+			Console.SetCursorPosition(97, 21);
+			Console.Write("                 ");
+			Console.SetCursorPosition(97, 21);
 			Console.Write($"{HP} / 1000");
 
 			Console.ForegroundColor = ConsoleColor.Red;
-			Console.SetCursorPosition(6, 23);
+			Console.SetCursorPosition(95, 23);
 			for (int i = 0; i < portion; i++)
 			{
 				Console.Write('/');
@@ -242,13 +253,13 @@ namespace W3_TeamProject.Scenes
 		{
 			int portion = MP / 100 * 20;
 
-			Console.SetCursorPosition(7, 25);
+			Console.SetCursorPosition(97, 25);
 			Console.Write("                 ");
-			Console.SetCursorPosition(7, 25);
+			Console.SetCursorPosition(97, 25);
 			Console.Write($"{MP} / 100");
 
 			Console.ForegroundColor = ConsoleColor.Blue;
-			Console.SetCursorPosition(6, 27);
+			Console.SetCursorPosition(95, 27);
 			for (int i = 0; i < portion; i++)
 			{
 				Console.Write('/');
