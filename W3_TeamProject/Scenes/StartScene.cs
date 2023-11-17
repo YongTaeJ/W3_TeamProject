@@ -61,7 +61,7 @@ namespace W3_TeamProject
             Console.WriteLine("Press to anykey");
 
             ConsoleKeyInfo key = Console.ReadKey(); //아무키나 눌렀을때
-            nextState = SceneState.Explain; // 다음스테이지(캐릭터 설명화면)으로 넘어갑니다.
+            nextState = SceneState.Town; // 다음스테이지(캐릭터 설명화면)으로 넘어갑니다.
             
         }
         public override SceneState ExitScene()
