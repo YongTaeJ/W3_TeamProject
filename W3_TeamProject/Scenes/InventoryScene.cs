@@ -12,19 +12,24 @@ namespace W3_TeamProject
         bool isInvenEquip; // 장착관리 확인
         int userinput = 0;
         BaseItem playerItem; //아이템을 받기위한 변수생성
-        
+
+        public override SceneState ExitScene()
+        {
+            return nextState;
+        }
         public override void EnterScene()
         {
             Inventory.AddWeaponItem(new SteelSword());
             Inventory.AddWeaponItem(new RustySword());
             Inventory.AddArmorItem(new OldArmor());
             Inventory.AddArmorItem(new SteelArmor());
+            Inventory.AddAccessory(new OrkRing());
 
             //리스트의 크기만큼 밑으로 위치시킴
             Controller controller = new Controller();
             for (int i = 0; i < 4; i++)
             {
-                controller.AddRotation(0, i + 7 + Inventory.GetListCount(ItemType.None));
+                controller.AddRotation(0, i + 8 + Inventory.GetListCount(ItemType.None));
             }
             while (true)
             {
@@ -38,11 +43,13 @@ namespace W3_TeamProject
                 InventoryConsole(isInvenEquip, ItemType.Weapon);
                 WordColor("[ - 아이템 - ]");
                 InventoryConsole(isInvenEquip, ItemType.Armor);
+                WordColor("[ - 장신구 - ]");
+                InventoryConsole(isInvenEquip, ItemType.Accessory);
                 Console.WriteLine();
                 Console.WriteLine("  뒤로가기");
                 Console.WriteLine("  무기 선택");
                 Console.WriteLine("  방어구 선택");
-                Console.WriteLine("  장신구(준비중)");
+                Console.WriteLine("  장신구");
                 Console.WriteLine();
                 Console.WriteLine("원하시는 행동을 입력해주세요.");
                 Console.Write(">>");
@@ -52,18 +59,25 @@ namespace W3_TeamProject
                 {
                     case 0:
                         nextState = SceneState.Status;
+                        Console.Clear();
                         break;
                     case 1:
-                        Console.SetCursorPosition(3, 13 + Inventory.GetListCount(ItemType.None));
+                        Console.SetCursorPosition(3, 14 + Inventory.GetListCount(ItemType.None));
                         WordColor("무기 선택 화면으로 넘어갑니다.");
                         Thread.Sleep(1000);
                         InvenWeaponEquip();
                         break;
                     case 2:
-                        Console.SetCursorPosition(3, 13 + Inventory.GetListCount(ItemType.None));
+                        Console.SetCursorPosition(3, 14 + Inventory.GetListCount(ItemType.None));
                         WordColor("방어구 선택 화면으로 넘어갑니다.");
                         Thread.Sleep(1000);
                         InvenArmorEquip();
+                        break;
+                    case 3:
+                        Console.SetCursorPosition(3, 14 + Inventory.GetListCount(ItemType.None));
+                        WordColor("장신구 선택 화면으로 넘어갑니다.");
+                        Thread.Sleep(1000);
+                        InvenAccessoryEquip();
                         break;
                 }
                 if (nextState != SceneState.None)
@@ -85,7 +99,7 @@ namespace W3_TeamProject
             WordColor("[인벤토리 - 무기 관리]");
             Console.WriteLine("숫자를 눌러 아이템을 장착하세요");
             Console.WriteLine();
-            Console.WriteLine("[아이템 목록]");
+            Console.WriteLine("[무기 목록]");
             InventoryConsole(isInvenEquip, ItemType.Weapon);
             Console.WriteLine();
             Console.WriteLine("  뒤로가기");
@@ -109,10 +123,7 @@ namespace W3_TeamProject
                 }
             }
         }
-        public override SceneState ExitScene()
-        {
-            return nextState;
-        }
+
         public void InvenArmorEquip()
         {
             Controller controller = new Controller();
@@ -127,7 +138,7 @@ namespace W3_TeamProject
             WordColor("[인벤토리 - 방어구 관리]");
             Console.WriteLine("숫자를 눌러 아이템을 장착하세요");
             Console.WriteLine();
-            Console.WriteLine("[아이템 목록]");
+            Console.WriteLine("[방어구 목록]");
             InventoryConsole(isInvenEquip, ItemType.Armor);
             Console.WriteLine();
             Console.WriteLine("  뒤로가기");
@@ -145,6 +156,44 @@ namespace W3_TeamProject
                     break;
                 }
                 else if (userinput == Inventory.GetListCount(ItemType.Armor)) //맨 아래로 내리고 Enter를 누를 시 작동
+                {
+                    nextState = beforeState;
+                    break;
+                }
+            }
+        }
+        public void InvenAccessoryEquip()
+        {
+            Controller controller = new Controller();
+            for (int i = 0; i < Inventory.GetListCount(ItemType.Accessory); i++)
+            {
+                controller.AddRotation(0, 4 + i);
+            }
+            controller.AddRotation(0, 5 + Inventory.GetListCount(ItemType.Accessory));
+            isInvenEquip = true; //장착관리 들어갈 시
+
+            Console.Clear();
+            WordColor("[인벤토리 - 장신구 관리]");
+            Console.WriteLine("숫자를 눌러 아이템을 장착하세요");
+            Console.WriteLine();
+            Console.WriteLine("[장신구 목록]");
+            InventoryConsole(isInvenEquip, ItemType.Accessory);
+            Console.WriteLine();
+            Console.WriteLine("  뒤로가기");
+            Console.WriteLine();
+            Console.WriteLine("원하시는 행동을 입력해주세요.");
+            Console.Write(">>");
+
+            userinput = controller.InputLoop();
+            for (int i = 0; i < Inventory.GetListCount(ItemType.Accessory) + 1; i++) //반복으로 내가 가지고 있는 아이템 List와 뒤로가기의 크기만큼 돌림
+            {
+                if (userinput == i)//해당 아이템의 위치로 가 Enter를 누를 시 해당 하는 번호의 아이템 작동
+                {
+                    ChangeItemEquip(userinput, ItemType.Accessory); // index를 받아 아이템 장착
+                    InvenAccessoryEquip(); //다시 재생성
+                    break;
+                }
+                else if (userinput == Inventory.GetListCount(ItemType.Accessory)) //맨 아래로 내리고 Enter를 누를 시 작동
                 {
                     nextState = beforeState;
                     break;
@@ -198,6 +247,11 @@ namespace W3_TeamProject
                     Player.EquipAttack += playerItem.EffectValue;
                 else if (playerItem.ItemType == ItemType.Armor && playerItem.IsEquip == true) //아이템 타입이 방어구이고 장착이 완료일 때 
                     Player.EquipDefense += playerItem.EffectValue;
+                else if (playerItem.ItemType == ItemType.Accessory && playerItem.IsEquip == true) //아이템 타입이 방어구이고 장착이 완료일 때 
+                {
+                    Player.EquipHealth += playerItem.EffectValue; //장착 체력 증가
+                    Player.CurrentHealth += playerItem.EffectValue; // 베이스 체력 증가
+                }
             }
             else
             {
@@ -205,6 +259,11 @@ namespace W3_TeamProject
                     Player.EquipAttack -= playerItem.EffectValue;
                 else if (playerItem.ItemType == ItemType.Armor && playerItem.IsEquip == false)//아이템 타입이 방어구 이고 장착을 해제할 때 
                     Player.EquipDefense -= playerItem.EffectValue;
+                else if (playerItem.ItemType == ItemType.Accessory && playerItem.IsEquip == true) //아이템 타입이 방어구이고 장착이 완료일 때 
+                {
+                    Player.EquipHealth -= playerItem.EffectValue;//장착 체력 감소
+                    Player.CurrentHealth -= playerItem.EffectValue;// 베이스 체력 감소
+                }
             }
         }
         public static void EquipItemColor(string _text)//아이템 장착시 색 - Green
