@@ -15,6 +15,8 @@ namespace W3_TeamProject
 		{
 			MakeBorder();
 			MakeHPMPPart();
+			// UpdateHPbar();
+			// UpdateMPBar();
 		}
 		public static void MakeBorder()
 		{
@@ -51,23 +53,8 @@ namespace W3_TeamProject
 			Console.SetCursorPosition(2, 25);
 			Console.Write("MP - ");
 
-			Console.SetCursorPosition(5, 22);
-			Console.Write("┌────────────────────┐");
-			Console.SetCursorPosition(5, 23);
-			Console.Write('│');
-			Console.SetCursorPosition(26, 23);
-			Console.Write('│');
-			Console.SetCursorPosition(5, 24);
-			Console.Write("└────────────────────┘");
-
-			Console.SetCursorPosition(5, 26);
-			Console.Write("┌────────────────────┐");
-			Console.SetCursorPosition(5, 27);
-			Console.Write('│');
-			Console.SetCursorPosition(26, 27);
-			Console.Write('│');
-			Console.SetCursorPosition(5, 28);
-			Console.Write("└────────────────────┘");
+			MakeBar(5, 22);
+			MakeBar(5, 26);
 
 			Console.SetCursorPosition(0, 0);
 		}
@@ -116,6 +103,21 @@ namespace W3_TeamProject
 			Console.ResetColor();
 
 			Console.SetCursorPosition(0, 0);
+		}
+
+		/// <summary>
+		/// x, y 좌표를 설정하면 길이 20짜리 Bar를 만들어줍니다.
+		/// </summary>
+		public static void MakeBar(int x, int y)
+		{
+			Console.SetCursorPosition(x, y);
+			Console.Write("┌────────────────────┐");
+			Console.SetCursorPosition(x, y+1);
+			Console.Write('│');
+			Console.SetCursorPosition(x + 21, y+1);
+			Console.Write('│');
+			Console.SetCursorPosition(x, y+2);
+			Console.Write("└────────────────────┘");
 		}
 	}
 

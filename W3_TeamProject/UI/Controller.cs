@@ -47,7 +47,6 @@ namespace W3_TeamProject
 							{
 								beforeIndex = index;
 								index = 0;
-								break;
 							}
 							else
 							{
@@ -66,7 +65,6 @@ namespace W3_TeamProject
 							{
 								beforeIndex = index;
 								index = xList.Count - 1;
-								break;
 							}
 							else
 							{
@@ -74,10 +72,13 @@ namespace W3_TeamProject
 								index--;
 							}
                         }
-							break;
-
+						break;
 					case ConsoleKey.Enter:
-						return index;
+						{
+							Console.SetCursorPosition(xList[index], yList[index]);
+							Console.Write("  ");
+							return index;
+						}
 				}
 			}
 		}
