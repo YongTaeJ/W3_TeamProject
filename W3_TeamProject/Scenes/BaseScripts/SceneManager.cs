@@ -15,6 +15,9 @@ namespace W3_TeamProject
 		None,
         Start,
         Inventory,
+		Town,
+        Explain,
+
     }
 
 	internal class SceneManager
@@ -40,6 +43,8 @@ namespace W3_TeamProject
             // ex) Scenes.Add(SceneState.None, new NoneScene() );
             Scenes.Add(SceneState.Inventory, new InventoryScene()); //인벤토리
             Scenes.Add(SceneState.Start, new StartScene()); //시작화면
+            Scenes.Add(SceneState.Town, new TownScene()); // 마을화면
+            Scenes.Add(SceneState.Explain, new ExplainScene()); // 소개,설명 화면
         }
 
 		public SceneState Update()

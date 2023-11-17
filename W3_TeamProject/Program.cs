@@ -11,12 +11,13 @@ namespace W3_TeamProject
 	{
 		static void Main(string[] args)
 		{
-			Console.SetWindowSize(120, 30);
+            Console.OutputEncoding = System.Text.Encoding.UTF8;  // 문자 변환 코드
+            Console.SetWindowSize(120, 30);
 			SceneManager sceneManager = new SceneManager();
 			sceneManager.Init();
 
-			// 맨 처음 시작화면은 StartScene으로 만들어주세요!
-			SceneState sceneState = SceneState.Inventory;
+			// 맨 처음 시작화면은 StartScene으로 만들어주세요
+			SceneState sceneState = SceneState.Start;
 
 			while(sceneState != SceneState.None)
 			{
