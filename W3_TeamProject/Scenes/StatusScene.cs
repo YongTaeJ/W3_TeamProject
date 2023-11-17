@@ -66,27 +66,27 @@ namespace W3_TeamProject
                         break;
                     case 1:
                         Thread.Sleep(300);
-                        CyanText("이  름");
+                        DetailName();
                         break;
                     case 2:
                         Thread.Sleep(300);
-                        CyanText("공격력");
+                        DetailAtk();
                         break;
                     case 3:
                         Thread.Sleep(300);
-                        CyanText("방어력");
+                        DetailDef();
                         break;
                     case 4:
                         Thread.Sleep(300);
-                        CyanText("체  력");
+                        DetailHP();
                         break;
                     case 5:
                         Thread.Sleep(300);
-                        CyanText("마  력");
+                        DetailMP();
                         break;
                     case 6:
                         Thread.Sleep(300);
-                        CyanText("소지금");
+                        DetailGold();
                         break;
                     case 7:
                         Thread.Sleep(200);
@@ -248,7 +248,33 @@ namespace W3_TeamProject
 
             Console.SetCursorPosition(67, 13);
             Console.WriteLine("▶ 돌아가기");
-            
+
+            while (true)
+            {
+                ConsoleKeyInfo keyInfo = Console.ReadKey(true);
+                if (keyInfo.Key == ConsoleKey.Enter)
+                {
+                    Console.Clear();
+                    StatusMain();
+                    Console.SetCursorPosition(58, 7);
+                    break;
+                }
+            }
+        }
+
+        private void DetailName()
+        {
+            MakeInnerBorder();
+            Console.SetCursorPosition(58, 7);
+            Console.WriteLine("이름에 대한 상세한 설명입니다.");
+            Console.SetCursorPosition(58, 9);
+            Console.WriteLine("H. 매니저");
+            Console.SetCursorPosition(58, 10);
+            Console.WriteLine("설명 설명");
+
+            Console.SetCursorPosition(67, 13);
+            Console.WriteLine("▶ 돌아가기");
+
             while (true)
             {
                 ConsoleKeyInfo keyInfo = Console.ReadKey(true);
@@ -260,6 +286,132 @@ namespace W3_TeamProject
                 }
             }
         }
+
+        private void DetailAtk()
+        {
+            MakeInnerBorder();
+            Console.SetCursorPosition(58, 7);
+            Console.WriteLine("공격력에 대한 상세한 설명입니다.");
+            Console.SetCursorPosition(58, 9);
+            Console.WriteLine("설명 설명");
+            Console.SetCursorPosition(58, 10);
+            Console.WriteLine("설명 설명");
+
+            Console.SetCursorPosition(67, 13);
+            Console.WriteLine("▶ 돌아가기");
+
+            while (true)
+            {
+                ConsoleKeyInfo keyInfo = Console.ReadKey(true);
+                if (keyInfo.Key == ConsoleKey.Enter)
+                {
+                    Console.Clear();
+                    StatusMain();
+                    break;
+                }
+            }
+        }
+
+        private void DetailDef()
+        {
+            MakeInnerBorder();
+            Console.SetCursorPosition(58, 7);
+            Console.WriteLine("방어력에 대한 상세한 설명입니다.");
+            Console.SetCursorPosition(58, 9);
+            Console.WriteLine("설명 설명");
+            Console.SetCursorPosition(58, 10);
+            Console.WriteLine("설명 설명");
+
+            Console.SetCursorPosition(67, 13);
+            Console.WriteLine("▶ 돌아가기");
+
+            while (true)
+            {
+                ConsoleKeyInfo keyInfo = Console.ReadKey(true);
+                if (keyInfo.Key == ConsoleKey.Enter)
+                {
+                    Console.Clear();
+                    StatusMain();
+                    break;
+                }
+            }
+        }
+
+        private void DetailHP()
+        {
+            MakeInnerBorder();
+            Console.SetCursorPosition(58, 7);
+            Console.WriteLine("체력에 대한 상세한 설명입니다.");
+            Console.SetCursorPosition(58, 9);
+            Console.WriteLine("설명 설명");
+            Console.SetCursorPosition(58, 10);
+            Console.WriteLine("설명 설명");
+
+            Console.SetCursorPosition(67, 13);
+            Console.WriteLine("▶ 돌아가기");
+
+            while (true)
+            {
+                ConsoleKeyInfo keyInfo = Console.ReadKey(true);
+                if (keyInfo.Key == ConsoleKey.Enter)
+                {
+                    Console.Clear();
+                    StatusMain();
+                    break;
+                }
+            }
+        }
+
+        private void DetailMP()
+        {
+            MakeInnerBorder();
+            Console.SetCursorPosition(58, 7);
+            Console.WriteLine("마력에 대한 상세한 설명입니다.");
+            Console.SetCursorPosition(58, 9);
+            Console.WriteLine("설명 설명");
+            Console.SetCursorPosition(58, 10);
+            Console.WriteLine("설명 설명");
+
+            Console.SetCursorPosition(67, 13);
+            Console.WriteLine("▶ 돌아가기");
+
+            while (true)
+            {
+                ConsoleKeyInfo keyInfo = Console.ReadKey(true);
+                if (keyInfo.Key == ConsoleKey.Enter)
+                {
+                    Console.Clear();
+                    StatusMain();
+                    break;
+                }
+            }
+        }
+
+        private void DetailGold()
+        {
+            MakeInnerBorder();
+            Console.SetCursorPosition(58, 7);
+            Console.WriteLine("소지금에 대한 상세한 설명입니다.");
+            Console.SetCursorPosition(58, 9);
+            Console.WriteLine("설명 설명");
+            Console.SetCursorPosition(58, 10);
+            Console.WriteLine("설명 설명");
+
+            Console.SetCursorPosition(67, 13);
+            Console.WriteLine("▶ 돌아가기");
+
+            while (true)
+            {
+                ConsoleKeyInfo keyInfo = Console.ReadKey(true);
+                if (keyInfo.Key == ConsoleKey.Enter)
+                {
+                    Console.Clear();
+                    StatusMain();
+                    break;
+                }
+            }
+        }
+
 
         /// <summary>
         /// 선택한 color로 text1를 표시합니다. / using static System.ConsoleColor;
