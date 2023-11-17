@@ -248,8 +248,17 @@ namespace W3_TeamProject
 
             Console.SetCursorPosition(67, 13);
             Console.WriteLine("▶ 돌아가기");
-            if(key.Key == ConsoleKey.Enter)
-            StatusMain();
+            
+            while (true)
+            {
+                ConsoleKeyInfo keyInfo = Console.ReadKey(true);
+                if (keyInfo.Key == ConsoleKey.Enter)
+                {
+                    Console.Clear();
+                    StatusMain();
+                    break;
+                }
+            }
         }
 
         /// <summary>
