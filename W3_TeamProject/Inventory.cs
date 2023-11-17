@@ -11,63 +11,44 @@ namespace W3_TeamProject
 	{
 		// !!수정이 많이 필요한 클래스입니다!!
 		// 추가적인 기능이 필요하거나, 기존 메서드가 너무 이상하면 직접 수정하시거나 팀원분들께 말씀해주세요!
-		private static List<BaseItem> ItemList = new List<BaseItem>();
+		private static List<BaseItem> WeaponItemList = new List<BaseItem>();
+        private static List<BaseItem> ArmorItemList = new List<BaseItem>();
 
-		public static void AddItem(BaseItem item)
-		{
-			// 참조 형식으로 item을 받는 점을 유의해야합니다.
-			ItemList.Add(item);
-		}
-
-		public static BaseItem GetItem(int index)
-		{
-			return ItemList[index];
-		}
-
-		public static void RemoveItem(int index)
-		{
-			ItemList.RemoveAt(index);
-		}
-
-		public static int GetListCount()
-		{
-			return ItemList.Count;
-		}
-		public static void InventoryItem(int _index)//아이템의 정보의 출력을 담당하는 함수
-		{
-			if (ItemList[_index].IsEquip)
-				WordColor($"{((ItemList[_index].IsEquip == true) ? "[E]" : "")} {ItemList[_index].Name} | {ItemList[_index].Status} + {ItemList[_index].EffectValue} | {ItemList[_index].Description}");
-			else
-				Console.WriteLine($"{((ItemList[_index].IsEquip == true) ? "[E]" : "")} {ItemList[_index].Name} | {ItemList[_index].Status} + {ItemList[_index].EffectValue} | {ItemList[_index].Description}");
-		}
-		public static void InventoryConsole(bool _isInventoryEquipScene)//인벤토리에 플레이어가 현재 가지고 있는 모든 아이템을 보여준다.
-		{
-            for (int i = 0; i < ItemList.Count; i++)
-            {	//장착관리 시스템으로 들어가면 숫자가 보여진다.
-				if (_isInventoryEquipScene)
-                    Console.Write($"   - {i + 1} ");
-				else
-                    Console.Write($"- ");
-                InventoryItem(i);
-            }
-			if (ItemList.Count == 0) //리스트에 아무것도 없을 때
-			{ 
-				WordColor("★ 현재 아이템이 없습니다. 상점을 통해 아이템을 구매해주세요.");
-            }
-        }
-        //아이템을 ture인지 확인하기
-        public static void ChangeItemEquip(int _index)
+        public static void AddWeaponItem(BaseItem item) //무기를 WeaponItemList에 추가
         {
-			if (ItemList[_index].IsEquip == true)
-				ItemList[_index].IsEquip = false;
-            else if (ItemList[_index].IsEquip == false)
-				ItemList[_index].IsEquip = true;
-        }
-        public static void WordColor(string _text) //이 함수를 사용하면 초록색 넣어주기
+            // 참조 형식으로 item을 받는 점을 유의해야합니다.
+            WeaponItemList.Add(item);
+		}
+        public static void AddArmorItem(BaseItem item) //방어구를 ArmorItemList에 추가
         {
-            Console.ForegroundColor = ConsoleColor.Green;
-            Console.WriteLine(_text);
-            Console.ResetColor();
+            // 참조 형식으로 item을 받는 점을 유의해야합니다.
+            ArmorItemList.Add(item);
+        }
+
+        public static BaseItem GetItem(int index, ItemType itemType)//아이템 타입과 반환 받고싶은 아이템의 위치를 적으면 return
+        {
+			if (itemType == ItemType.Weapon)
+				return WeaponItemList[index];
+			else 
+				return ArmorItemList[index];
+        }
+
+		public static void RemoveItem(int index, ItemType itemType) //아이템 타입과 삭제하고 싶은 아이템의 위치를 적으면 RemoveAt 작동
+		{
+            if (itemType == ItemType.Weapon)
+                WeaponItemList.RemoveAt(index);
+            else if (itemType == ItemType.Armor)
+                ArmorItemList.RemoveAt(index);
+        }
+
+		public static int GetListCount(ItemType itemType) //방어구, 무기 List의 크기를 따로 받고 Inven의 메인씬에서는 2개의 크기를 합친 값을 받음
+		{
+            if (itemType == ItemType.Weapon)
+                return WeaponItemList.Count;
+            else if(itemType == ItemType.Armor)
+                return ArmorItemList.Count;
+            else 
+                return WeaponItemList.Count + ArmorItemList.Count;
         }
     }
 }

@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using W3_TeamProject.Scenes;
 
 namespace W3_TeamProject
 {
@@ -13,12 +14,15 @@ namespace W3_TeamProject
 	enum SceneState
 	{
 		None,
-        Start,
-        Inventory,
+    Start,
+    Inventory,
 		Town,
-        Explain,
-
-    }
+    Explain,
+		Status,
+		Battle,
+		Store,
+		Boss
+  }
 
 	internal class SceneManager
 	{
@@ -45,7 +49,12 @@ namespace W3_TeamProject
             Scenes.Add(SceneState.Start, new StartScene()); //시작화면
             Scenes.Add(SceneState.Town, new TownScene()); // 마을화면
             Scenes.Add(SceneState.Explain, new ExplainScene()); // 소개,설명 화면
-        }
+		      	Scenes.Add(SceneState.Status, new StatusScene()); //상태보기
+			      Scenes.Add(SceneState.Battle, new BattleScene()); //전투화면
+			      Scenes.Add(SceneState.Boss, new BossScene()); // 보스전
+            Scenes.Add(SceneState.Store, new StoreScene()); // 상점 장면
+
+    }
 
 		public SceneState Update()
 		{
