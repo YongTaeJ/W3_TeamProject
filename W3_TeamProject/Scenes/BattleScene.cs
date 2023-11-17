@@ -111,7 +111,7 @@
         {
             Console.Clear();
             // UI 델꼬오기
-            UnderUI.MakeUnderUI();
+            UI.MakeUI();
             // 말풍선bar
             MakeCommentBoarder();
 
