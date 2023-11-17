@@ -44,14 +44,14 @@ namespace W3_TeamProject
 		public static int CurrentHealth { get { return currentHeatlh; } set { currentHeatlh = value; } }
 		public static int CurrentMana {  get { return currentMana; } }
 		public static int BaseAttack { get { return baseAttack; } }
-		public static int BaseDefense { get {  return baseDefense; } }
-		public static int BaseHealth { get { return baseHealth; } }
-		public static int BaseMana {  get { return baseMana; } }
+		public static int BaseDefense { get {  return baseDefense; } } 
+		public static int BaseHealth { get { return baseHealth; } set { currentHeatlh = value; } }//체력이 올라가면 같이 베이스 체력도 같이 올림
+        public static int BaseMana {  get { return baseMana; } }
 		public static int EquipAttack { get { return equipAttack; } set { equipAttack = value; } }
 		public static int EquipDefense {  get { return equipDefense; } set { equipDefense = value; } }
 		public static int EquipHealth {  get { return equipHealth; } set { equipHealth = value; } }
 		public static int EquipMana {  get { return equipMana; } }
-		public static int Gold { get {  return gold; } }
+		public static int Gold { get { return gold;  } set { gold = value; } }
 		#endregion
 
 		public static void ChangeHP(int value)
