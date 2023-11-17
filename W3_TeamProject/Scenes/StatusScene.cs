@@ -14,20 +14,78 @@ namespace W3_TeamProject
     /// </summary>
     internal class StatusScene : BaseScene
     {
+        int userinput = 0;
 
         public override void EnterScene()
         {
-            UnderUI.MakeUnderUI();
+            // UI, Controller 초기화
+            UI.MakeUI();
             Player.Init();
+            Controller controller = new Controller();
+            for (int i = 0; i < 7; i++)
+            {
+                controller.AddRotation(50, i + 7);
+            }
+            controller.AddRotation(50, 17);
 
-            // 꾸밀 수 있는 요소
-            // 상태보기 창 -> 디자인을 추가
+            // 제목, 상태 표시
+            Console.SetCursorPosition(2, 1);
             LeftHiText(Cyan, "상태보기");
-            Console.WriteLine();
+            Console.WriteLine(new string('ㅡ', 60));
+            Console.SetCursorPosition(2, 3);
             Console.WriteLine("플레이어의 상태를 확인할 수 있습니다.");
+            Console.SetCursorPosition(2, 4);
             Console.WriteLine("각 항목을 선택하면 자세한 정보를 볼 수 있습니다.");
-            ViewStatus(30, 5, 60, 11);
-            StatusSelection(45, 7);
+            ViewStatus(40, 5, 40, 11); // Status BorderLine, Data 출력
+
+            // 선택지 및 그에 따른 결과
+            Console.SetCursorPosition(52, 17);
+            Console.WriteLine("뒤로가기");
+            Console.SetCursorPosition(50, 7);
+
+            while (true)
+            {
+                userinput = controller.InputLoop();
+
+                switch (userinput)  // 각 스테이터스에 대한 설명 추가할 예정
+                {
+                    case 0:
+                        Thread.Sleep(400);
+                        DeatilLevel();
+                        break;
+                    case 1:
+                        Thread.Sleep(400);
+                        CyanText("이  름");
+                        break;
+                    case 2:
+                        Thread.Sleep(400);
+                        CyanText("공격력");
+                        break;
+                    case 3:
+                        Thread.Sleep(400);
+                        CyanText("방어력");
+                        break;
+                    case 4:
+                        Thread.Sleep(400);
+                        CyanText("체  력");
+                        break;
+                    case 5:
+                        Thread.Sleep(400);
+                        CyanText("마  력");
+                        break;
+                    case 6:
+                        Thread.Sleep(400);
+                        CyanText("소지금");
+                        break;
+                    case 7:
+                        nextState = SceneState.Town;
+                        Console.Clear();
+                        break;
+
+                }
+                if (nextState != SceneState.None)
+                    break;
+            }
         }
 
         public override SceneState ExitScene()
@@ -45,47 +103,88 @@ namespace W3_TeamProject
             StatusData(startXpos + 2, startYpos + 1);
         }
 
-
         /// <summary>
-        /// 상태보기에서 주어지는 선택지
+        /// 테두리를 만들어주는 함수 / 시작 x좌표, 시작 y좌표, 너비, 높이
         /// </summary>
-        public void StatusSelection(int startXpos, int startYpos)
+        /// <param name="width"></param>
+        /// <param name="height"></param>
+        public static void MakeBorder(int startXpos, int startYpos, int width, int height)
         {
-
-            while (true)
+            Console.ForegroundColor = Cyan;
+            Console.SetCursorPosition(startXpos, startYpos);
+            Console.Write("┏");
+            Console.Write(new string('━', width));
+            Console.WriteLine("┓");
+            for (int i = startYpos + 1; i < startYpos + height; i++)
             {
-                // 플레이어의 입력을 기다리는 상태
-                // if 문을 사용하여
-                // 플레이어의 입력을 받았다면
-                // 해당하는 입력에 대한 리액션을 리턴하고 break;
-
-                
-                Console.SetCursorPosition(47, 16);
-                Console.WriteLine("뒤로가기");
-                Console.SetCursorPosition(47, 17);
-                Console.WriteLine("원하시는 행동을 입력해주세요.");
-                Console.SetCursorPosition(47, 18);
-                Console.Write(">> ");
-                Console.SetCursorPosition(startXpos, startYpos);
-                string input = Console.ReadLine();
-
-                if (int.TryParse(input, out int userInput) && userInput == 0)
-                {
-                    nextState = beforeState;
-                    break;
-                }
-                else
-                {
-                    Console.Clear();
-                    Console.SetCursorPosition(0, 16);
-                    Console.WriteLine("잘못된 입력입니다. 다시 입력해주세요");
-                    Console.SetCursorPosition(0, 0);
-                    EnterScene();
-                    break;
-                }
+                Console.SetCursorPosition(startXpos, i);
+                Console.Write('┃');
+                Console.SetCursorPosition(startXpos + width + 1, i);
+                Console.WriteLine('┃');
             }
+            Console.SetCursorPosition(startXpos, startYpos + height - 1);
+            Console.Write("┗");
+            Console.Write(new string('━', width));
+            Console.WriteLine("┛");
+            Console.ResetColor();
         }
 
+        /// <summary>
+        /// Status 창 안에서 자세한 설명을 하기 위한 테두리를 만들어주는 함수
+        /// </summary>
+        /// <param name="startXpos"></param>
+        /// <param name="startYpos"></param>
+        /// <param name="width"></param>
+        /// <param name="height"></param>
+        public static void MakeInnerBorder()
+        {
+            for (int i = 0; i < 9; i++)
+            {
+                Console.ForegroundColor = Yellow;
+                Console.SetCursorPosition(52, i + 6);
+                Console.WriteLine(new string(' ', 30));
+            }
+            Console.SetCursorPosition(52, 6);
+            Console.Write("┏");
+            Console.Write(new string('━', 40));
+            Console.WriteLine("┓");
+                for (int j = 7; j < 15; j++)
+                {
+                    Console.SetCursorPosition(52, j);
+                    Console.Write('┃');
+                    Console.SetCursorPosition(92 + 1, j);
+                    Console.WriteLine('┃');
+                }
+            Console.SetCursorPosition(52, 14);
+            Console.Write("┗");
+            Console.Write(new string('━', 40));
+            Console.WriteLine("┛");
+            Console.ResetColor();
+        }
+
+        /// <summary>
+        /// Status data를 보여주는 함수 / 시작 x좌표, 시작 y좌표
+        /// </summary>
+        /// <param name="startXpos"></param>
+        /// <param name="startYpos"></param>
+        public static void StatusData(int startXpos, int startYpos)
+        {
+            Console.SetCursorPosition(startXpos + 10, startYpos + 1);
+            Console.WriteLine($"레  벨 : {Player.Level}");
+            Console.SetCursorPosition(startXpos + 10, startYpos + 2);
+            Console.WriteLine($"이  름 : {Player.PlayerName}");
+            Console.SetCursorPosition(startXpos + 10, startYpos + 3);
+            ViewAtk();
+            Console.SetCursorPosition(startXpos + 10, startYpos + 4);
+            ViewDef();
+            Console.SetCursorPosition(startXpos + 10, startYpos + 5);
+            ViewHP();
+            Console.SetCursorPosition(startXpos + 10, startYpos + 6);
+            ViewMP();
+            Console.SetCursorPosition(startXpos + 10, startYpos + 7);
+            Console.WriteLine($"소지금 : {Player.Gold}");
+            Console.WriteLine();
+        }
 
         /// <summary>
         /// Atk 상승 시 상승량 표기
@@ -117,12 +216,11 @@ namespace W3_TeamProject
                 Console.WriteLine($"방어력 : {Player.BaseDefense}");
         }
 
-
         public static void ViewHP()
         {
             int totalHealth = Player.EquipHealth + Player.BaseHealth;
             Console.Write("체  력 : ");
-            LeftHiText(Red, $"{Player.CurrentHealth }", $"/ {totalHealth} ");
+            LeftHiText(Red, $"{Player.CurrentHealth} ", $"/ {totalHealth} ");
         }
 
         public static void ViewMP()
@@ -132,56 +230,12 @@ namespace W3_TeamProject
             LeftHiText(Blue, $"{Player.CurrentMana} ", $"/ {totalMana} ");
         }
 
-        /// <summary>
-        /// 테두리를 만들어주는 함수 / 시작 x좌표, 시작 y좌표, 너비, 높이
-        /// </summary>
-        /// <param name="width"></param>
-        /// <param name="height"></param>
-        public static void MakeBorder(int startXpos, int startYpos, int width, int height)
+        public static void DeatilLevel()
         {
-            Console.ForegroundColor = Cyan;
-            Console.SetCursorPosition(startXpos, startYpos);
-            Console.Write("┏");
-            Console.Write(new string('━', width));
-            Console.WriteLine("┓");
-            for (int i = startYpos + 1; i < startYpos + height; i++)
-            {
-                Console.SetCursorPosition(startXpos, i);
-                Console.Write('┃');
-                Console.SetCursorPosition(startXpos + width + 1, i);
-                Console.WriteLine('┃');
-            }
-            Console.SetCursorPosition(startXpos, startYpos + height - 1);
-            Console.Write("┗");
-            Console.Write(new string('━', width));
-            Console.WriteLine("┛");
-            Console.ResetColor();
+            MakeInnerBorder();
+            Console.SetCursorPosition(54, 7);
+            Console.WriteLine("레벨에 대한 상세한 설명입니다.");
         }
-
-        /// <summary>
-        /// Status data를 보여주는 함수 / 시작 x좌표, 시작 y좌표
-        /// </summary>
-        /// <param name="startXpos"></param>
-        /// <param name="startYpos"></param>
-        public static void StatusData(int startXpos, int startYpos)
-        {
-            Console.SetCursorPosition(startXpos + 15, startYpos + 1);
-            Console.WriteLine($"레  벨 : {Player.Level}");
-            Console.SetCursorPosition(startXpos + 15, startYpos + 2);
-            Console.WriteLine($"이  름 : {Player.PlayerName}");
-            Console.SetCursorPosition(startXpos + 15, startYpos + 3);
-            ViewAtk();
-            Console.SetCursorPosition(startXpos + 15, startYpos + 4);
-            ViewDef();
-            Console.SetCursorPosition(startXpos + 15, startYpos + 5);
-            ViewHP();
-            Console.SetCursorPosition(startXpos + 15, startYpos + 6);
-            ViewMP();
-            Console.SetCursorPosition(startXpos + 15, startYpos + 7);
-            Console.WriteLine($"소지금 : {Player.Gold}");
-            Console.WriteLine();
-        }
-
 
         /// <summary>
         /// 선택한 color로 text1를 표시합니다. / using static System.ConsoleColor;
@@ -208,6 +262,17 @@ namespace W3_TeamProject
             Console.Write(text1);
             Console.ForegroundColor = col;
             Console.WriteLine(text2);
+            Console.ResetColor();
+        }
+
+        /// <summary>
+        /// str을 Cyan 색으로 표기
+        /// </summary>
+        /// <param name="str"></param>
+        public static void CyanText(string str)
+        {
+            Console.ForegroundColor = ConsoleColor.Cyan;
+            Console.WriteLine(str);
             Console.ResetColor();
         }
     }
