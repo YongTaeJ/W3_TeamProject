@@ -17,10 +17,10 @@ namespace W3_TeamProject
 		private static string playerName;
 
 		// 장비 아이템으로 인한 스탯 상승과 구분하기 위해 나누었습니다.
-		private static int baseAttack;
-		private static int baseDefense;
-		private static int baseHealth;
-		private static int baseMana;
+		private static int baseAttack = 0;
+		private static int baseDefense = 0;
+		private static int baseHealth = 1; 
+		private static int baseMana = 1; // div0 방지용;;
 
 		private static int equipAttack = 0;
 		private static int equipDefense = 0;
