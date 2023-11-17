@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -24,12 +25,13 @@ namespace W3_TeamProject
             Inventory.AddArmorItem(new OldArmor());
             Inventory.AddArmorItem(new SteelArmor());
             Inventory.AddAccessory(new OrkRing());
+            Inventory.AddPotion(new HealthPotion());
 
             //리스트의 크기만큼 밑으로 위치시킴
             Controller controller = new Controller();
-            for (int i = 0; i < 4; i++)
+            for (int i = 0; i < 5; i++)
             {
-                controller.AddRotation(0, i + 8 + Inventory.GetListCount(ItemType.None));
+                controller.AddRotation(0, i + 9 + Inventory.GetListCount(ItemType.None));
             }
             while (true)
             {
@@ -41,19 +43,29 @@ namespace W3_TeamProject
                 Console.WriteLine();
                 WordColor("[ - 장비 - ]");
                 InventoryConsole(isInvenEquip, ItemType.Weapon);
-                WordColor("[ - 아이템 - ]");
+                WordColor("[ - 방어구 - ]");
                 InventoryConsole(isInvenEquip, ItemType.Armor);
                 WordColor("[ - 장신구 - ]");
                 InventoryConsole(isInvenEquip, ItemType.Accessory);
+                WordColor("[ - 아이템 - ]");
+                InventoryConsole(isInvenEquip, ItemType.Potion);
                 Console.WriteLine();
                 Console.WriteLine("  뒤로가기");
                 Console.WriteLine("  무기 선택");
                 Console.WriteLine("  방어구 선택");
-                Console.WriteLine("  장신구");
+                Console.WriteLine("  장신구 선택");
+                Console.WriteLine("  아이템 선택");
                 Console.WriteLine();
                 Console.WriteLine("원하시는 행동을 입력해주세요.");
                 Console.Write(">>");
                 userinput = controller.InputLoop();
+
+                void NextSelcetConsole(string _text)
+                {
+                    Console.SetCursorPosition(3, 16 + Inventory.GetListCount(ItemType.None));
+                    WordColor(_text);
+                    Thread.Sleep(1000);
+                }
 
                 switch (userinput)
                 {
@@ -62,22 +74,20 @@ namespace W3_TeamProject
                         Console.Clear();
                         break;
                     case 1:
-                        Console.SetCursorPosition(3, 14 + Inventory.GetListCount(ItemType.None));
-                        WordColor("무기 선택 화면으로 넘어갑니다.");
-                        Thread.Sleep(1000);
+                        NextSelcetConsole("무기 선택 화면으로 넘어갑니다.");    
                         InvenWeaponEquip();
                         break;
                     case 2:
-                        Console.SetCursorPosition(3, 14 + Inventory.GetListCount(ItemType.None));
-                        WordColor("방어구 선택 화면으로 넘어갑니다.");
-                        Thread.Sleep(1000);
+                        NextSelcetConsole("방어구 선택 화면으로 넘어갑니다.");
                         InvenArmorEquip();
                         break;
                     case 3:
-                        Console.SetCursorPosition(3, 14 + Inventory.GetListCount(ItemType.None));
-                        WordColor("장신구 선택 화면으로 넘어갑니다.");
-                        Thread.Sleep(1000);
+                        NextSelcetConsole("장신구 선택 화면으로 넘어갑니다.");
                         InvenAccessoryEquip();
+                        break;
+                    case 4:
+                        NextSelcetConsole("아이템 선택 화면으로 넘어갑니다.");
+                        InvenItemEquip();
                         break;
                 }
                 if (nextState != SceneState.None)
@@ -97,7 +107,7 @@ namespace W3_TeamProject
 
             Console.Clear();
             WordColor("[인벤토리 - 무기 관리]");
-            Console.WriteLine("숫자를 눌러 아이템을 장착하세요");
+            Console.WriteLine("여기서는 무기를 장착, 해제할 수 있습니다.");
             Console.WriteLine();
             Console.WriteLine("[무기 목록]");
             InventoryConsole(isInvenEquip, ItemType.Weapon);
@@ -136,7 +146,7 @@ namespace W3_TeamProject
 
             Console.Clear();
             WordColor("[인벤토리 - 방어구 관리]");
-            Console.WriteLine("숫자를 눌러 아이템을 장착하세요");
+            Console.WriteLine("여기서는 방어구를 장착, 해제할 수 있습니다.");
             Console.WriteLine();
             Console.WriteLine("[방어구 목록]");
             InventoryConsole(isInvenEquip, ItemType.Armor);
@@ -174,7 +184,7 @@ namespace W3_TeamProject
 
             Console.Clear();
             WordColor("[인벤토리 - 장신구 관리]");
-            Console.WriteLine("숫자를 눌러 아이템을 장착하세요");
+            Console.WriteLine("여기서는 아이템을 장착, 해제할 수 있습니다.");
             Console.WriteLine();
             Console.WriteLine("[장신구 목록]");
             InventoryConsole(isInvenEquip, ItemType.Accessory);
@@ -200,15 +210,57 @@ namespace W3_TeamProject
                 }
             }
         }
+        public void InvenItemEquip()
+        {
+            Controller controller = new Controller();
+            for (int i = 0; i < Inventory.GetListCount(ItemType.Potion); i++)
+            {
+                controller.AddRotation(0, 4 + i);
+            }
+            controller.AddRotation(0, 5 + Inventory.GetListCount(ItemType.Potion));
+            isInvenEquip = true; //장착관리 들어갈 시
+
+            Console.Clear();
+            WordColor("[인벤토리 - 아이템 관리]");
+            Console.WriteLine("여기서는 아이템을 장착, 해제할 수 있습니다.");
+            Console.WriteLine();
+            Console.WriteLine("[장신구 목록]");
+            InventoryConsole(isInvenEquip, ItemType.Potion);
+            Console.WriteLine();
+            Console.WriteLine("  뒤로가기");
+            Console.WriteLine();
+            Console.WriteLine("원하시는 행동을 입력해주세요.");
+            Console.Write(">>");
+
+            userinput = controller.InputLoop();
+            for (int i = 0; i < Inventory.GetListCount(ItemType.Potion) + 1; i++) //반복으로 내가 가지고 있는 아이템 List와 뒤로가기의 크기만큼 돌림
+            {
+                if (userinput == i)//해당 아이템의 위치로 가 Enter를 누를 시 해당 하는 번호의 아이템 작동
+                {
+                    ChangeItemEquip(userinput, ItemType.Potion); // index를 받아 아이템 장착
+                    InvenItemEquip(); //다시 재생성
+                    break;
+                }
+                else if (userinput == Inventory.GetListCount(ItemType.Potion)) //맨 아래로 내리고 Enter를 누를 시 작동
+                {
+                    nextState = beforeState;
+                    break;
+                }
+            }
+        }
 
 
         public void InventoryItem(int _index, ItemType _itemType) //인벤토리의 아이템 출력을 나타냄
         {
             playerItem = Inventory.GetItem(_index, _itemType);
             if (playerItem.IsEquip)
-                EquipItemColor($"{((playerItem.IsEquip == true) ? "[E]" : "")} {playerItem.Name} | {playerItem.Status} + {playerItem.EffectValue} | {playerItem.Description}");
+            {
+                EquipItemColor($"{((playerItem.IsEquip == true) ? "[E]" : "")} {playerItem.Name} | {playerItem.Status} + {playerItem.EffectValue} | {playerItem.Description} | {((playerItem.ItemType == ItemType.Potion) ? playerItem.PotionCount + "개" : "")}");
+            }
             else
-                Console.WriteLine($"{((playerItem.IsEquip == true) ? "[E]" : "")} {playerItem.Name} | {playerItem.Status} + {playerItem.EffectValue} | {playerItem.Description}");
+            { 
+                Console.WriteLine($"{((playerItem.IsEquip == true) ? "[E]" : "")} {playerItem.Name} | {playerItem.Status} + {playerItem.EffectValue} | {playerItem.Description} | {((playerItem.ItemType == ItemType.Potion) ? playerItem.PotionCount + "개" : "")}");
+            }
         }
         public void InventoryConsole(bool _isInventoryEquipScene, ItemType _itemType)//인벤토리에 플레이어가 현재 가지고 있는 모든 아이템을 보여준다.
         {
@@ -228,6 +280,13 @@ namespace W3_TeamProject
         public void ChangeItemEquip(int _index, ItemType _itemType)
         {
             playerItem = Inventory.GetItem(_index, _itemType);
+            if (playerItem.ItemType == ItemType.Potion && playerItem.PotionCount <= 0)
+            {
+                Console.SetCursorPosition(3, 8 + Inventory.GetListCount(_itemType));
+                WordColor($"현재 {playerItem.Name}이 0개 입니다. 상점에서 구매해주세요");
+                Thread.Sleep(2000);
+                return;
+            }
             if (playerItem.IsEquip == true)
             { 
                 playerItem.IsEquip = false;

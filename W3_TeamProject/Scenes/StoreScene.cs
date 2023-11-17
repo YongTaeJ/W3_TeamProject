@@ -113,7 +113,7 @@ namespace W3_TeamProject
         }
         public void SpecialAddInList() //특수
         {
-            BuyList.Add(new TestItem());
+            BuyList.Add(new HealthPotion());
         }
         public override SceneState ExitScene()
         {
