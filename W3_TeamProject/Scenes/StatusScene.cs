@@ -14,7 +14,6 @@ namespace W3_TeamProject
     /// </summary>
     internal class StatusScene : BaseScene
     {
-        int userinput = 0;
 
         public override void EnterScene()
         {
@@ -23,9 +22,10 @@ namespace W3_TeamProject
 
             // 꾸밀 수 있는 요소
             // 상태보기 창 -> 디자인을 추가
-
-            Console.WriteLine(new string('ㅁ', 60));
+            LeftHiText(Cyan, "상태보기");
+            Console.WriteLine();
             ViewStatus();
+            Console.WriteLine();
             StatusSelection();
         }
 
@@ -40,12 +40,19 @@ namespace W3_TeamProject
         /// </summary>
         public void ViewStatus()
         {
+            Console.SetCursorPosition(5, 2);
             Console.WriteLine($"레 벨 : {Player.Level}");
+            Console.SetCursorPosition(5, 3);
             Console.WriteLine($"이 름 : {Player.PlayerName}");
+            Console.SetCursorPosition(5, 4);
             ViewAtk();
+            Console.SetCursorPosition(5, 5);
             ViewDef();
+            Console.SetCursorPosition(6, 6);
             ViewHP();
+            Console.SetCursorPosition(6, 7);
             ViewMP();
+            Console.SetCursorPosition(5, 8);
             Console.WriteLine($"소지금 : {Player.Gold}");
         }
 
@@ -63,7 +70,7 @@ namespace W3_TeamProject
                 // 플레이어의 입력을 받았다면
                 // 해당하는 입력에 대한 리액션을 리턴하고 break;
                 Console.WriteLine("0. 뒤로가기");
-                Console.WriteLine(">> ");
+                Console.Write(">> ");
                 string input = Console.ReadLine();
 
                 if (int.TryParse(input, out int userInput) && userInput == 0)
@@ -115,15 +122,14 @@ namespace W3_TeamProject
         public static void ViewHP()
         {
             int totalHealth = Player.EquipHealth + Player.BaseHealth;
-            Console.Write("H P : ");
+            Console.Write("H  P : ");
             LeftHiText(Red, $"{Player.CurrentHealth} ", $"/ {totalHealth}");
         }
-
 
         public static void ViewMP()
         {
             int totalMana = Player.EquipMana + Player.BaseMana;
-            Console.Write("M P : ");
+            Console.Write("M  P : ");
             LeftHiText(Blue, $"{Player.CurrentMana} ", $"/ {totalMana}");
         }
 
@@ -134,7 +140,7 @@ namespace W3_TeamProject
         /// <param name="color"></param> 
         /// <param name="text1"></param>
         /// <param name="text2"></param>
-        public static void LeftHiText(ConsoleColor col, string text1, string text2)
+        public static void LeftHiText(ConsoleColor col, string text1, string text2 = "")
         {
             Console.ForegroundColor = col;
             Console.Write(text1);
@@ -148,7 +154,7 @@ namespace W3_TeamProject
         /// <param name="color"></param>
         /// <param name="text1"></param>
         /// <param name="text2"></param>
-        public static void RightHiText(ConsoleColor col, string text1, string text2)
+        public static void RightHiText(ConsoleColor col, string text1, string text2 = "")
         {
             Console.Write(text1);
             Console.ForegroundColor = col;
