@@ -7,17 +7,16 @@ using System.Xml.Linq;
 
 namespace W3_TeamProject
 {
-    internal class TestItem : BaseItem
+    internal class HealthPotion : BaseItem
     {
         protected override void Init()
         {
-            // 가격이 500원이고, 방어력을 5 올려주는 방어구 타입의 아이템을 작성했습니다.
-            name = "테스트 갑옷";
-            description = "테스트용 갑옷입니다. 썩 좋진 않습니다.";
-            cost = 500;
-            status = Status.Defense;
-            effectValue = 5;
-            itemType = ItemType.Armor;
+            name = "빨간 포션";
+            description = "체력을 올려주지만 맛은 보장할 수 없다.";
+            cost = 20;
+            status = Status.Health;
+            effectValue = 20;
+            itemType = ItemType.Potion;
             isEquip = false;
         }
     }

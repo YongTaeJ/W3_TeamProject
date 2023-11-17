@@ -44,7 +44,7 @@ namespace W3_TeamProject
 					break;
 			}
 			*/
-            Console.WriteLine("상점에 온걸 환영합니다.");
+            Console.WriteLine("상점에 오신걸 환영합니다.");
             Console.WriteLine("\n무엇을 찾으시나요? \n1.공격 아이템 \n2.방어 아이템 \n3.악세서리 아이템 \n4.특수 아이템 \n\n0.돌아가기");
 
             while (true)
@@ -118,7 +118,7 @@ namespace W3_TeamProject
         }
         public void SpecialAddInList()
         {
-            BuyList.Add(new TestItem());
+            BuyList.Add(new HealthPotion());
         }
         public override SceneState ExitScene()
         {
