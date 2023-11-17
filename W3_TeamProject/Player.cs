@@ -8,13 +8,6 @@ using System.Threading.Tasks;
 
 namespace W3_TeamProject
 {
-	enum Job
-	{
-		Warrior,
-		Theif,
-		Mage
-	}
-
 	internal static class Player
 	{
 		public static PlayerSkillList playerSkillList;
@@ -22,7 +15,6 @@ namespace W3_TeamProject
 		#region variables
 		private static int level;
 		private static string playerName;
-		private static Job job;
 
 		// 장비 아이템으로 인한 스탯 상승과 구분하기 위해 나누었습니다.
 		private static int baseAttack;
@@ -49,7 +41,6 @@ namespace W3_TeamProject
 		// 필드에 값 할당이 필요하신 경우에는 이야기해주세요!!
 		public static int Level { get { return level; } }
 		public static string PlayerName { get {  return playerName; } }
-		public static Job Job { get { return job; } }
 		public static int CurrentHealth { get { return currentHeatlh; } }
 		public static int CurrentMana {  get { return currentMana; } }
 		public static int BaseAttack { get { return baseAttack; } }
@@ -73,18 +64,17 @@ namespace W3_TeamProject
 			// 플레이어를 초기화하기 위한 함수입니다. 게임 시작 전에 호출해주세요!
 			// 추후에 이름, 직업을 받아서 스탯을 변경할 수 있도록 임시로 만들어둔 함수입니다.
 			playerName = "나";
-			job = Job.Warrior;
 			baseAttack = 10;
 			baseDefense = 5;
 			baseHealth = 100;
 			currentHeatlh = baseHealth;
 			gold = 1500;
-			playerSkillList = new PlayerSkillList(job);
+			playerSkillList = new PlayerSkillList();
 		}
 	}
 
 	/// <summary>
-	/// 직업에 맞는 스킬들의 리스트와, 사용 가능한 스킬 리스트를 보유한 클래스입니다.
+	/// 스킬들의 리스트와, 사용 가능한 스킬 리스트를 보유한 클래스입니다.
 	/// </summary>
 	internal class PlayerSkillList
 	{
@@ -113,42 +103,16 @@ namespace W3_TeamProject
 			return null;
 		}
 
-		#region Constructor, Init
-		public PlayerSkillList(Job job)
+		public PlayerSkillList()
 		{
-			Init(job);
+			Init();
 		}
 
-		private void Init(Job job)
-		{
-			switch(job)
-			{
-				case Job.Warrior:
-					InitWarrior();
-					break;
-				case Job.Theif:
-					InitTheif();
-					break;
-				case Job.Mage:
-					InitMage();
-					break;
-			}
-		}
-
-		// 해당 직업에 맞는 스킬들을 등록해주시면 됩니다.
+		// 스킬들을 등록해주시면 됩니다.
 		// skillData.Add(new TestSkill());
-		private void InitWarrior()
-		{
-			
-		}
-		private void InitTheif()
+		private void Init()
 		{
 
 		}
-		private void InitMage()
-		{
-
-		}
-		#endregion
 	}
 }

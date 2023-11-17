@@ -45,7 +45,7 @@ namespace W3_TeamProject
             // 골드
 
             Console.WriteLine($"레 벨 : {Player.Level}");
-            Console.WriteLine($"이 름 : {Player.PlayerName} , ({Player.Job})");
+            Console.WriteLine($"이 름 : {Player.PlayerName}");
             Console.WriteLine($"공격력 : {Player.EquipAttack}");
             Console.WriteLine($"방어력 : {Player.EquipDefense}");
             Console.WriteLine($"H P : {Player.CurrentHealth} / {Player.EquipHealth}");
