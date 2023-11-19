@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -25,9 +26,9 @@ namespace W3_TeamProject
 		{
 			nextState = SceneState.None;
 		}
-        public static void WordColor(string _text) //색 지정해주기 - 박정혁
+		public static void WordColor(string _text, ConsoleColor _color) //색 지정해주기 - 박정혁
         {
-            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.ForegroundColor = _color;
             Console.WriteLine(_text);
             Console.ResetColor();
         }
