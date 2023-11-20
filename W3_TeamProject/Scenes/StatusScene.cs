@@ -14,9 +14,18 @@ namespace W3_TeamProject
     /// </summary>
     internal class StatusScene : BaseScene
     {
+        private BaseItem statusItemData;
 
         public override void EnterScene()
         {
+
+            for (int i = 0; i < Inventory.GetListCount(ItemType.Weapon); i++)
+                statusItemData = Inventory.GetItem(i, ItemType.Weapon);
+            for (int i = 0; i < Inventory.GetListCount(ItemType.Armor); i++)
+                statusItemData = Inventory.GetItem(i, ItemType.Armor);
+            for (int i = 0; i < Inventory.GetListCount(ItemType.Accessory); i++)
+                statusItemData = Inventory.GetItem(i, ItemType.Accessory);
+
             StatusMain();
         }
 
@@ -499,13 +508,20 @@ namespace W3_TeamProject
         /// <summary>
         /// Status에서 현재 착용하고 있는 아이템을 표시해주는 함수입니다
         /// </summary>
-        public static void CurrentEquipment()
+        public void CurrentEquipment()
         {
-            BaseItem playerItem;
-
             CurrentEquipmentItem();
             StatusBaseImage();
-            StatusWeaponImage();
+
+            if (statusItemData != null && statusItemData.ItemType == ItemType.Weapon)
+                StatusWeaponImage();
+            if (statusItemData != null && statusItemData.ItemType == ItemType.Armor)
+                StatusArmorImage();
+            if (statusItemData != null && statusItemData.ItemType == ItemType.Accessory)
+                StatusAccessoryImage();
+
+
+            //StatusWeaponImage();
 
             //if (playerItem.ItemType == ItemType.Weapon && playerItem.IsEquip == true)
             //{
@@ -537,7 +553,7 @@ namespace W3_TeamProject
         /// <summary>
         /// CurrentEquipment() 에 들어갈 데이터 -> 추후 병합
         /// </summary>
-        public static void CurrentEquipmentItem()
+        public void CurrentEquipmentItem()
         {
             string Equip = "착용중 아이템";
             string Weapon = "무  기";
@@ -546,6 +562,14 @@ namespace W3_TeamProject
             string EquipWeapon = "없  음";  // 여기를 player 데이터로 받아오기
             string EquipArmor = "없  음";  // 여기를 player 데이터로 받아오기
             string EquipAccessory = "없  음";  // 여기를 player 데이터로 받아오기
+
+            if (statusItemData != null && statusItemData.ItemType == ItemType.Weapon)
+                EquipWeapon = statusItemData.Name; 
+            if (statusItemData != null && statusItemData.ItemType == ItemType.Armor)
+                EquipArmor = statusItemData.Name; 
+            if (statusItemData != null && statusItemData.ItemType == ItemType.Accessory)
+                EquipAccessory = statusItemData.Name;
+
             int EWLength = (23 - KoreanStrLength(EquipWeapon)) / 2;
             int EALength = (23 - KoreanStrLength(EquipArmor)) / 2;
             int ECLength = (23 - KoreanStrLength(EquipAccessory)) / 2;
