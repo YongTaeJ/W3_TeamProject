@@ -67,11 +67,10 @@ namespace W3_TeamProject
 
 
 
-            int anykeyBlink = 0; // Initialize i outside the while loop
+            int anykeyBlink = 0;
 
             while (true)
             {
-                // Toggle between showing the message and clearing it
                 if (anykeyBlink % 2 == 0)
                 {
                     Console.SetCursorPosition(49, 25);
@@ -80,41 +79,22 @@ namespace W3_TeamProject
                 else
                 {
                     Console.SetCursorPosition(49, 25);
-                    Console.Write(new string(' ', "Press any key to start".Length));
+                    Console.Write(new string(' ', "Press any key to start".Length)); //문자 길이 만큼 공백 처리
                 }
 
-                Thread.Sleep(500); // msec delay
+                Thread.Sleep(500); // msec 지연
                 anykeyBlink++; 
 
-                // Check if a key has been pressed
                 if (Console.KeyAvailable)
                 {
-                    break; // Exit the loop if a key is pressed
+                    Console.ReadKey(false);
+                    break; 
                 }
+                nextState = SceneState.Town; // 다음스테이지(캐릭터 설명화면)으로 넘어갑니다.
             }
 
-
-            nextState = SceneState.Town; // 다음스테이지(캐릭터 설명화면)으로 넘어갑니다.
-
-
-            //foreach (char letter in sentence)
-            //{
-            //    if (letter == '\n') // 새 줄 문자 확인
-            //    {
-            //        y = y + 3; // 3Line 아래로 이동
-            //        x = 10; // 초기 X 위치로 재설정
-            //        Console.SetCursorPosition(x, y);
-            //    }
-            //    else
-            //    {
-            //        Console.Write(letter);
-            //        x++; // 다음 문자 위치로 이동
-            //    }
-
-            //    Thread.Sleep(10); // msec 지연
-            //}
-
             
+
             
         }
         public override SceneState ExitScene()

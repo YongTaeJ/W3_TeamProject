@@ -55,9 +55,8 @@ namespace W3_TeamProject
 
             Console.SetCursorPosition(100, 28);
 			Console.WriteLine("마을 화면 입니다."); //임시 표시
-
-            Console.SetCursorPosition(54, 20);
             
+            Console.SetCursorPosition(54, 20);
             int userInput = int.Parse(Console.ReadLine());
             
             switch (userInput)
