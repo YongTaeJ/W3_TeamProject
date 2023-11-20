@@ -17,6 +17,7 @@ namespace W3_TeamProject
         private void firstScene()
         {
             Console.Clear();
+            Console.ForegroundColor = ConsoleColor.Yellow;
             Console.SetCursorPosition(0, 0); // 테두리_가로선 맨 윗줄
             for (int i = 0; i < 120; i++)
             {
@@ -36,6 +37,7 @@ namespace W3_TeamProject
                 Console.Write('■');
             }
             // Hey !!  문구
+            Console.ForegroundColor = ConsoleColor.Yellow;
             Console.SetCursorPosition(43, 5);
             Console.WriteLine("██   ██ ███████ ██    ██     ██ ██ ");
             Console.SetCursorPosition(43, 6);
@@ -57,11 +59,62 @@ namespace W3_TeamProject
             Console.WriteLine("██ ███ ██ ██   ██ ██   ██    ██         ██     ██ ███ ██ ██   ██ ██    ██ ██  ██ ██ ██    ██       ▀▀   ");
             Console.SetCursorPosition(8, 19);
             Console.WriteLine(" ███ ███  ██   ██ ██   ██    ██    ███████      ███ ███  ██   ██  ██████  ██   ████  ██████        ██   ");
-            Console.SetCursorPosition(52, 25);
-            Console.WriteLine("Press to anykey");
 
-            ConsoleKeyInfo key = Console.ReadKey(); //아무키나 눌렀을때
+            Console.SetCursorPosition(46, 23);
+            Console.WriteLine("< 이봐  !!  뭐가  문제야  ? >");
+
+            Console.ForegroundColor = ConsoleColor.White;
+
+
+
+            int anykeyBlink = 0; // Initialize i outside the while loop
+
+            while (true)
+            {
+                // Toggle between showing the message and clearing it
+                if (anykeyBlink % 2 == 0)
+                {
+                    Console.SetCursorPosition(49, 25);
+                    Console.WriteLine("Press any key to start");
+                }
+                else
+                {
+                    Console.SetCursorPosition(49, 25);
+                    Console.Write(new string(' ', "Press any key to start".Length));
+                }
+
+                Thread.Sleep(500); // msec delay
+                anykeyBlink++; 
+
+                // Check if a key has been pressed
+                if (Console.KeyAvailable)
+                {
+                    break; // Exit the loop if a key is pressed
+                }
+            }
+
+
             nextState = SceneState.Town; // 다음스테이지(캐릭터 설명화면)으로 넘어갑니다.
+
+
+            //foreach (char letter in sentence)
+            //{
+            //    if (letter == '\n') // 새 줄 문자 확인
+            //    {
+            //        y = y + 3; // 3Line 아래로 이동
+            //        x = 10; // 초기 X 위치로 재설정
+            //        Console.SetCursorPosition(x, y);
+            //    }
+            //    else
+            //    {
+            //        Console.Write(letter);
+            //        x++; // 다음 문자 위치로 이동
+            //    }
+
+            //    Thread.Sleep(10); // msec 지연
+            //}
+
+            
             
         }
         public override SceneState ExitScene()

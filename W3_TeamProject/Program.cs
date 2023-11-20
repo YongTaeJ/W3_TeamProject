@@ -27,5 +27,5 @@ namespace W3_TeamProject
 				sceneState = sceneManager.Update();
 			}
 		}
-	}
+    }
 }
