@@ -14,9 +14,7 @@ namespace W3_TeamProject
             name = "빨간 포션";
             description = "체력을 올려주지만 맛은 보장할 수 없다.";
             cost = 20;
-            status = Status.Health;
             effectValue = 20;
-            itemType = ItemType.Potion;
             isEquip = false;
         }
     }

@@ -14,7 +14,6 @@ namespace W3_TeamProject
 		Weapon,
 		Armor,
 		Accessory,
-		Potion
 	}
 	enum Status
 	{
@@ -35,7 +34,6 @@ namespace W3_TeamProject
 		protected bool isEquip;
 		protected Status status = Status.None;
 		protected ItemType itemType = ItemType.None;
-		protected int potionCount = 0;
 		#endregion
 
 		#region properties
@@ -46,7 +44,6 @@ namespace W3_TeamProject
 		public bool IsEquip {  get { return isEquip; } set { isEquip = value; } } //장착확인 - 박정혁
 		public Status Status { get { return status; } }	
 		public ItemType ItemType { get { return itemType; } }
-        public int PotionCount { get { return potionCount; } set { potionCount = value; } }
         #endregion
 
         public BaseItem()
