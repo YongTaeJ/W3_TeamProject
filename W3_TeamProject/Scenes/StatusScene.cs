@@ -14,17 +14,19 @@ namespace W3_TeamProject
     /// </summary>
     internal class StatusScene : BaseScene
     {
-        private BaseItem statusItemData;
+        private BaseItem statusWeapon;
+        private BaseItem statusArmor;
+        private BaseItem statusAccessory;
 
         public override void EnterScene()
         {
 
             for (int i = 0; i < Inventory.GetListCount(ItemType.Weapon); i++)
-                statusItemData = Inventory.GetItem(i, ItemType.Weapon);
+                statusWeapon = Inventory.GetItem(i, ItemType.Weapon);
             for (int i = 0; i < Inventory.GetListCount(ItemType.Armor); i++)
-                statusItemData = Inventory.GetItem(i, ItemType.Armor);
+                statusArmor = Inventory.GetItem(i, ItemType.Armor);
             for (int i = 0; i < Inventory.GetListCount(ItemType.Accessory); i++)
-                statusItemData = Inventory.GetItem(i, ItemType.Accessory);
+                statusAccessory = Inventory.GetItem(i, ItemType.Accessory);
 
             StatusMain();
         }
@@ -515,11 +517,11 @@ namespace W3_TeamProject
             StatusBaseImage();  // 기본 이미지
 
             // 해당 장비를 착용 중이면, 이미지 불러오기
-            if (statusItemData != null && statusItemData.ItemType == ItemType.Weapon)
+            if (statusWeapon != null && statusWeapon.ItemType == ItemType.Weapon)
                 StatusWeaponImage();
-            if (statusItemData != null && statusItemData.ItemType == ItemType.Armor)
+            if (statusArmor != null && statusArmor.ItemType == ItemType.Armor)
                 StatusArmorImage();
-            if (statusItemData != null && statusItemData.ItemType == ItemType.Accessory)
+            if (statusAccessory != null && statusAccessory.ItemType == ItemType.Accessory)
                 StatusAccessoryImage();
         }
 
@@ -536,12 +538,12 @@ namespace W3_TeamProject
             string EquipArmor = "없  음";
             string EquipAccessory = "없  음";
 
-            if (statusItemData != null && statusItemData.ItemType == ItemType.Weapon)
-                EquipWeapon = statusItemData.Name;
-            if (statusItemData != null && statusItemData.ItemType == ItemType.Armor)
-                EquipArmor = statusItemData.Name;
-            if (statusItemData != null && statusItemData.ItemType == ItemType.Accessory)
-                EquipAccessory = statusItemData.Name;
+            if (statusWeapon != null && statusWeapon.ItemType == ItemType.Weapon)
+                EquipWeapon = statusWeapon.Name;
+            if (statusArmor != null && statusArmor.ItemType == ItemType.Armor)
+                EquipArmor = statusArmor.Name;
+            if (statusAccessory != null && statusAccessory.ItemType == ItemType.Accessory)
+                EquipAccessory = statusAccessory.Name;
 
             int EWLength = (23 - KoreanStrLength(EquipWeapon)) / 2;
             int EALength = (23 - KoreanStrLength(EquipArmor)) / 2;
@@ -735,12 +737,12 @@ namespace W3_TeamProject
             string EquipArmor = "없  음";
             string EquipAccessory = "없  음";
 
-            if (statusItemData != null && statusItemData.ItemType == ItemType.Weapon)
-                EquipWeapon = statusItemData.Name;
-            if (statusItemData != null && statusItemData.ItemType == ItemType.Armor)
-                EquipArmor = statusItemData.Name;
-            if (statusItemData != null && statusItemData.ItemType == ItemType.Accessory)
-                EquipAccessory = statusItemData.Name;
+            if (statusWeapon != null && statusWeapon.ItemType == ItemType.Weapon)
+                EquipWeapon = statusWeapon.Name;
+            if (statusArmor != null && statusArmor.ItemType == ItemType.Armor)
+                EquipArmor = statusArmor.Name;
+            if (statusAccessory != null && statusAccessory.ItemType == ItemType.Accessory)
+                EquipAccessory = statusAccessory.Name;
 
 
             Console.SetCursorPosition(97, 21);
