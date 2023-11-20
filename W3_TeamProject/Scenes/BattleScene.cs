@@ -13,38 +13,23 @@ namespace W3_TeamProject
         {
             Controller controller = new Controller();
 
-            /* 
-             * BattleScene 의 흐름
-             * 
-             * 마을에서 던전입구로 온다.
-             * 던전입구에서 던전 / 나가기(마을로 돌아감) 선택.
-             * 
-             * 던전 입장하면 스테이지 / 나가기 선택.
-             * 
-             * 스테이지 클리어 하면 던전 입장 파트로 가고, (클리어한 스테이지 에 대해서는 표시하기)
-             * 죽으면 어디선가 부활..? 마을에서 부활 ? 던전입구에서 부활 ?
-            */
             Console.Clear();
 
             Console.WriteLine("던전입구로 왔따.");
             Console.WriteLine();
-            // 던전입구에서 던전입장할지 다시 나갈지 선택
             Console.WriteLine("  던전 입장");
             Console.WriteLine("  마을로 돌아가기");
             Console.WriteLine();
 
             controller.AddRotation(0, 2);
             controller.AddRotation(0, 3);
-
             userInput = controller.InputLoop();
-
             switch (userInput)
             {
-                case 0:
+                case 0: // 던전 입장
                     EnterDungeon();
                     break;
-                case 1:
-                    // 마을로 돌아가기
+                case 1: // 마을로 돌아가기
                     nextState = SceneState.Town;
                     break;
             }
@@ -60,17 +45,15 @@ namespace W3_TeamProject
         {
             Controller controller = new Controller();
 
-            // 던전에 들어와서는 무엇을 해야할까
-
             /* 스테이지들이 여럿 있다고 가정.
              * e.g. 1층, 2층, 3층(= 보스, BossScene 과 연결)
-             * 
-             * 3층 = final stage BOSS
-             * 2층 stage
-             * 1층 stage
             */
             Console.Clear();
 
+            MakeCommentBoarder();
+            WriteComment(" 스테이지를 선택하세요 !");
+
+            Console.SetCursorPosition(0, 0);
             Console.WriteLine("스테이지를 선택하시라 !");
             Console.WriteLine();
             Console.WriteLine("  3층 (최종 - 보스) ■■■");
@@ -84,18 +67,22 @@ namespace W3_TeamProject
             controller.AddRotation(0, 3);
             controller.AddRotation(0, 4);
             controller.AddRotation(0, 6);
-
             userInput = controller.InputLoop();
-
             switch (userInput)
             {
                 case 0: // 3층 최종 스테이지 입장
+                    WriteComment(" 3층으로 입장합니다.");
+                    Thread.Sleep(1000);
                     nextState = SceneState.Boss;
                     break;
                 case 1: // 2층 스테이지 입장
+                    WriteComment(" 2층으로 입장합니다.");
+                    Thread.Sleep(1000);
                     EnterSecondStage();
                     break;
                 case 2: // 1층 스테이지 입장
+                    WriteComment(" 1층으로 입장합니다.");
+                    Thread.Sleep(1000);
                     EnterFirstStage();
                     break;
                 case 3: // 마을로 돌아가기
@@ -112,36 +99,137 @@ namespace W3_TeamProject
             Console.WriteLine("[1층]");
 
             ShowPlayer();
+            //
+            // 적 랜덤 출현 구현 thinking..
+            // 적마다 int type 을 지정해서 random.Range(1,4) 이런 식으로 호출할까 ?
+            //
             ShowEnemy1();
             ShowEnemy2();
             ShowEnemy3();
 
             WriteComment(" 원하시는 행동을 선택하세요.");
 
-            Controller mainController = new Controller();
+            bool isPlayerTurn = true;
 
-            mainController.AddRotation(34, 23);
-            mainController.AddRotation(62, 23);
-            mainController.AddRotation(34, 26);
-            mainController.AddRotation(62, 26);
-
-            userInput = mainController.InputLoop();
-            switch (userInput)
+            while (endPoint == 0)
             {
-                case 0: // 공격
+                Controller mainController = new Controller();
 
-                    break;
-                case 1: // 방어
+                mainController.AddRotation(34, 23);
+                mainController.AddRotation(62, 23);
+                mainController.AddRotation(34, 26);
+                mainController.AddRotation(62, 26);
 
-                    break;
-                case 2: // 스킬 목록
+                userInput = mainController.InputLoop();
+                switch (userInput)
+                {
+                    case 0: // 공격
+                        NormalAttack();
+                        isPlayerTurn = false;
+                        break;
+                    case 1: // 방어
+                        NormalDefense();
+                        isPlayerTurn = false;
+                        break;
+                    case 2: // 스킬 목록
+                        ShowSkillList(); // 구현 not yet
+                        break;
+                    case 3: // 아이템 목록
+                        ShowItemList(); // 구현 not yet
+                        break;
+                }
 
-                    break;
-                case 3: // 아이템 목록
-
-                    break;
+                // 적의 턴
+                if (isPlayerTurn == false)
+                {
+                    WriteComment(" 적이 공격합니다.");
+                    // 적의 공격 구현
+                    // ENEMY 의 공격
+                    // Player currentHealth -= Enemy 의 attack
+                    // Player currentHealth 가 ENEMY 의 공격보다 낮으면 PLAYER DEAD
+                    // if (Player currentHealth < damage){WriteComment("Player 기절 사망 꿲.");}
+                    isPlayerTurn = true;
+                }
             }
 
+            if (endPoint == 1) // 플레이어 승리 (모든 적이 DEAD)
+            {
+                // 플레이어 WIN
+                // 보상으로 Gold 지급 ?
+                // 스테이지 목록으로 돌려보내기
+                // 클리어한 스테이지 에 대해서는 CLEAR 라고 옆에 따로 표시하기 ?
+            }
+            else if (endPoint == 2) // 플레이어 패배 (플레이어 체력 0)
+            {
+                // 플레이어 DEAD
+                // maybe 마을에서 부활
+                WriteComment(" 플레이어는 정신을 잃고 말았습니다... :-(");
+                Thread.Sleep(1000);
+                WriteComment(" 마을에서 부활합니다 뾰로롱");
+                Thread.Sleep(1000);
+                WriteComment(" 3");
+                Thread.Sleep(1000);
+                WriteComment(" 2");
+                Thread.Sleep(1000);
+                WriteComment(" 1");
+                Thread.Sleep(1000);
+                WriteComment(" 얍");
+                Thread.Sleep(300);
+                nextState = SceneState.Town;
+            }
+
+        }
+
+        private void ShowItemList()
+        {
+            // 아이템 목록 보여주기
+            // 컨트롤러로 아이템 선택
+            // 해당 효과 뾰로롱 
+            // 등등등
+        }
+
+        private void ShowSkillList()
+        {
+            // 스킬 목록 보여주기
+            // 컨트롤러로 스킬 선택
+            // mana 깎고, 
+            // 등등등
+        }
+
+        private void NormalDefense()
+        {
+            WriteComment(" 최고의 공격은 방어죠 하하");
+        }
+
+        private void NormalAttack()
+        {
+            int damage = Player.BaseAttack + Player.EquipAttack;
+            WriteComment(" 공격하고 싶은 적을 선택하세요");
+            // 공격하고 싶은 적을 선택.
+            // 적의 HP 깎아야함.
+            Controller controller = new Controller();
+            controller.AddRotation(70, 2);
+            controller.AddRotation(95, 5);
+            controller.AddRotation(73, 10);
+            userInput = controller.InputLoop();
+            switch (userInput)
+            {
+                case 0: // ENEMY 1 공격
+                    // ENEMY 체력 -= damage;
+                    // ENEMY 의 체력이 공격보다 낮으면 ENEMY DEAD
+                    // if (ENEMY currentHealth < damage){WriteComment("ENEMY 죽었따.");}
+                    break;
+                case 1: // ENEMY 2 공격
+                    // ENEMY 체력 -= damage;
+                    // ENEMY 의 체력이 공격보다 낮으면 ENEMY DEAD
+                    // if (ENEMY currentHealth < damage){WriteComment("ENEMY 죽었따.");}
+                    break;
+                case 2: // ENEMY 3 공격
+                    // ENEMY 체력 -= damage;
+                    // ENEMY 의 체력이 공격보다 낮으면 ENEMY DEAD
+                    // if (ENEMY currentHealth < damage){WriteComment("ENEMY 죽었따.");}
+                    break;
+            }
         }
 
         private void EnterSecondStage()
@@ -152,36 +240,85 @@ namespace W3_TeamProject
             Console.WriteLine("[2층]");
 
             ShowPlayer();
+            //
+            // 적 랜덤 출현 구현 thinking..
+            // 적마다 int type 을 지정해서 random.Range(1,4) 이런 식으로 호출할까 ?
+            //
             ShowEnemy1();
             ShowEnemy2();
             ShowEnemy3();
 
             WriteComment(" 원하시는 행동을 선택하세요.");
 
-            Controller mainController = new Controller();
+            bool isPlayerTurn = true;
 
-            mainController.AddRotation(34, 23);
-            mainController.AddRotation(62, 23);
-            mainController.AddRotation(34, 26);
-            mainController.AddRotation(62, 26);
-
-            userInput = mainController.InputLoop();
-            switch (userInput)
+            while (endPoint == 0)
             {
-                case 0: // 공격
+                Controller mainController = new Controller();
 
-                    break;
-                case 1: // 방어
+                mainController.AddRotation(34, 23);
+                mainController.AddRotation(62, 23);
+                mainController.AddRotation(34, 26);
+                mainController.AddRotation(62, 26);
 
-                    break;
-                case 2: // 스킬 목록
+                userInput = mainController.InputLoop();
+                switch (userInput)
+                {
+                    case 0: // 공격
+                        NormalAttack();
+                        isPlayerTurn = false;
+                        break;
+                    case 1: // 방어
+                        NormalDefense();
+                        isPlayerTurn = false;
+                        break;
+                    case 2: // 스킬 목록
+                        ShowSkillList(); // 구현 not yet
+                        break;
+                    case 3: // 아이템 목록
+                        ShowItemList(); // 구현 not yet
+                        break;
+                }
 
-                    break;
-                case 3: // 아이템 목록
-
-                    break;
+                // 적의 턴
+                if (isPlayerTurn == false)
+                {
+                    WriteComment(" 적이 공격합니다.");
+                    // 적의 공격 구현
+                    // ENEMY 의 공격
+                    // Player currentHealth -= Enemy 의 attack
+                    // Player currentHealth 가 ENEMY 의 공격보다 낮으면 PLAYER DEAD
+                    // if (Player currentHealth < damage){WriteComment("Player 기절 사망 꿲.");}
+                    isPlayerTurn = true;
+                }
             }
 
+            if (endPoint == 1) // 플레이어 승리 (모든 적이 DEAD)
+            {
+                // 플레이어 WIN
+                // 보상으로 Gold 지급 ?
+                // 스테이지 목록으로 돌려보내기
+                // 클리어한 스테이지 에 대해서는 CLEAR 라고 옆에 따로 표시하기 ?
+            }
+            else if (endPoint == 2) // 플레이어 패배 (플레이어 체력 0)
+            {
+                // 플레이어 DEAD
+                // maybe 마을에서 부활
+                WriteComment(" 플레이어는 정신을 잃고 말았습니다... :-(");
+                Thread.Sleep(1000);
+                WriteComment(" 마을에서 부활합니다 뾰로롱");
+                Thread.Sleep(1000);
+                WriteComment(" 3");
+                Thread.Sleep(1000);
+                WriteComment(" 2");
+                Thread.Sleep(1000);
+                WriteComment(" 1");
+                Thread.Sleep(1000);
+                WriteComment(" 얍!");
+                Thread.Sleep(300);
+                nextState = SceneState.Town;
+
+            }
         }
 
         private void DrawStage()
