@@ -45,10 +45,10 @@ namespace W3_TeamProject
             {
                if (letter == '\n') // 새 줄 문자 확인
                {
-                    y = y + 3; // 3Line 아래로 이동
+                    y = y + 3; // 초기 Y 위치로 재설정
                     x = 10; // 초기 X 위치로 재설정
                     Console.SetCursorPosition(x, y);
-               }
+                }
                else
                {
                    Console.Write(letter);
@@ -57,8 +57,85 @@ namespace W3_TeamProject
                
                 Thread.Sleep(10); // msec 지연
             }
+
+            // 주인공 캐릭터
+            Console.SetCursorPosition(70, 5);
+
+
+            string charFace = "\n                /////////////////" +
+                              "\n              /////////////////////" +
+                              "\n            ////////////////////////" +
+                              "\n          ///////////////////////////" +
+                              "\n           /////////////////////////" +
+                              "\n           | ＼        /    ┘└    |" +
+                              "\n           |   ＼     /     ┐┌    |" +
+                              "\n           | @         @          |" +
+                              "\n           |     ______           |" +
+                              "\n           |    /______＼         |" +
+                              "\n            ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ" +
+                              "\n      ┌ㅡㅡ                      ㅡㅡ┐" +
+                              "\n      ㅣ                              ㅣ" +
+                              "\n      ㅣ   ㅣ                    ㅣ   ㅣ" +
+                              "\n      ㅣ   ㅣ                    ㅣ   ㅣ" +
+                              "\n      ㅣ   ㅣ                    ㅣ   ㅣ" +
+                              "\n       ㅡㅡ  ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ  ㅡㅡ" +
+                              "\n             ㅡㅡㅡ       ㅡㅡㅡ" +
+                              "\n             ㅡㅡㅡ       ㅡㅡㅡ" +
+                              "\n             ㅡㅡㅡ       ㅡㅡㅡ" +
+                              "\n             ㅡㅡㅡ       ㅡㅡㅡ" +
+                              "\n             ㅡㅡㅡ       ㅡㅡㅡ";
+
+
+
+
+
+
+
+
+
+            int charColorBlink = 0;
+            while (true)
+            {
+                int charX = 70; // 초기 X 위치
+                int charY = 5; // 초기 Y 위치
+                if (charColorBlink % 2 == 0)
+                {
+                    Console.ForegroundColor = ConsoleColor.Yellow;
+                }
+                else
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                }
+                foreach (char letter in charFace)
+                {
+                    if (letter == '\n') // 새 줄 문자 확인
+                    {
+
+                        charY = charY + 1; // 1 Line 아래로 이동
+                        charX = 70; // 초기 X 위치로 재설정
+                        Console.SetCursorPosition(charX, charY);
+                        Thread.Sleep(1); // msec 지연
+
+                    }
+                    else
+                    {
+                        Console.Write(letter);
+                        charX++; // 다음 문자 위치로 이동
+                    }
+                    
+                }
+                Thread.Sleep(500); // msec 지연
+                charColorBlink++;
+
+                if (Console.KeyAvailable)
+                {
+                    Console.ReadKey(false);
+                    charColorBlink = 0;
+                    break;
+                }
+                
+            }
             
-            ConsoleKeyInfo key = Console.ReadKey(); //아무키나 눌렀을때
             nextState = SceneState.Start; // 다음스테이지(캐릭터 설명화면)으로 넘어갑니다.
 
             // 빡친 모습의 케릭터 추후에 추가하여 공백을 메꾸자!!

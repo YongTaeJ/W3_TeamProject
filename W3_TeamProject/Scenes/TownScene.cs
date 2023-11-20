@@ -13,29 +13,12 @@ namespace W3_TeamProject
 			Console.Clear();
             //마을 화면 구성 //일단 글씨로만 하기
             //상점, 전투하러가기, 상태보기
-            
-            for (int i = 0; i < 119; i++)
-            {
-                Console.SetCursorPosition(i, 0);
-                Console.Write('ㅡ');
-                Console.SetCursorPosition(i, 29);
-                Console.Write('ㅡ');
-            }
-            for (int i = 0; i < 28; i++)
-            {
-                Console.SetCursorPosition(0, i + 1);
-                Console.Write('|');
-                Console.SetCursorPosition(119, i + 1);
-                Console.Write('|');
-            }
-            //선택하여 장소 이동
-            // 1.상점 2.상태보기 3.전투화면
-            Console.SetCursorPosition(50, 10);
+            UI.MakeUI(); // UI 기본 틀 가져오기
+
+            Console.SetCursorPosition(50, 10); //
             int x = 50;
             int y = 10;
-
             string sentence = "1. 상점\n\n2. 상태보기\n\n3. 전투화면\n\n4.인벤토리";
-
             foreach (char letter in sentence)
             {
                 if (letter == '\n') // 새 줄 문자 확인
