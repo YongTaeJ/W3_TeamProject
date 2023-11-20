@@ -8,6 +8,8 @@ namespace W3_TeamProject
         string clearChoosePanelString = "                                                           ";
         int userInput = 0;
         int endPoint = 0; // 0 계속, 1 플레이어 승리, 2 플레이어 패배.(BossScene 과 동일하게)
+        int enemyType; // ENEMY 의 타입 지정 (0 = None, 1 = ENEMY 1 , 2 = ENEMY 2 , 3 = ENEMY 3), 무조건 적이 최소 1명은 나오도록 구현하자.
+        Random random = new Random();
 
         public override void EnterScene()
         {
@@ -101,11 +103,12 @@ namespace W3_TeamProject
             ShowPlayer();
             //
             // 적 랜덤 출현 구현 thinking..
-            // 적마다 int type 을 지정해서 random.Range(1,4) 이런 식으로 호출할까 ?
+            // 적마다 int type 을 지정해서 random.Next(1,4) 이런 식으로 호출할까 ?
             //
             ShowEnemy1();
             ShowEnemy2();
             ShowEnemy3();
+            ShowEnemy4();
 
             WriteComment(" 원하시는 행동을 선택하세요.");
 
@@ -177,7 +180,6 @@ namespace W3_TeamProject
                 Thread.Sleep(300);
                 nextState = SceneState.Town;
             }
-
         }
 
         private void ShowItemList()
@@ -199,6 +201,7 @@ namespace W3_TeamProject
         private void NormalDefense()
         {
             WriteComment(" 최고의 공격은 방어죠 하하");
+            Thread.Sleep(1500);
         }
 
         private void NormalAttack()
@@ -209,8 +212,9 @@ namespace W3_TeamProject
             // 적의 HP 깎아야함.
             Controller controller = new Controller();
             controller.AddRotation(70, 2);
-            controller.AddRotation(95, 5);
+            controller.AddRotation(95, 3);
             controller.AddRotation(73, 10);
+            controller.AddRotation(98, 11);
             userInput = controller.InputLoop();
             switch (userInput)
             {
@@ -225,6 +229,11 @@ namespace W3_TeamProject
                     // if (ENEMY currentHealth < damage){WriteComment("ENEMY 죽었따.");}
                     break;
                 case 2: // ENEMY 3 공격
+                    // ENEMY 체력 -= damage;
+                    // ENEMY 의 체력이 공격보다 낮으면 ENEMY DEAD
+                    // if (ENEMY currentHealth < damage){WriteComment("ENEMY 죽었따.");}
+                    break;
+                case 3: // ENEMY 3 공격
                     // ENEMY 체력 -= damage;
                     // ENEMY 의 체력이 공격보다 낮으면 ENEMY DEAD
                     // if (ENEMY currentHealth < damage){WriteComment("ENEMY 죽었따.");}
@@ -247,6 +256,7 @@ namespace W3_TeamProject
             ShowEnemy1();
             ShowEnemy2();
             ShowEnemy3();
+            ShowEnemy4();
 
             WriteComment(" 원하시는 행동을 선택하세요.");
 
@@ -324,15 +334,25 @@ namespace W3_TeamProject
         private void DrawStage()
         {
             UI.MakeUI(); // UI 그리기
+            MakeRightBoarderInsideUI(); // UI 내부 오른쪽 세로선 그리기
             MakeCommentBoarder(); // 말풍선 그리기
-            MakeMiddleBar(); // 중간 세로선 그리기
+            MakeMiddleBar(); // 화면 중간 세로선 그리기
             MakeMainChoicePanel(); // UI 내 선택옵션 그리기
                                    // UI 내 오른쪽 부분에 Status 도 연동할 것 !
         }
 
+        private static void MakeRightBoarderInsideUI()
+        {
+            for (int i = 0; i < 8; i++)
+            {
+                Console.SetCursorPosition(90, 21 + i);
+                Console.Write('|');
+            }
+        }
+
         private static void MakeMiddleBar() // 화면 중간 세로선 그리기
         {
-            for (int i = 0; i < 15; i++)
+            for (int i = 0; i < 16; i++)
             {
                 Console.SetCursorPosition(60, i + 1);
                 Console.Write("|");
@@ -341,35 +361,35 @@ namespace W3_TeamProject
 
         private void MakeCommentBoarder() // 말풍선 그리기
         {
-            Console.SetCursorPosition(10, 16);
+            Console.SetCursorPosition(10, 17);
             for (int i = 0; i < 49; i++)
             {
                 Console.Write('ㅡ');
             }
-            Console.SetCursorPosition(10, 17);
-            Console.Write('|');
-            Console.SetCursorPosition(107, 17);
-            Console.Write('|');
             Console.SetCursorPosition(10, 18);
+            Console.Write('|');
+            Console.SetCursorPosition(107, 18);
+            Console.Write('|');
+            Console.SetCursorPosition(10, 19);
             for (int i = 0; i < 49; i++)
             {
                 Console.Write('ㅡ');
             }
 
-            // 텍스트 시작점은 (11 ,17)
+            // 텍스트 시작점은 (11 ,18)
         }
 
         public void WriteComment(string comment = "")
         {
-            Console.SetCursorPosition(11, 17);
+            Console.SetCursorPosition(11, 18);
             Console.Write(clearString);
-            Console.SetCursorPosition(11, 17);
+            Console.SetCursorPosition(11, 18);
             Console.Write(comment);
         }
 
         public void MakeMainChoicePanel()
         {
-            //ClearChoosePanel(); // 이건 언제 왜 쓰이는건지 아직 파악 못 함.
+            ClearChoosePanel();
 
             UI.MakeBar(36, 22);
             Console.SetCursorPosition(38, 23);
@@ -396,15 +416,33 @@ namespace W3_TeamProject
             // 이하는 상황에 맞는 스킬 목록 작성
         }
 
-        //public void ClearChoosePanel()
-        //{
-        //    for (int i = 0; i < 8; i++)
-        //    {
-        //        Console.SetCursorPosition(31, 21 + i);
-        //        Console.Write(clearChoosePanelString);
-        //    }
-        //}
+        public void ClearChoosePanel()
+        {
+            for (int i = 0; i < 8; i++)
+            {
+                Console.SetCursorPosition(31, 21 + i);
+                Console.Write(clearChoosePanelString);
+            }
+        }
 
+
+        private static void ShowEnemy4()
+        {
+            Console.SetCursorPosition(98, 10);
+            Console.WriteLine("---------------");
+            Console.SetCursorPosition(98, 11);
+            Console.WriteLine("     ENEMY4    ");
+            Console.SetCursorPosition(98, 12);
+            Console.WriteLine("---------------");
+            Console.SetCursorPosition(98, 13);
+            Console.WriteLine(" 공:    방:    ");
+            Console.SetCursorPosition(98, 14);
+            Console.WriteLine("---------------");
+            Console.SetCursorPosition(98, 15);
+            Console.WriteLine("HP | //////////");
+            Console.SetCursorPosition(98, 16);
+            Console.WriteLine("---------------");
+        }
         private static void ShowEnemy3()
         {
             Console.SetCursorPosition(73, 9);
@@ -425,19 +463,19 @@ namespace W3_TeamProject
 
         private static void ShowEnemy2()
         {
+            Console.SetCursorPosition(95, 2);
+            Console.WriteLine("---------------");
+            Console.SetCursorPosition(95, 3);
+            Console.WriteLine("     ENEMY2    ");
             Console.SetCursorPosition(95, 4);
             Console.WriteLine("---------------");
             Console.SetCursorPosition(95, 5);
-            Console.WriteLine("     ENEMY2    ");
+            Console.WriteLine(" 공:    방:    ");
             Console.SetCursorPosition(95, 6);
             Console.WriteLine("---------------");
             Console.SetCursorPosition(95, 7);
-            Console.WriteLine(" 공:    방:    ");
-            Console.SetCursorPosition(95, 8);
-            Console.WriteLine("---------------");
-            Console.SetCursorPosition(95, 9);
             Console.WriteLine(" HP |          ");
-            Console.SetCursorPosition(95, 10);
+            Console.SetCursorPosition(95, 8);
             Console.WriteLine("---------------");
         }
 
@@ -461,19 +499,19 @@ namespace W3_TeamProject
 
         private static void ShowPlayer()
         {
-            Console.SetCursorPosition(20, 5);
+            Console.SetCursorPosition(21, 5);
             Console.WriteLine("---------------");
-            Console.SetCursorPosition(20, 6);
+            Console.SetCursorPosition(21, 6);
             Console.WriteLine("    PLAYER     ");
-            Console.SetCursorPosition(20, 7);
+            Console.SetCursorPosition(21, 7);
             Console.WriteLine("---------------");
-            Console.SetCursorPosition(20, 8);
+            Console.SetCursorPosition(21, 8);
             Console.WriteLine(" 공:    방:    ");
-            Console.SetCursorPosition(20, 9);
+            Console.SetCursorPosition(21, 9);
             Console.WriteLine("---------------");
-            Console.SetCursorPosition(20, 10);
+            Console.SetCursorPosition(21, 10);
             Console.WriteLine(" HP |          ");
-            Console.SetCursorPosition(20, 11);
+            Console.SetCursorPosition(21, 11);
             Console.WriteLine("---------------");
         }
     }
