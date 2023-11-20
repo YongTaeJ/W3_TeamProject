@@ -8,10 +8,12 @@ namespace W3_TeamProject
         string clearChoosePanelString = "                                                           ";
         int userInput = 0;
         int endPoint = 0; // 0 계속, 1 플레이어 승리, 2 플레이어 패배.(BossScene 과 동일하게)
+
         int enemyType; // ENEMY 의 타입 지정 (0 = None, 1 = ENEMY 1 , 2 = ENEMY 2 , 3 = ENEMY 3), 무조건 적이 최소 1명은 나오도록 구현하자.
-		Controller itemController = new Controller();
-		Controller skillController = new Controller();
-		Random random = new Random();
+		    Controller itemController = new Controller();
+		    Controller skillController = new Controller();
+		    Random random = new Random();
+
 
 		public override void EnterScene()
         {
@@ -103,11 +105,31 @@ namespace W3_TeamProject
 
             Console.SetCursorPosition(0, 0);
             Console.WriteLine("[1층]");
-			ShowPlayer();
+
+			    ShowPlayer();
+
             //
             // 적 랜덤 출현 구현 thinking..
-            // 적마다 int type 을 지정해서 random.Next(1,4) 이런 식으로 호출할까 ?
             //
+            int enemyCount = random.Next(1, 5); // Enemy 스폰 수( 최소 1 ~ 최대 4 마리 스폰)
+            for (int i = 0; i < enemyCount; i++)
+            {
+                int selectEnemy = random.Next(0, 3); // Enemy 종류 (슬라임, 고블린, 르탄이 중에서) 랜덤 생성
+                switch (selectEnemy)
+                {
+                    case 0: // e.g. Slime
+
+                        break;
+                    case 1: // e.g. Goblin
+
+                        break;
+                    case 2: // Rtan
+
+                        break;
+                }
+            }
+
+            // 가능하다면, x y 좌표값 받아서 아래 ShowEnemy 메서드들 단순하게 만들기 츄라이해보자 !
             ShowEnemy1();
             ShowEnemy2();
             ShowEnemy3();
@@ -137,6 +159,9 @@ namespace W3_TeamProject
                         break;
                     case 1: // 방어
                         NormalDefense();
+                        //
+                        // 방어하면 방어력이 올라가는 것 구현해야 함. e.g. 받는 공격력 감소 like BossScene
+                        //
                         isPlayerTurn = false;
                         break;
                     case 2: // 스킬 목록
@@ -147,6 +172,9 @@ namespace W3_TeamProject
                         break;
                 }
 
+                if (endPoint != 0)
+                    break;
+
                 // 적의 턴
                 if (isPlayerTurn == false)
                 {
@@ -156,6 +184,7 @@ namespace W3_TeamProject
                     // Player currentHealth -= Enemy 의 attack
                     // Player currentHealth 가 ENEMY 의 공격보다 낮으면 PLAYER DEAD
                     // if (Player currentHealth < damage){WriteComment("Player 기절 사망 꿲.");}
+                    // endPoint 도 상황에 맞춰 변경해줘야 함!
                     isPlayerTurn = true;
                 }
             }
@@ -165,7 +194,7 @@ namespace W3_TeamProject
                 // 플레이어 WIN
                 // 보상으로 Gold 지급 ?
                 // 스테이지 목록으로 돌려보내기
-                // 클리어한 스테이지 에 대해서는 CLEAR 라고 옆에 따로 표시하기 ?
+                // 클리어한 스테이지 에 대해서는 CLEAR 라고 옆에 따로 표시할까 고민중 ..
             }
             else if (endPoint == 2) // 플레이어 패배 (플레이어 체력 0)
             {
@@ -306,7 +335,7 @@ namespace W3_TeamProject
                     // ENEMY 의 체력이 공격보다 낮으면 ENEMY DEAD
                     // if (ENEMY currentHealth < damage){WriteComment("ENEMY 죽었따.");}
                     break;
-                case 3: // ENEMY 3 공격
+                case 3: // ENEMY 4 공격
                     // ENEMY 체력 -= damage;
                     // ENEMY 의 체력이 공격보다 낮으면 ENEMY DEAD
                     // if (ENEMY currentHealth < damage){WriteComment("ENEMY 죽었따.");}
@@ -316,6 +345,10 @@ namespace W3_TeamProject
 
         private void EnterSecondStage()
         {
+            //
+            // EnterFirstStage() 내용 수정 후 여기도 수정사항 반영해주는 것 잊지말기 !
+            //
+
             DrawStage(); // 스테이지 화면 그리기 (UI, 말풍선, 중간 세로선, )
 
             Console.SetCursorPosition(0, 0);
@@ -417,7 +450,7 @@ namespace W3_TeamProject
                                    // UI 내 오른쪽 부분에 Status 도 연동할 것 !
         }
 
-        private static void MakeRightBoarderInsideUI()
+        private static void MakeRightBoarderInsideUI() // UI 내부 오른쪽 세로선 그리기
         {
             for (int i = 0; i < 8; i++)
             {
@@ -588,11 +621,11 @@ namespace W3_TeamProject
             Console.SetCursorPosition(21, 7);
             Console.WriteLine("---------------");
             Console.SetCursorPosition(21, 8);
-            Console.WriteLine(" 공:    방:    ");
+            Console.WriteLine("플레이어 이미지");
             Console.SetCursorPosition(21, 9);
             Console.WriteLine("---------------");
             Console.SetCursorPosition(21, 10);
-            Console.WriteLine(" HP |          ");
+            Console.WriteLine("  추가  예정   ");
             Console.SetCursorPosition(21, 11);
             Console.WriteLine("---------------");
         }
