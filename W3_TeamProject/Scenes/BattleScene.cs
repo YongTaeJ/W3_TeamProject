@@ -1,9 +1,13 @@
-﻿namespace W3_TeamProject
+﻿using System.Diagnostics.SymbolStore;
+
+namespace W3_TeamProject
 {
     internal class BattleScene : BaseScene
     {
         string clearString = "                                     ";
+        string clearChoosePanelString = "                                                           ";
         int userInput = 0;
+        int endPoint = 0; // 0 계속, 1 플레이어 승리, 2 플레이어 패배.(BossScene 과 동일하게)
 
         public override void EnterScene()
         {
@@ -28,7 +32,6 @@
             Console.WriteLine("  던전 입장");
             Console.WriteLine("  마을로 돌아가기");
             Console.WriteLine();
-            Console.Write(">> ");
 
             controller.AddRotation(0, 2);
             controller.AddRotation(0, 3);
@@ -45,8 +48,6 @@
                     nextState = SceneState.Town;
                     break;
             }
-
-
         }
 
         public override SceneState ExitScene()
@@ -72,13 +73,12 @@
 
             Console.WriteLine("스테이지를 선택하시라 !");
             Console.WriteLine();
-            Console.WriteLine("  3층 (최종 - 보스)");
-            Console.WriteLine("  2층");
-            Console.WriteLine("  1층");
+            Console.WriteLine("  3층 (최종 - 보스) ■■■");
+            Console.WriteLine("  2층               ■■■");
+            Console.WriteLine("  1층               ■■■");
             Console.WriteLine();
             Console.WriteLine("  마을로 돌아가기");
             Console.WriteLine();
-            Console.Write(">> ");
 
             controller.AddRotation(0, 2);
             controller.AddRotation(0, 3);
@@ -89,61 +89,120 @@
 
             switch (userInput)
             {
-                case 0:
-                    // 3층 스테이지 입장
-
+                case 0: // 3층 최종 스테이지 입장
+                    nextState = SceneState.Boss;
                     break;
-                case 1:
-                    // 2층 스테이지 입장
-
+                case 1: // 2층 스테이지 입장
+                    EnterSecondStage();
                     break;
-                case 2:
+                case 2: // 1층 스테이지 입장
                     EnterFirstStage();
                     break;
-                case 3:
+                case 3: // 마을로 돌아가기
                     nextState = SceneState.Town;
                     break;
             }
-
         }
 
         private void EnterFirstStage()
         {
-            Console.Clear();
-            // UI 델꼬오기
-            UI.MakeUI();
-            // 말풍선bar
-            MakeCommentBoarder();
-
-
+            DrawStage(); // 스테이지 화면 그리기 (UI, 말풍선, 중간 세로선, )
 
             Console.SetCursorPosition(0, 0);
             Console.WriteLine("[1층]");
-
-
-
-            for (int i = 0; i < 15; i++)
-            {
-                Console.SetCursorPosition(60, i + 1);
-                Console.Write("|");
-            }
 
             ShowPlayer();
             ShowEnemy1();
             ShowEnemy2();
             ShowEnemy3();
 
-            WriteComment("플레이어는 1층에 도착했다.");
-            Thread.Sleep(2000);
-            WriteComment("야생의 ENEMY (이)가 나타났다 !");
-            Thread.Sleep(2000);
-            WriteComment("으ㅡㅡㅡㅡㅡㅡㅡㅡ악ㄹ");
-            Thread.Sleep(2000);
+            WriteComment(" 원하시는 행동을 선택하세요.");
 
-            Console.ReadKey();
+            Controller mainController = new Controller();
+
+            mainController.AddRotation(34, 23);
+            mainController.AddRotation(62, 23);
+            mainController.AddRotation(34, 26);
+            mainController.AddRotation(62, 26);
+
+            userInput = mainController.InputLoop();
+            switch (userInput)
+            {
+                case 0: // 공격
+
+                    break;
+                case 1: // 방어
+
+                    break;
+                case 2: // 스킬 목록
+
+                    break;
+                case 3: // 아이템 목록
+
+                    break;
+            }
+
         }
 
-        private void MakeCommentBoarder()
+        private void EnterSecondStage()
+        {
+            DrawStage(); // 스테이지 화면 그리기 (UI, 말풍선, 중간 세로선, )
+
+            Console.SetCursorPosition(0, 0);
+            Console.WriteLine("[2층]");
+
+            ShowPlayer();
+            ShowEnemy1();
+            ShowEnemy2();
+            ShowEnemy3();
+
+            WriteComment(" 원하시는 행동을 선택하세요.");
+
+            Controller mainController = new Controller();
+
+            mainController.AddRotation(34, 23);
+            mainController.AddRotation(62, 23);
+            mainController.AddRotation(34, 26);
+            mainController.AddRotation(62, 26);
+
+            userInput = mainController.InputLoop();
+            switch (userInput)
+            {
+                case 0: // 공격
+
+                    break;
+                case 1: // 방어
+
+                    break;
+                case 2: // 스킬 목록
+
+                    break;
+                case 3: // 아이템 목록
+
+                    break;
+            }
+
+        }
+
+        private void DrawStage()
+        {
+            UI.MakeUI(); // UI 그리기
+            MakeCommentBoarder(); // 말풍선 그리기
+            MakeMiddleBar(); // 중간 세로선 그리기
+            MakeMainChoicePanel(); // UI 내 선택옵션 그리기
+                                   // UI 내 오른쪽 부분에 Status 도 연동할 것 !
+        }
+
+        private static void MakeMiddleBar() // 화면 중간 세로선 그리기
+        {
+            for (int i = 0; i < 15; i++)
+            {
+                Console.SetCursorPosition(60, i + 1);
+                Console.Write("|");
+            }
+        }
+
+        private void MakeCommentBoarder() // 말풍선 그리기
         {
             Console.SetCursorPosition(10, 16);
             for (int i = 0; i < 49; i++)
@@ -170,6 +229,44 @@
             Console.SetCursorPosition(11, 17);
             Console.Write(comment);
         }
+
+        public void MakeMainChoicePanel()
+        {
+            //ClearChoosePanel(); // 이건 언제 왜 쓰이는건지 아직 파악 못 함.
+
+            UI.MakeBar(36, 22);
+            Console.SetCursorPosition(38, 23);
+            Console.Write("       공격");
+
+            UI.MakeBar(64, 22);
+            Console.SetCursorPosition(66, 23);
+            Console.Write("       방어");
+
+            UI.MakeBar(36, 25);
+            Console.SetCursorPosition(38, 26);
+            Console.Write("     스킬 목록");
+
+            UI.MakeBar(64, 25);
+            Console.SetCursorPosition(66, 26);
+            Console.Write("    아이템 목록");
+        }
+
+        public void MakeSkillChoicePanel()
+        {
+            Console.SetCursorPosition(79, 28);
+            Console.Write("돌아가기");
+
+            // 이하는 상황에 맞는 스킬 목록 작성
+        }
+
+        //public void ClearChoosePanel()
+        //{
+        //    for (int i = 0; i < 8; i++)
+        //    {
+        //        Console.SetCursorPosition(31, 21 + i);
+        //        Console.Write(clearChoosePanelString);
+        //    }
+        //}
 
         private static void ShowEnemy3()
         {
