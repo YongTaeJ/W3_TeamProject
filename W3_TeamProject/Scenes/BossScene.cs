@@ -22,7 +22,6 @@ namespace W3_TeamProject
 		public BossScene()
 		{
 			InitMainController();
-			Player.Init();
 		}
 
 		public override void EnterScene()
@@ -126,7 +125,7 @@ namespace W3_TeamProject
 			skillController.RemoveAll();
 
 			skillController.AddRotation(77,28); // 돌아가기 할당
-			int? count = 1; // Player.playerSkillList.SkillCount;
+			int count = Player.playerSkillList.SkillCount;
 
 			// 현재까지 스킬은 최대 6개 상정
 			if (count == null)
@@ -147,7 +146,7 @@ namespace W3_TeamProject
 
 			itemController.AddRotation(77, 28); // 돌아가기 할당
 			itemController.AddRotation(37, 26); // 체력 할당
-			itemController.AddRotation(65, 26);
+			itemController.AddRotation(65, 26); // 마나 할당
 		}
 
 		public override SceneState ExitScene()
@@ -325,7 +324,7 @@ namespace W3_TeamProject
 
 			// 이하는 상황에 맞는 스킬 목록 작성
 			// 스킬카운트를 받아서, for문 돌림(위치는 35, 22+i)
-			for(int i=0; i < Player.playerSkillList.SkillCount; i++)
+			for(int i=0; i < Player.playerSkillList.SkillCount ; i++)
 			{
 				Console.SetCursorPosition(35, 22 + i);
 				BaseSkill tempSkill = Player.GetSkill(i);

@@ -26,7 +26,6 @@ namespace W3_TeamProject
 		public bool IsDie { get { return isDie; } }
 		#endregion
 
-
 		public BaseEnemy(int level = 1)
 		{
 			Init(level);
