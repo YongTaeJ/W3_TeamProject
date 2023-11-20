@@ -17,7 +17,12 @@ namespace W3_TeamProject
 			sceneManager.Init();
 
 			// 맨 처음 시작화면은 StartScene으로 만들어주세요
+<<<<<<< HEAD
 			SceneState sceneState = SceneState.Status;
+=======
+
+			SceneState sceneState = SceneState.Boss;
+>>>>>>> main
 
 			while(sceneState != SceneState.None)
 			{
@@ -26,5 +31,5 @@ namespace W3_TeamProject
 				sceneState = sceneManager.Update();
 			}
 		}
-	}
+    }
 }

@@ -17,8 +17,9 @@ namespace W3_TeamProject
         private void firstScene()
         {
             Console.Clear();
+            Console.ForegroundColor = ConsoleColor.Yellow;
             Console.SetCursorPosition(0, 0); // 테두리_가로선 맨 윗줄
-            for (int i = 0; i < 60; i++)
+            for (int i = 0; i < 120; i++)
             {
                 Console.Write('■');
             }
@@ -31,11 +32,12 @@ namespace W3_TeamProject
                 Console.Write('■');
             }
             Console.SetCursorPosition(0, 29); // 테두리_가로선 맨 밑줄
-            for (int i = 0; i < 60; i++)
+            for (int i = 0; i < 120; i++)
             {
                 Console.Write('■');
             }
             // Hey !!  문구
+            Console.ForegroundColor = ConsoleColor.Yellow;
             Console.SetCursorPosition(43, 5);
             Console.WriteLine("██   ██ ███████ ██    ██     ██ ██ ");
             Console.SetCursorPosition(43, 6);
@@ -57,11 +59,42 @@ namespace W3_TeamProject
             Console.WriteLine("██ ███ ██ ██   ██ ██   ██    ██         ██     ██ ███ ██ ██   ██ ██    ██ ██  ██ ██ ██    ██       ▀▀   ");
             Console.SetCursorPosition(8, 19);
             Console.WriteLine(" ███ ███  ██   ██ ██   ██    ██    ███████      ███ ███  ██   ██  ██████  ██   ████  ██████        ██   ");
-            Console.SetCursorPosition(52, 25);
-            Console.WriteLine("Press to anykey");
 
-            ConsoleKeyInfo key = Console.ReadKey(); //아무키나 눌렀을때
-            nextState = SceneState.Town; // 다음스테이지(캐릭터 설명화면)으로 넘어갑니다.
+            Console.SetCursorPosition(46, 23);
+            Console.WriteLine("< 이봐  !!  뭐가  문제야  ? >");
+
+            Console.ForegroundColor = ConsoleColor.White;
+
+
+
+            int anykeyBlink = 0;
+
+            while (true)
+            {
+                if (anykeyBlink % 2 == 0)
+                {
+                    Console.SetCursorPosition(49, 25);
+                    Console.WriteLine("Press any key to start");
+                }
+                else
+                {
+                    Console.SetCursorPosition(49, 25);
+                    Console.Write(new string(' ', "Press any key to start".Length)); //문자 길이 만큼 공백 처리
+                }
+
+                Thread.Sleep(500); // msec 지연
+                anykeyBlink++; 
+
+                if (Console.KeyAvailable)
+                {
+                    Console.ReadKey(false);
+                    break; 
+                }
+                nextState = SceneState.Town; // 다음스테이지(캐릭터 설명화면)으로 넘어갑니다.
+            }
+
+            
+
             
         }
         public override SceneState ExitScene()

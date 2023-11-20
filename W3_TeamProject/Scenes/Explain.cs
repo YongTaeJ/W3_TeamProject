@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -12,7 +13,7 @@ namespace W3_TeamProject
 		{
 			Console.Clear();
             Console.SetCursorPosition(0, 0); // 테두리_가로선 맨 윗줄
-            for (int i = 0; i < 60; i++)
+            for (int i = 0; i < 120; i++)
             {
                 Console.Write('■');
             }
@@ -25,16 +26,16 @@ namespace W3_TeamProject
                 Console.Write('■');
             }
             Console.SetCursorPosition(0, 29); // 테두리_가로선 맨 밑줄
-            for (int i = 0; i < 60; i++)
+            for (int i = 0; i < 120; i++)
             {
                 Console.Write('■');
             }
-
-
-            Console.SetCursorPosition(4, 2);
-            int x = 4; // 초기 X 위치
-            int y = 2; // 초기 Y 위치
-
+            
+            
+            Console.SetCursorPosition(10, 8);
+            int x = 10; // 초기 X 위치
+            int y = 8; // 초기 Y 위치
+            //Console.ForegroundColor = ConsoleColor.Green;
             string sentence = "2023년, 어느 날\n능력,성과가 뛰어난 H.매니저의 연봉협상이 동결되었다...." +
                               "\n이에 부당하다고 생각한 H.매니저 !!" +
                               "\n각오를 하고 Boss에게 최후통첩을 하려는 이를 막으려는 동료들" +
@@ -44,8 +45,8 @@ namespace W3_TeamProject
             {
                if (letter == '\n') // 새 줄 문자 확인
                {
-                    y++; // 한 줄 아래로 이동
-                    x = 4; // 초기 X 위치로 재설정
+                    y = y + 3; // 3Line 아래로 이동
+                    x = 10; // 초기 X 위치로 재설정
                     Console.SetCursorPosition(x, y);
                }
                else
@@ -53,14 +54,14 @@ namespace W3_TeamProject
                    Console.Write(letter);
                    x++; // 다음 문자 위치로 이동
                }
-
-                Thread.Sleep(50); // msec 지연
+               
+                Thread.Sleep(10); // msec 지연
             }
             
-            Console.ReadKey();
             ConsoleKeyInfo key = Console.ReadKey(); //아무키나 눌렀을때
             nextState = SceneState.Start; // 다음스테이지(캐릭터 설명화면)으로 넘어갑니다.
 
+            // 빡친 모습의 케릭터 추후에 추가하여 공백을 메꾸자!!
 
         }
 
