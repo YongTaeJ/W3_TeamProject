@@ -32,12 +32,12 @@ namespace W3_TeamProject
             Console.Clear();
             // UI, Controller 초기화
             UI.MakeUI();
-            Player.Init();
             Controller controller = new Controller();
             for (int i = 0; i < 7; i++)
             {
                 controller.AddRotation(16, i + 7);
             }
+            controller.AddRotation(16, 16);
             controller.AddRotation(16, 17);
 
             // 제목, 상태 표시
@@ -53,8 +53,10 @@ namespace W3_TeamProject
             CurrentEquipment();
 
             // 선택지 및 그에 따른 결과
+            Console.SetCursorPosition(18, 16);
+            Console.WriteLine("● 인벤토리");
             Console.SetCursorPosition(18, 17);
-            Console.WriteLine("뒤로가기");
+            Console.WriteLine("● 뒤로가기");
             Console.SetCursorPosition(18, 7);
 
             while (true)
@@ -91,7 +93,12 @@ namespace W3_TeamProject
                         Thread.Sleep(300);
                         DetailGold();
                         break;
-                    case 7:  // 뒤로가기 선택 시 -> Town으로
+                    case 7:  // 인벤토리 선택 시 -> Inventory로
+                        Thread.Sleep(200);
+                        nextState = SceneState.Inventory;
+                        Console.Clear();
+                        break;
+                    case 8:  // 뒤로가기 선택 시 -> Town으로
                         Thread.Sleep(200);
                         nextState = SceneState.Town;
                         Console.Clear();
@@ -179,9 +186,9 @@ namespace W3_TeamProject
         public static void StatusData(int startXpos, int startYpos)
         {
             Console.SetCursorPosition(startXpos + 10, startYpos + 1);
-            Console.WriteLine($"레  벨 : {Player.Level}");
+            Console.WriteLine($"● 레  벨 : {Player.Level}");
             Console.SetCursorPosition(startXpos + 10, startYpos + 2);
-            Console.WriteLine($"이  름 : {Player.PlayerName}");
+            Console.WriteLine($"● 이  름 : {Player.PlayerName}");
             Console.SetCursorPosition(startXpos + 10, startYpos + 3);
             ViewAtk();
             Console.SetCursorPosition(startXpos + 10, startYpos + 4);
@@ -191,7 +198,7 @@ namespace W3_TeamProject
             Console.SetCursorPosition(startXpos + 10, startYpos + 6);
             ViewMP();
             Console.SetCursorPosition(startXpos + 10, startYpos + 7);
-            Console.WriteLine($"소지금 : {Player.Gold}");
+            Console.WriteLine($"● 소지금 : {Player.Gold}");
             Console.WriteLine();
         }
 
@@ -204,35 +211,35 @@ namespace W3_TeamProject
 
             if (Player.EquipAttack != 0)
             {
-                RightHiText(Red, $"공격력 : {totalAttack}  ", $" (+{Player.BaseAttack}) ");
+                RightHiText(Red, $"● 공격력 : {totalAttack}", $" (+{Player.EquipAttack}) ");
             }
             else
-                Console.WriteLine($"공격력 : {Player.BaseAttack}");
+                Console.WriteLine($"● 공격력 : {Player.BaseAttack}");
         }
 
         public static void ViewDef()
         {
             int totalDefense = Player.EquipDefense + Player.BaseDefense;
 
-            if (Player.EquipAttack != 0)
+            if (Player.EquipDefense != 0)
             {
-                RightHiText(Red, $"방어력 : {totalDefense}  ", $" (+{Player.BaseDefense}) ");
+                RightHiText(Blue, $"● 방어력 : {totalDefense}", $" (+{Player.EquipDefense}) ");
             }
             else
-                Console.WriteLine($"방어력 : {Player.BaseDefense}");
+                Console.WriteLine($"● 방어력 : {Player.BaseDefense}");
         }
 
         public static void ViewHP()
         {
             int totalHealth = Player.EquipHealth + Player.BaseHealth;
-            Console.Write("체  력 : ");
+            Console.Write("● 체  력 : ");
             LeftHiText(Red, $"{Player.CurrentHealth} ", $"/ {totalHealth} ");
         }
 
         public static void ViewMP()
         {
             int totalMana = Player.EquipMana + Player.BaseMana;
-            Console.Write("마  력 : ");
+            Console.Write("● 마  력 : ");
             LeftHiText(Blue, $"{Player.CurrentMana} ", $"/ {totalMana} ");
         }
 
