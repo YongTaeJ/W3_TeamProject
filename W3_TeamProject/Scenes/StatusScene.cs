@@ -14,6 +14,7 @@ namespace W3_TeamProject
     /// </summary>
     internal class StatusScene : BaseScene
     {
+
         public override void EnterScene()
         {
             StatusMain();
@@ -493,43 +494,28 @@ namespace W3_TeamProject
         /// </summary>
         public static void CurrentEquipment()
         {
-            // Player 데이터에서 현재 착용중인 아이템들의 정보를 모두 받아오기
-            // 이후에 장착 중인 아이템들을 해당 위치에 맞게 표시하기
-            // 
+            BaseItem playerItem;
+
             CurrentEquipmentItem();
-            Console.SetCursorPosition(65, 4);
-            Console.WriteLine("       ㅇㅇㅇㅇㅇㅇ");
-            Console.SetCursorPosition(65, 5);
-            Console.WriteLine("     ㅇ            ㅇ");
-            Console.SetCursorPosition(65, 6);
-            Console.WriteLine("   ㅇ                ㅇ");
-            Console.SetCursorPosition(65, 7);
-            Console.WriteLine("   ㅇ    ㅇ    ㅇ    ㅇ");
-            Console.SetCursorPosition(65, 8);
-            Console.WriteLine("   ㅇ                ㅇ");
-            Console.SetCursorPosition(65, 9);
-            Console.WriteLine("     ㅇ            ㅇ");
-            Console.SetCursorPosition(65, 10);
-            Console.WriteLine("       ㅇㅇㅇㅇㅇㅇ");
-            Console.SetCursorPosition(65, 11);
-            Console.WriteLine("     ㅇ            ㅇ");
-            Console.SetCursorPosition(65, 12);
-            Console.WriteLine("   ㅇ                ㅇ");
-            Console.SetCursorPosition(65, 13);
-            Console.WriteLine("   ㅇ  ㅇ        ㅇ  ㅇ");
-            Console.SetCursorPosition(65, 14);
-            Console.WriteLine("   ㅇㅇㅇ        ㅇㅇㅇ");
-            Console.SetCursorPosition(65, 15);
-            Console.WriteLine("       ㅇ        ㅇ");
-            Console.SetCursorPosition(65, 16);
-            Console.WriteLine("       ㅇ        ㅇ");
-            Console.SetCursorPosition(65, 17);
-            Console.WriteLine("       ㅇ  ㅇㅇ  ㅇ");
-            Console.SetCursorPosition(65, 18);
-            Console.WriteLine("       ㅇㅇ    ㅇㅇ");
-            StatusArmorImage();
+            StatusBaseImage();
             StatusWeaponImage();
-            StatusAccessoryImage();
+
+            //if (playerItem.ItemType == ItemType.Weapon && playerItem.IsEquip == true)
+            //{
+            //    // 착용한 아이템이 기본 길이 무기면 StatusWeaponImage();
+            //    // 착용한 아이템이 짧은 무기면 StatusWeaponImageSS();
+            //    // 착용한 아이템이 긴 무기면 StatusWeaponImageLS();
+            //}
+
+            //if (playerItem.ItemType == ItemType.Armor && playerItem.IsEquip == true)
+            //{
+            //    StatusArmorImage();
+            //}
+
+            //if (playerItem.ItemType == ItemType.Accessory && playerItem.IsEquip == true)
+            //{
+            //    StatusAccessoryImage();
+            //}
 
             // 1안 -> 착용하고 있는 아이템의 종류에 따라 그림이 다르게 표시되게
             // 각 아이템에 맞게 그림을 제작, 장착한 아이템에 따라 표시되는 그림
@@ -548,11 +534,11 @@ namespace W3_TeamProject
         {
             string Equip = "착용중 아이템";
             string Weapon = "무  기";
-            string EquipWeapon = "스파르타 검";  // 여기를 player 데이터로 받아오기
             string Armor = "방어구";
-            string EquipArmor = "슈퍼 아머";  // 여기를 player 데이터로 받아오기
             string Accessory = "장신구";
-            string EquipAccessory = "오크의 반지";  // 여기를 player 데이터로 받아오기
+            string EquipWeapon = "없  음";  // 여기를 player 데이터로 받아오기
+            string EquipArmor = "없  음";  // 여기를 player 데이터로 받아오기
+            string EquipAccessory = "없  음";  // 여기를 player 데이터로 받아오기
             int EWLength = (23 - KoreanStrLength(EquipWeapon)) / 2;
             int EALength = (23 - KoreanStrLength(EquipArmor)) / 2;
             int ECLength = (23 - KoreanStrLength(EquipAccessory)) / 2;
@@ -562,11 +548,11 @@ namespace W3_TeamProject
             Console.SetCursorPosition(100, 9);
             Console.WriteLine(Weapon);
             Console.SetCursorPosition(96 + EWLength, 10);
-            LeftHiText(Blue, EquipWeapon);
+            LeftHiText(DarkBlue, EquipWeapon);
             Console.SetCursorPosition(100, 12);
             Console.WriteLine(Armor);
             Console.SetCursorPosition(96 + EALength, 13);
-            LeftHiText(Green, EquipArmor);
+            LeftHiText(DarkGreen, EquipArmor);
             Console.SetCursorPosition(100, 15);
             Console.WriteLine(Accessory);
             Console.SetCursorPosition(96 + ECLength, 16);
@@ -631,6 +617,47 @@ namespace W3_TeamProject
             Console.ResetColor();
         }
 
+        public static void StatusWeaponImageSS()
+        {
+
+            Console.ForegroundColor = DarkBlue;
+            Console.SetCursorPosition(65, 10);
+            Console.SetCursorPosition(65, 11);
+            Console.WriteLine("     ㅁ");
+            Console.SetCursorPosition(65, 12);
+            Console.WriteLine("   ㅁ  ㅁ");
+            Console.SetCursorPosition(65, 13);
+            Console.WriteLine("   ㅁ  ㅁ");
+            Console.SetCursorPosition(65, 14);
+            Console.WriteLine(" ㅁㅁㅁㅁㅁ");
+            Console.SetCursorPosition(65, 15);
+            Console.WriteLine("     ㅁ");
+            Console.ResetColor();
+        }
+
+        public static void StatusWeaponImageLS()
+        {
+            Console.ForegroundColor = DarkBlue;
+            Console.SetCursorPosition(65, 8);
+            Console.WriteLine("     ㅁ");
+            Console.SetCursorPosition(65, 9);
+            Console.WriteLine("   ㅁ  ㅁ");
+            Console.SetCursorPosition(65, 10);
+            Console.WriteLine("   ㅁ  ㅁ");
+            Console.SetCursorPosition(65, 11);
+            Console.WriteLine("   ㅁ  ㅁ");
+            Console.SetCursorPosition(65, 12);
+            Console.WriteLine("   ㅁ  ㅁ");
+            Console.SetCursorPosition(65, 13);
+            Console.WriteLine("   ㅁ  ㅁ");
+            Console.SetCursorPosition(65, 14);
+            Console.WriteLine(" ㅁㅁㅁㅁㅁ");
+            Console.SetCursorPosition(65, 15);
+            Console.WriteLine("     ㅁ");
+            Console.ResetColor();
+        }
+        
+
         /// <summary>
         /// 방어구 착용시 추가되는 이미지
         /// </summary>
@@ -659,7 +686,6 @@ namespace W3_TeamProject
             Console.WriteLine("ㅁ");
             Console.ResetColor();
         }
-
 
         /// <summary>
         /// 한국어 길이가 다른 문제를 해결하는 길이 측정
