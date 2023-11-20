@@ -11,10 +11,11 @@ namespace W3_TeamProject
 		#region variables
 		protected string skillName;
 		protected string skillDescription;
+		protected string skillComment;
 		protected int requiredLevel;
 
 		protected int fixedDamage;
-		protected float variableDamage;
+		protected int variableDamage;
 
 		protected int cost;
 		protected int cooldown;
@@ -26,9 +27,10 @@ namespace W3_TeamProject
 		#region properties
 		public string SkillName { get { return skillName; } }
 		public string SkillDescription { get {  return skillDescription; } }
+		public string SkillComment { get { return skillComment; } }
 		public int RequiredLevel { get {  return requiredLevel; } }
 		public int FixedDamage { get { return fixedDamage; } }
-		public float VariableDamage {  get { return variableDamage; } }
+		public int VariableDamage {  get { return variableDamage; } }
 		public int Cost { get { return cost; } }
 		public int Cooldown { get { return cooldown; } }
 		public int CurrentCooldown { get { return currentCooldown; } }

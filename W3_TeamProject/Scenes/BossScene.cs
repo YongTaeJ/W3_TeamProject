@@ -21,13 +21,15 @@ namespace W3_TeamProject.Scenes
 		public BossScene()
 		{
 			InitMainController();
-			InitSkillController();
+			Player.Init();
 		}
 
 		public override void EnterScene()
 		{
 			int bias;
 			bool isTurn = false;
+			InitSkillController();
+
 			while (endPoint == 0)
 			{
 				bias = 1;
@@ -51,14 +53,7 @@ namespace W3_TeamProject.Scenes
 						break;
 					case 2: // 스킬창
 						{
-							ClearChoosePanel();
-							MakeSkillChoicePanel();
-							int temp = skillController.InputLoop();
-							if (temp == 0) ;
-							else
-							{
-								// input값에 따라 플레이어 스킬 호출, 계산
-							}
+							isTurn = UseSkill();
 						}
 						break;
 					case 3: // 아이템창
@@ -69,6 +64,7 @@ namespace W3_TeamProject.Scenes
 				}
 
 				// 선택이 끝나면 여기서 보스의 행동
+				// 선택이 아니라면 선택지를 다시 루프
 				if(isTurn)
 				{
 					isTurn = false;
@@ -115,8 +111,23 @@ namespace W3_TeamProject.Scenes
 
 		private void InitSkillController()
 		{
-			// default로 돌아가기키 넣고, 나머지 할당
+			// 기존 데이터 초기화
+			skillController.RemoveAll();
+
 			skillController.AddRotation(77,28); // 돌아가기 할당
+			int? count = 1; // Player.playerSkillList.SkillCount;
+
+			// 현재까지 스킬은 최대 6개 상정
+			if (count == null)
+				count = 0;
+			else if (count > 6)
+				count = 6;
+
+			for(int i=0; i < count; i++)
+			{
+				// 해당 위치에 커서만 생성하도록
+				skillController.AddRotation(33, 22 + i);
+			}
 		}
 
 		public override SceneState ExitScene()
@@ -136,6 +147,33 @@ namespace W3_TeamProject.Scenes
 		{
 			WriteComment("사장님의 질문 공세에 대비해 단단히 마음을 먹습니다.");
 			Thread.Sleep(1000);
+		}
+
+		public bool UseSkill()
+		{
+			ClearChoosePanel();
+			MakeSkillChoicePanel();
+			BaseSkill? currentSkill = null;
+			int chooseSkillCount = skillController.InputLoop();
+			if (chooseSkillCount == 0) return false;
+			else
+			{
+				currentSkill = Player.UseSkill(chooseSkillCount);
+				if (currentSkill == null)
+				{
+					WriteComment("MP가 부족해 스킬을 사용할 수 없습니다.");
+					Thread.Sleep(1000);
+					return false;
+				}
+				else // 스킬 사용 성공
+				{
+					int damage = currentSkill.FixedDamage + currentSkill.VariableDamage * Player.Level;
+					endPoint = boss.GetDamage(damage);
+					WriteComment($"{currentSkill.SkillComment} 사장님께 {damage}만큼의 데미지를 입혔습니다!");
+					Thread.Sleep(1000);
+					return true;
+				}
+			}
 		}
 
 		private void WriteComment(string comment = "")
@@ -212,6 +250,13 @@ namespace W3_TeamProject.Scenes
 			Console.Write("돌아가기");
 
 			// 이하는 상황에 맞는 스킬 목록 작성
+			// 스킬카운트를 받아서, for문 돌림(위치는 35, 22+i)
+			for(int i=0; i < Player.playerSkillList.SkillCount; i++)
+			{
+				Console.SetCursorPosition(35, 22 + i);
+				BaseSkill tempSkill = Player.GetSkill(i);
+				Console.Write($"{tempSkill.SkillName} | {tempSkill.Cost} | {tempSkill.SkillDescription}");
+			}
 		}
 		private void ClearChoosePanel()
 		{
@@ -341,6 +386,8 @@ namespace W3_TeamProject.Scenes
 					{
 						isDelayTriggered = true;
 						delaySkillIndex = choose;
+						WriteComment("사장님이 기를 모으고 있습니다...!!!");
+						Thread.Sleep(1000);
 						break;
 					}
 
@@ -373,6 +420,8 @@ namespace W3_TeamProject.Scenes
 		{
 			int damage = skillList[index].damage / bias;
 			Player.ChangeHP(-damage);
+			MP -= skillList[index].cost;
+			UpdateMPbar();
 			WriteComment($"{skillList[index].description} {damage}만큼의 타격을 입었습니다!");
 			Thread.Sleep(1000);
 		}
