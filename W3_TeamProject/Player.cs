@@ -2,12 +2,20 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Security;
+using System.Net.WebSockets;
 using System.Reflection.Metadata;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace W3_TeamProject
 {
+	enum SkillState
+	{
+		None,
+		OK,
+		LackOfMana,
+		IsCoolDown
+	}
 	internal static class Player
 	{
 		public static PlayerSkillList playerSkillList;
@@ -32,7 +40,11 @@ namespace W3_TeamProject
 		private static int currentHeatlh = 0;
 		private static int currentMana = 0;
 
+		private static int healthPotionCount = 0;
+		private static int manaPotionCount = 0;
+
 		private static int gold;
+		private static bool isDie = false;
 		#endregion
 
 		#region properties
@@ -44,6 +56,8 @@ namespace W3_TeamProject
 		public static string PlayerName { get {  return playerName; } }
 		public static int CurrentHealth { get { return currentHeatlh; } set { currentHeatlh = value; } }
 		public static int CurrentMana {  get { return currentMana; } }
+		public static int HealthPotionCount { get { return healthPotionCount; } }
+		public static int ManaPotionCount { get { return manaPotionCount; } }
 		public static int BaseAttack { get { return baseAttack; } }
 		public static int BaseDefense { get {  return baseDefense; } } 
 		public static int BaseHealth { get { return baseHealth; } set { currentHeatlh = value; } }//체력이 올라가면 같이 베이스 체력도 같이 올림
@@ -53,12 +67,38 @@ namespace W3_TeamProject
 		public static int EquipHealth {  get { return equipHealth; } set { equipHealth = value; } }
 		public static int EquipMana {  get { return equipMana; } }
 		public static int Gold { get { return gold;  } set { gold = value; } }
+		public static bool IsDie {  get { return isDie; } }
 		#endregion
 
 		public static void ChangeHP(int value)
 		{
-			currentHeatlh += value;
-			UI.UpdateHPbar();
+			if(baseHealth + equipHealth < currentHeatlh + value)
+			{
+				currentHeatlh = baseHealth + equipHealth;
+			}
+			else
+			{
+				currentHeatlh += value;
+			}
+
+			if(currentHeatlh <= 0)
+			{
+				isDie = true;
+			}
+
+			UI.UpdateHPBar();
+		}
+		public static void ChangeMP(int value)
+		{
+			if (baseMana + equipMana < currentMana + value)
+			{
+				currentMana = baseMana + equipMana;
+			}
+			else
+			{
+				currentMana += value;
+			}
+			UI.UpdateMPBar();
 		}
 		public static void Init()
 		{
@@ -73,24 +113,50 @@ namespace W3_TeamProject
 			playerSkillList = new PlayerSkillList();
 		}
 
-		public static BaseSkill UseSkill(int index)
+		public static void TurnCooldown()
+		{
+			playerSkillList.TurnCooldown();
+		}
+		public static BaseSkill? UseSkill(int index, ref SkillState skillState)
 		{
 			currentSkill = playerSkillList.GetData(index);
 
-			if(currentMana >= currentSkill.Cost)
+			if(currentSkill.CurrentCooldown > 0)
 			{
-				// 스킬 사용 성공 -> Player의 마나 후-> Scene에 스킬데이터 넘겨줌
-				currentMana -= currentSkill.Cost;
-				UI.UpdateMPBar();
-				return currentSkill;
+				// 쿨타임!!!
+				skillState = SkillState.IsCoolDown;
+				return null;
 			}
 
-			// 스킬 사용 실패
-			return null;
+			if(currentMana < currentSkill.Cost)
+			{
+				// 마나 부족
+				skillState = SkillState.LackOfMana;
+				return null;
+			}
+
+			// 스킬 사용 성공 -> Player의 마나 후-> Scene에 스킬데이터 넘겨줌
+			currentMana -= currentSkill.Cost;
+			UI.UpdateMPBar();
+			currentSkill.SetCooldown();
+			skillState = SkillState.OK;
+			return currentSkill;
 		}
 		public static BaseSkill GetSkill(int index)
 		{
 			return playerSkillList.GetData(index);
+		}
+		public static void UseHealthPotion()
+		{
+			healthPotionCount--;
+			int value = (baseHealth + equipHealth) / 2;
+			ChangeHP(value);
+		}
+		public static void UseManaPotion()
+		{
+			manaPotionCount--;
+			int value = (baseMana + equipMana) / 2;
+			ChangeMP(value);
 		}
 	}
 
@@ -126,6 +192,14 @@ namespace W3_TeamProject
 			return null;
 		}
 
+		public void TurnCooldown()
+		{
+			for(int i=0; i < availableSkill.Count; i++)
+			{
+				availableSkill[i].DecreaseCooldown();
+			}
+		}
+
 		public PlayerSkillList()
 		{
 			Init();
@@ -136,7 +210,6 @@ namespace W3_TeamProject
 		private void Init()
 		{
 			availableSkill.Add(new TestSkill());
-			Console.Write("dd");
 		}
 	}
 }

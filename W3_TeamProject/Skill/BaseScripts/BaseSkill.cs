@@ -42,6 +42,17 @@ namespace W3_TeamProject
 			Init();
 		}
 
+		public void SetCooldown()
+		{
+			currentCooldown = cooldown;
+		}
+
+		public void DecreaseCooldown()
+		{
+			if (currentCooldown > 0)
+				currentCooldown--;
+		}
+
 		protected abstract void Init();
 	}
 }

@@ -17,7 +17,7 @@ namespace W3_TeamProject
 			Console.Clear();
 			MakeBorder();
 			MakeHPMPPart();
-			UpdateHPbar();
+			UpdateHPBar();
 			UpdateMPBar();
 		}
 		public static void MakeBorder()
@@ -76,11 +76,12 @@ namespace W3_TeamProject
 			Console.SetCursorPosition(0, 0);
 		}
 
-		public static void UpdateHPbar()
+		public static void UpdateHPBar()
 		{
 			int portion = Player.CurrentHealth * 20  / (Player.BaseHealth + Player.EquipHealth) ;
 
 			if (portion <= 0) portion = 0;
+			if (portion > 20) portion = 20;
 
 			Console.SetCursorPosition(7, 21);
 			Console.Write($"{Player.CurrentHealth} / {Player.BaseHealth + Player.EquipHealth}");
@@ -104,6 +105,7 @@ namespace W3_TeamProject
 		{
 			int portion = Player.CurrentMana * 20  / (Player.BaseMana + Player.EquipMana) ;
 			if (portion <= 0) portion = 0;
+			if (portion > 20) portion = 20;
 
 			Console.SetCursorPosition(7, 25);
 			Console.Write("                 ");

@@ -4,7 +4,6 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using W3_TeamProject.Scenes;
 
 namespace W3_TeamProject
 {
@@ -21,7 +20,9 @@ namespace W3_TeamProject
 		Status,
 		Battle,
 		Store,
-		Boss
+		Boss,
+		FinalWin,
+		FinalLose
   }
 
 	internal class SceneManager
@@ -53,8 +54,9 @@ namespace W3_TeamProject
 			Scenes.Add(SceneState.Battle, new BattleScene()); //전투화면
 			Scenes.Add(SceneState.Boss, new BossScene()); // 보스전
             Scenes.Add(SceneState.Store, new StoreScene()); // 상점 장면
-
-    }
+			Scenes.Add(SceneState.FinalWin, new FinalWinScene()); // 상점 장면
+			Scenes.Add(SceneState.FinalLose, new FinalLoseScene()); // 상점 장면
+		}
 
 		public SceneState Update()
 		{

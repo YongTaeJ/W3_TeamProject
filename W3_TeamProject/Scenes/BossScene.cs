@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.Design;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace W3_TeamProject.Scenes
+namespace W3_TeamProject
 {
 	internal class BossScene : BaseScene
 	{
@@ -29,6 +30,7 @@ namespace W3_TeamProject.Scenes
 			int bias;
 			bool isTurn = false;
 			InitSkillController();
+			InitItemController();
 
 			while (endPoint == 0)
 			{
@@ -58,29 +60,38 @@ namespace W3_TeamProject.Scenes
 						break;
 					case 3: // 아이템창
 						{
-
+							isTurn = UsePotion();
 						}
 						break;
 				}
+
+				if (endPoint != 0)
+					break;
 
 				// 선택이 끝나면 여기서 보스의 행동
 				// 선택이 아니라면 선택지를 다시 루프
 				if(isTurn)
 				{
 					isTurn = false;
-					boss.BossAttack(bias, ref endPoint);
+					boss.BossAttack(bias);
+					if (Player.IsDie) endPoint = 2;
 					boss.UpdateCooldown();
+					Player.TurnCooldown();
 				}
 			}
 
-			// 계산상 이상이 없으면 endPoint는 계속 0. 루프 발생
-			// 둘 중 한 명이 죽으면 1 혹은 2. 루프 탈출
-
-			//endPoint 분기에 따른 처리(게임 승리, 패배)
-
-			Console.SetCursorPosition(0, 0);
+			if(endPoint == 1)
+			{
+				// 플레이어 승리
+				nextState = SceneState.FinalWin;
+			}
+			else
+			{
+				// 플레이어 패배
+				nextState = SceneState.FinalLose;
+			}
 		}
-		public void Init()
+		private void Init()
 		{
 			// 기초 UI 생성 + Main, Skill Controller 초기화!!
 			UI.MakeUI();
@@ -129,13 +140,22 @@ namespace W3_TeamProject.Scenes
 				skillController.AddRotation(33, 22 + i);
 			}
 		}
+		private void InitItemController()
+		{
+			// 기존 데이터 초기화
+			itemController.RemoveAll();
+
+			itemController.AddRotation(77, 28); // 돌아가기 할당
+			itemController.AddRotation(37, 26); // 체력 할당
+			itemController.AddRotation(65, 26);
+		}
 
 		public override SceneState ExitScene()
 		{
 			return nextState;
 		}
 
-		public void NormalAttack()
+		private void NormalAttack()
 		{
 			int damage = 10 + Player.EquipAttack + Player.BaseAttack;
 			endPoint = boss.GetDamage(damage);
@@ -143,35 +163,89 @@ namespace W3_TeamProject.Scenes
 			Thread.Sleep(1000);
 		}
 
-		public void NormalDefense()
+		private void NormalDefense()
 		{
 			WriteComment("사장님의 질문 공세에 대비해 단단히 마음을 먹습니다.");
 			Thread.Sleep(1000);
 		}
 
-		public bool UseSkill()
+		private bool UseSkill()
 		{
 			ClearChoosePanel();
 			MakeSkillChoicePanel();
 			BaseSkill? currentSkill = null;
+			SkillState skillState = SkillState.None;
+
 			int chooseSkillCount = skillController.InputLoop();
 			if (chooseSkillCount == 0) return false;
 			else
 			{
-				currentSkill = Player.UseSkill(chooseSkillCount);
-				if (currentSkill == null)
+				chooseSkillCount--; // 돌아가기가 0번이라 인덱스와 맞추기 위한 보정
+				currentSkill = Player.UseSkill(chooseSkillCount, ref skillState);
+				if (skillState == SkillState.LackOfMana)
 				{
 					WriteComment("MP가 부족해 스킬을 사용할 수 없습니다.");
 					Thread.Sleep(1000);
 					return false;
 				}
-				else // 스킬 사용 성공
+				else if (skillState == SkillState.IsCoolDown)
+				{
+					WriteComment("현재 쿨타임이 남아있는 스킬입니다.");
+					Thread.Sleep(1000);
+					return false;
+				}
+				else if (skillState == SkillState.OK) // 스킬 사용 성공
 				{
 					int damage = currentSkill.FixedDamage + currentSkill.VariableDamage * Player.Level;
 					endPoint = boss.GetDamage(damage);
 					WriteComment($"{currentSkill.SkillComment} 사장님께 {damage}만큼의 데미지를 입혔습니다!");
 					Thread.Sleep(1000);
 					return true;
+				}
+				else return false;
+			}
+		}
+		private bool UsePotion()
+		{
+			ClearChoosePanel();
+			MakeItemChoicePanel();
+
+			int chooseItemCount = itemController.InputLoop();
+			if (chooseItemCount == 0) return false;
+			else
+			{
+				if(chooseItemCount == 1)
+				{
+					// 체력포션 사용
+					if(Player.HealthPotionCount == 0)
+					{
+						WriteComment("체력 포션이 없습니다.");
+						Thread.Sleep(1000);
+						return false;
+					}
+					else
+					{
+						Player.UseHealthPotion();
+						WriteComment("당신은 체력 포션을 마셨습니다!");
+						Thread.Sleep(1000);
+						return true;
+					}
+				}
+				else // 마나포션 사용
+				{
+					if (Player.ManaPotionCount == 0)
+					{
+						WriteComment("마나 포션이 없습니다.");
+						Thread.Sleep(1000);
+						return false;
+					}
+					else
+					{
+						Player.UseManaPotion();
+						WriteComment("당신은 마나 포션을 마셨습니다!");
+						Thread.Sleep(1000);
+						return true;
+					}
 				}
 			}
 		}
@@ -255,8 +329,72 @@ namespace W3_TeamProject.Scenes
 			{
 				Console.SetCursorPosition(35, 22 + i);
 				BaseSkill tempSkill = Player.GetSkill(i);
-				Console.Write($"{tempSkill.SkillName} | {tempSkill.Cost} | {tempSkill.SkillDescription}");
+				Console.Write($"{tempSkill.SkillName} | Cost : {tempSkill.Cost} | Cooldown : {tempSkill.CurrentCooldown}");
 			}
+		}
+
+		private void MakeItemChoicePanel()
+		{
+			Console.SetCursorPosition(79, 28);
+			Console.Write("돌아가기");
+			// 체력포션, 아이템포션
+			Console.SetCursorPosition(36, 22);
+			Console.Write("┌────────────────────┐");
+			Console.SetCursorPosition(36, 23);
+			Console.Write('│');
+			Console.SetCursorPosition(36 + 21, 23);
+			Console.Write('│');
+			Console.SetCursorPosition(36, 24);
+			Console.Write('│');
+			Console.SetCursorPosition(36 + 21, 24);
+			Console.Write('│');
+			Console.SetCursorPosition(36, 25);
+			Console.Write("└────────────────────┘");
+
+			Console.SetCursorPosition(64, 22);
+			Console.Write("┌────────────────────┐");
+			Console.SetCursorPosition(64, 23);
+			Console.Write('│');
+			Console.SetCursorPosition(64 + 21, 23);
+			Console.Write('│');
+			Console.SetCursorPosition(64, 24);
+			Console.Write('│');
+			Console.SetCursorPosition(64 + 21, 24);
+			Console.Write('│');
+			Console.SetCursorPosition(64, 25);
+			Console.Write("└────────────────────┘");
+
+			Console.SetCursorPosition(42, 23);
+			Console.ForegroundColor = ConsoleColor.Red;
+			Console.Write("체력");
+			Console.ResetColor();
+			Console.Write(" 포션");
+
+			Console.SetCursorPosition(40, 24);
+			Console.Write("체력 ");
+			Console.ForegroundColor= ConsoleColor.Green;
+			Console.Write("50% ");
+			Console.ResetColor();
+			Console.Write("회복");
+
+			Console.SetCursorPosition(70, 23);
+			Console.ForegroundColor = ConsoleColor.Blue;
+			Console.Write("마나");
+			Console.ResetColor();
+			Console.Write(" 포션");
+
+			Console.SetCursorPosition(68, 24);
+			Console.Write("마나 ");
+			Console.ForegroundColor = ConsoleColor.Green;
+			Console.Write("50% ");
+			Console.ResetColor();
+			Console.Write("회복");
+
+			Console.SetCursorPosition(39, 26);
+			Console.Write($"남은 포션 : {Player.HealthPotionCount}개");
+
+			Console.SetCursorPosition(67, 26);
+			Console.Write($"남은 포션 : {Player.ManaPotionCount}개");
 		}
 		private void ClearChoosePanel()
 		{
@@ -342,7 +480,7 @@ namespace W3_TeamProject.Scenes
 			Console.SetCursorPosition(0, 0);
 		}
 
-		public void BossAttack(int bias, ref int endPoint)
+		public void BossAttack(int bias)
 		{
 			// 딜레이가 발생했으면 딜레이 스킬 사용!!
 			if(isDelayTriggered)
@@ -446,6 +584,31 @@ namespace W3_TeamProject.Scenes
 			this.cooldown = cooldown;
 			this.isDelay = isDelay;
 			currentcooldown = cooldown;
+		}
+	}
+
+	internal class FinalWinScene : BaseScene
+	{
+		public override void EnterScene()
+		{
+			throw new NotImplementedException();
+		}
+
+		public override SceneState ExitScene()
+		{
+			return SceneState.None;
+		}
+	}
+	internal class FinalLoseScene : BaseScene
+	{
+		public override void EnterScene()
+		{
+			throw new NotImplementedException();
+		}
+
+		public override SceneState ExitScene()
+		{
+			return SceneState.None;
 		}
 	}
 }
