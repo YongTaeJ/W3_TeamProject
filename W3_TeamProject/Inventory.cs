@@ -41,7 +41,62 @@ namespace W3_TeamProject
             else
                 return AccessoryList[index];
         }
+        public static List<BaseItem> GetItemList(ItemType itemtype)
+        {
+            switch (itemtype)
+            {
+                case ItemType.Weapon:
+                    return WeaponItemList;
+                case ItemType.Armor:
+                    return ArmorItemList;
+                case ItemType.Accessory:
+                    return AccessoryList;
+                default:
+                    return new List<BaseItem>(); // 유효하지 않은 아이템 타입일 경우 빈 리스트 반환
+            }
+        }
+        public static void RemoveItemFromInventory(string itemName, ItemType itemType)
+        {
+            switch (itemType)
+            {
+                case ItemType.Weapon:
+                    var weaponIndex = WeaponItemList.FindIndex(item => item.Name == itemName); //Findindex 리스트에서 특정 아이템의 값을 리턴해주는 녀석으로 없을 시 -1이 리턴된다.
+                    if (weaponIndex != -1)
+                        WeaponItemList.RemoveAt(weaponIndex);
+                    break;
 
+                case ItemType.Armor:
+                    var armorIndex = ArmorItemList.FindIndex(item => item.Name == itemName);
+                    if (armorIndex != -1)
+                        ArmorItemList.RemoveAt(armorIndex);
+                    break;
+
+                case ItemType.Accessory:
+                    var accessoryIndex = AccessoryList.FindIndex(item => item.Name == itemName);
+                    if (accessoryIndex != -1)
+                        AccessoryList.RemoveAt(accessoryIndex);
+                    break;
+
+                default:
+                    break;
+            }
+        }
+
+        public static void AddItemToInventory(BaseItem item)
+        {
+            switch (item.ItemType)
+            {
+                case ItemType.Weapon:
+                    WeaponItemList.Add(item);
+                    break;
+                case ItemType.Armor:
+                    ArmorItemList.Add(item);
+                    break;
+                case ItemType.Accessory:
+                    AccessoryList.Add(item);
+                    break;
+            }
+        }
         public static void RemoveItem(int index, ItemType itemType) //아이템 타입과 삭제하고 싶은 아이템의 위치를 적으면 RemoveAt 작동
 		{
             if (itemType == ItemType.Weapon)

@@ -11,6 +11,8 @@ namespace W3_TeamProject
     {
         public override void EnterScene()
         {
+
+            Console.Clear();
             /*
 			 * 장면에 대해 연출을 하고, 해당 장면에 대한 연출이 끝나면 nextState로 넘깁니다.
 			 * 예를 들어, 0을 눌러서 뒤로가기 기능을 구현한다고 하면
@@ -46,108 +48,160 @@ namespace W3_TeamProject
 			*/
             Console.WriteLine("상점에 온걸 환영합니다.");
             while (true)
-            { 
-                Console.WriteLine("무엇을 찾으시나요? \n1.공격 아이템 \n2.방어 아이템 \n3.악세서리 아이템 \n4.특수 아이템 \n\n0.돌아가기");
+            {
+                Console.WriteLine("무엇을 찾으시나요? \n1.방어 아이템 \n2.공격 아이템 \n3.악세서리 아이템 \n4.특수 아이템 \n\n0.돌아가기");
                 Console.Write(">> ");
                 if (int.TryParse(Console.ReadLine(), out int select))
-                { 
-                    if (select == 1)
-                    {
-                        Console.Clear();
-                        BuyList.Clear(); //BuyList를 싹 비워줌
-                        ArmorAddInList(); //방어구 목록
-                        ShowItem();
-                    }
-                    else if (select == 2)
-                    {
-                        Console.Clear();
-                        BuyList.Clear();
-                        WeaponAddInList(); //무기 목록
-                        ShowItem();
-                    }
-                    else if (select == 3)
-                    {
-                        Console.Clear();
-                        BuyList.Clear();
-                        AccessoryAddInList(); //장신구 목록
-                        ShowItem();
-                    }
-                    else if (select == 4)
-                    {
-                        Console.Clear();
-                        BuyList.Clear();
-                        SpecialAddInList(); //포션? 잡다한 아이템 목록
-                        ShowItem();
-                    }
-                    else if (select == 0)
-                    {
-                        nextState = SceneState.Inventory;
-                        break;
-                    }
-                    else
-                    {
-                        Console.Clear();
-                        Console.WriteLine("다시 입력해 주세요");
-                    }
+                {
+                    ProcessUserInput(select);
+                }
+                else
+                {
+                    Console.Clear();
+                    Console.WriteLine("숫자를 입력해 주세요.");
                 }
             }
 
         }
         private static List<BaseItem> BuyList = new List<BaseItem>();
         // BuyList.Add로 목록 추가
-        public void ArmorAddInList() //방어구
+        private void ProcessUserInput(int select)
         {
-            BuyList.Add(new SteelArmor());
-            BuyList.Add(new SpartaArmor());
-        }
+            Console.Clear();
+            BuyList.Clear();
 
-        public void WeaponAddInList() //무기
-        {
-            BuyList.Add(new SteelSword());
-            BuyList.Add(new SpartaSword());
+            switch (select)
+            {
+                case 1:
+                    AddItemsToList(new OldArmor(), new SteelArmor(), new SpartaArmor()); //방어 아이템 목록
+                    ShowItemToBuy();
+                    break;
+                case 2:
+                    AddItemsToList(new RustySword(), new SteelSword(), new SpartaSword()); //공격 아이템 목록
+                    ShowItemToBuy();
+                    break;
+                case 3:
+                    AddItemsToList(new OrkRing(), new HealthRing(), new ManaRing()); //악세사리 아이템 목록
+                    ShowItemToBuy();
+                    break;
+                case 4:
+                    AddItemsToList(new HealthPotion()); //포션 아이템 목록
+                    ShowItemToBuy();
+                    break;
+                case 0:
+                    nextState = beforeState;
+                    break;
+                default:
+                    Console.WriteLine("다시 입력해 주세요");
+                    break;
+            }
         }
-        public void AccessoryAddInList() //장신구
+        private void AddItemsToList(params BaseItem[] items)
         {
-            BuyList.Add(new HealthRing());
-            BuyList.Add(new ManaRing());
-        }
-        public void SpecialAddInList() //특수
-        {
-            BuyList.Add(new HealthPotion());
+            BuyList.AddRange(items);
         }
         public override SceneState ExitScene()
         {
             return nextState;
         }
-        private void ShowItem()
+        private void ShowItemToBuy()
         {
             while (true)
-            {  
+            {
+                List<BaseItem> playerItemList = Inventory.GetItemList(BuyList[0].ItemType);
+                Console.Write("인벤토리이 존재하는 아이템:");
+                Console.ForegroundColor = ConsoleColor.DarkCyan;
+                Console.WriteLine("파란색");
+                Console.ResetColor();
+                Console.Write("골드가 부족한 아이템:");
+                Console.ForegroundColor = ConsoleColor.DarkRed;
+                Console.WriteLine("빨간색");
+                Console.ResetColor();
                 for (int i = 0; i < BuyList.Count; i++)
                 {
-                    if (BuyList[i].Cost > Player.Gold) { Console.ForegroundColor = ConsoleColor.DarkRed; } //돈이 부족하면 빨간색으로
-                    Console.WriteLine($"{i + 1}. {BuyList[i].Name} | {BuyList[i].Status} + {BuyList[i].EffectValue} | {BuyList[i].Description}"); //아이템 목록
-                    Console.ResetColor(); //색 리셋
-                }
-                Console.WriteLine("0. 돌아가기");
-                Console.Write("입력해라:");
-                int.TryParse(Console.ReadLine(), out int num);
-                if (num == 0) { Console.Clear(); break; }
-                else if (num <= BuyList.Count)
-                {
-                    if (BuyList[num - 1].Cost < Player.Gold)
+                    bool isItemInInventory = playerItemList.Any(item => item.Name == BuyList[i].Name);
+                    if (isItemInInventory)
                     {
-                        Console.Clear() ;
-                        Player.Gold -= BuyList[num - 1].Cost;
-                        if (BuyList[0].ItemType == ItemType.Armor) { Inventory.AddArmorItem(BuyList[num - 1]); } //방어구 상점에서 샀으면 방어구 인벤토리로
-                        else if (BuyList[0].ItemType == ItemType.Weapon) { Inventory.AddWeaponItem(BuyList[num - 1]); } //무기 상점에서 샀으면 무기 인벤토리로
-                        else if (BuyList[0].ItemType == ItemType.Accessory) { Inventory.AddAccessory(BuyList[num - 1]); } //장신구 상점에서 샀으면 장신구 인벤토리로
+                        Console.ForegroundColor = ConsoleColor.DarkCyan; // 인벤토리에 이미 있는 아이템이라면 청록색으로 표시                     
                     }
-                    else {Console.Clear(); Console.WriteLine("다시"); }
-                }
+                    else if (BuyList[i].Cost > Player.Gold)
+                    {
+                        Console.ForegroundColor = ConsoleColor.DarkRed; //돈이 부족하면 빨간색으로 표시
+                    }
+                    else
+                    {
+                        Console.ForegroundColor = ConsoleColor.White; //둘다 아니라면 흰색으로 표시
+                    }
 
+                    Console.WriteLine($"{i + 1}. {BuyList[i].Name} | {BuyList[i].Status} + {BuyList[i].EffectValue} | {BuyList[i].Description} | 구매 비용:{BuyList[i].Cost}gold | 판매 비용:{BuyList[i].Cost - (BuyList[i].Cost / 10)}gold"); //아이템목록을 보여주는 코드
+                    Console.ResetColor();
+                }
+                Console.WriteLine($"가진 돈:{Player.Gold} gold");
+                Console.WriteLine("0. 돌아가기");
+                Console.Write("어떤 아이템을 사고 파실건가요?:");
+                if (int.TryParse(Console.ReadLine(), out int num))
+                {
+                    if (num == 0)
+                    {
+                        Console.Clear();
+                        break;
+                    }
+                    else if (num <= BuyList.Count)
+                    {
+                        Console.WriteLine("1. 판매하기");
+                        Console.WriteLine("2. 구매하기");
+                        Console.Write("어떤 것을 하실건가요?: ");
+
+                        if (int.TryParse(Console.ReadLine(), out int num2))
+                        {
+                            if (num2 == 1)
+                            {
+                                Console.Clear();
+                                if (playerItemList.Any(item => item.Name == BuyList[num - 1].Name))
+                                {
+                                    Player.Gold += (BuyList[num - 1].Cost - (BuyList[num - 1].Cost / 10));
+                                    // 판매 기능 추가: 아이템을 판매하고 해당 아이템을 인벤토리에서 제거
+                                    Inventory.RemoveItemFromInventory(BuyList[num - 1].Name, BuyList[num - 1].ItemType);
+                                }
+                                else
+                                {
+                                    Console.WriteLine("판매할 아이템이 인벤토리에 없습니다.");
+                                }
+                            }
+                            else if (num2 == 2)
+                            {
+                                if (BuyList[num - 1].Cost <= Player.Gold)
+                                {
+                                    Console.Clear();
+                                    Player.Gold -= BuyList[num - 1].Cost;
+                                    // 구매 기능 추가: 아이템을 구매하고 해당 아이템을 인벤토리에 추가
+                                    Inventory.AddItemToInventory(BuyList[num - 1]);
+                                }
+                                else
+                                {
+                                    Console.Clear();
+                                    Console.WriteLine("돈이 부족합니다:");
+                                }
+                            }
+                            else 
+                            {
+                                Console.Clear();
+                                Console.WriteLine("다시 입력해주세요:");
+                            }
+                        }
+                    }
+                    else
+                    {
+                        Console.Clear();
+                        Console.WriteLine("다시 입력해주세요:");
+                    }
+                }
+                else
+                {
+                    Console.Clear();
+                    Console.WriteLine("숫자를 입력해주세요:");
+                }
             }
         }
     }
 }
-
