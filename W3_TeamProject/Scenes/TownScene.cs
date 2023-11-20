@@ -34,7 +34,7 @@ namespace W3_TeamProject
             int x = 50;
             int y = 10;
 
-            string sentence = "1. 상점\n\n2. 상태보기\n\n3. 전투화면";
+            string sentence = "1. 상점\n\n2. 상태보기\n\n3. 전투화면\n\n4.인벤토리";
 
             foreach (char letter in sentence)
             {
@@ -55,9 +55,9 @@ namespace W3_TeamProject
 
             Console.SetCursorPosition(100, 28);
 			Console.WriteLine("마을 화면 입니다."); //임시 표시
-            Console.SetCursorPosition(54, 15);
-            int userInput;
-            userInput = int.Parse(Console.ReadLine());
+            
+            Console.SetCursorPosition(54, 20);
+            int userInput = int.Parse(Console.ReadLine());
             
             switch (userInput)
             {
@@ -69,6 +69,9 @@ namespace W3_TeamProject
                     break;
                 case 3:
                     nextState = SceneState.Battle;
+                    break;
+                case 4:
+                    nextState = SceneState.Inventory;
                     break;
             }
         }

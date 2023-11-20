@@ -55,14 +55,13 @@ namespace W3_TeamProject
                    x++; // 다음 문자 위치로 이동
                }
                
-                Thread.Sleep(50); // msec 지연
+                Thread.Sleep(10); // msec 지연
             }
             
             ConsoleKeyInfo key = Console.ReadKey(); //아무키나 눌렀을때
             nextState = SceneState.Start; // 다음스테이지(캐릭터 설명화면)으로 넘어갑니다.
 
             // 빡친 모습의 케릭터 추후에 추가하여 공백을 메꾸자!!
-
 
         }
 
