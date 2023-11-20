@@ -35,9 +35,9 @@ namespace W3_TeamProject
             Controller controller = new Controller();
             for (int i = 0; i < 7; i++)
             {
-                controller.AddRotation(50, i + 7);
+                controller.AddRotation(16, i + 7);
             }
-            controller.AddRotation(50, 17);
+            controller.AddRotation(16, 17);
 
             // 제목, 상태 표시
             Console.SetCursorPosition(2, 1);
@@ -47,12 +47,14 @@ namespace W3_TeamProject
             Console.WriteLine("플레이어의 상태를 확인할 수 있습니다.");
             Console.SetCursorPosition(2, 4);
             Console.WriteLine("각 항목을 선택하면 자세한 정보를 볼 수 있습니다.");
-            ViewStatus(40, 5, 40, 11); // Status BorderLine, Data 출력
+            ViewStatus(6, 5, 40, 11); // Status BorderLine, Data 출력
+            MakeRightBorder(60, 3, 56, 17);
+            CurrentEquipment();
 
             // 선택지 및 그에 따른 결과
-            Console.SetCursorPosition(52, 17);
+            Console.SetCursorPosition(18, 17);
             Console.WriteLine("뒤로가기");
-            Console.SetCursorPosition(50, 7);
+            Console.SetCursorPosition(18, 7);
 
             while (true)
             {
@@ -88,7 +90,7 @@ namespace W3_TeamProject
                         Thread.Sleep(300);
                         DetailGold();
                         break;
-                    case 7:
+                    case 7:  // 뒤로가기 선택 시 -> Town으로
                         Thread.Sleep(200);
                         nextState = SceneState.Town;
                         Console.Clear();
@@ -147,21 +149,21 @@ namespace W3_TeamProject
             for (int i = 0; i < 9; i++)
             {
                 Console.ForegroundColor = Yellow;
-                Console.SetCursorPosition(52, i + 6);
-                Console.WriteLine(new string(' ', 30));
+                Console.SetCursorPosition(10, i + 6);
+                Console.WriteLine(new string(' ', 50));
             }
-            Console.SetCursorPosition(52, 6);
+            Console.SetCursorPosition(10, 6);
             Console.Write("┏");
             Console.Write(new string('━', 40));
             Console.WriteLine("┓");
                 for (int j = 7; j < 15; j++)
                 {
-                    Console.SetCursorPosition(52, j);
+                    Console.SetCursorPosition(10, j);
                     Console.Write('┃');
-                    Console.SetCursorPosition(92 + 1, j);
+                    Console.SetCursorPosition(50 + 1, j);
                     Console.WriteLine('┃');
                 }
-            Console.SetCursorPosition(52, 14);
+            Console.SetCursorPosition(10, 14);
             Console.Write("┗");
             Console.Write(new string('━', 40));
             Console.WriteLine("┛");
@@ -207,9 +209,6 @@ namespace W3_TeamProject
                 Console.WriteLine($"공격력 : {Player.BaseAttack}");
         }
 
-        /// <summary>
-        /// Def 상승 시 상승량 표기
-        /// </summary>
         public static void ViewDef()
         {
             int totalDefense = Player.EquipDefense + Player.BaseDefense;
@@ -236,18 +235,21 @@ namespace W3_TeamProject
             LeftHiText(Blue, $"{Player.CurrentMana} ", $"/ {totalMana} ");
         }
 
+        /// <summary>
+        /// Detail__ 함수들은 해당 데이터에 대한 자세한 정보를 넣는 함수들입니다.
+        /// </summary>
         private void DetailLevel()
         {
             MakeInnerBorder();
-            Console.SetCursorPosition(58, 7);
+            Console.SetCursorPosition(14, 7);
             Console.WriteLine("레벨에 대한 상세한 설명입니다.");
-            Console.SetCursorPosition(58, 9);
+            Console.SetCursorPosition(14, 9);
             Console.WriteLine("설명 설명");
-            Console.SetCursorPosition(58, 10);
+            Console.SetCursorPosition(14, 10);
             Console.WriteLine("설명 설명");
 
-            Console.SetCursorPosition(67, 13);
-            Console.WriteLine("▶ 돌아가기");
+            Console.SetCursorPosition(23, 13);
+            LeftHiText(Red, "▶", " 돌아가기");
 
             while (true)
             {
@@ -256,7 +258,7 @@ namespace W3_TeamProject
                 {
                     Console.Clear();
                     StatusMain();
-                    Console.SetCursorPosition(58, 7);
+                    Console.SetCursorPosition(14, 7);
                     break;
                 }
             }
@@ -265,15 +267,15 @@ namespace W3_TeamProject
         private void DetailName()
         {
             MakeInnerBorder();
-            Console.SetCursorPosition(58, 7);
+            Console.SetCursorPosition(14, 7);
             Console.WriteLine("이름에 대한 상세한 설명입니다.");
-            Console.SetCursorPosition(58, 9);
+            Console.SetCursorPosition(14, 9);
             Console.WriteLine("H. 매니저");
-            Console.SetCursorPosition(58, 10);
+            Console.SetCursorPosition(14, 10);
             Console.WriteLine("설명 설명");
 
-            Console.SetCursorPosition(67, 13);
-            Console.WriteLine("▶ 돌아가기");
+            Console.SetCursorPosition(23, 13);
+            LeftHiText(Red, "▶", " 돌아가기");
 
             while (true)
             {
@@ -290,15 +292,15 @@ namespace W3_TeamProject
         private void DetailAtk()
         {
             MakeInnerBorder();
-            Console.SetCursorPosition(58, 7);
+            Console.SetCursorPosition(14, 7);
             Console.WriteLine("공격력에 대한 상세한 설명입니다.");
-            Console.SetCursorPosition(58, 9);
+            Console.SetCursorPosition(14, 9);
             Console.WriteLine("설명 설명");
-            Console.SetCursorPosition(58, 10);
+            Console.SetCursorPosition(14, 10);
             Console.WriteLine("설명 설명");
 
-            Console.SetCursorPosition(67, 13);
-            Console.WriteLine("▶ 돌아가기");
+            Console.SetCursorPosition(23, 13);
+            LeftHiText(Red, "▶", " 돌아가기");
 
             while (true)
             {
@@ -315,15 +317,15 @@ namespace W3_TeamProject
         private void DetailDef()
         {
             MakeInnerBorder();
-            Console.SetCursorPosition(58, 7);
+            Console.SetCursorPosition(14, 7);
             Console.WriteLine("방어력에 대한 상세한 설명입니다.");
-            Console.SetCursorPosition(58, 9);
+            Console.SetCursorPosition(14, 9);
             Console.WriteLine("설명 설명");
-            Console.SetCursorPosition(58, 10);
+            Console.SetCursorPosition(14, 10);
             Console.WriteLine("설명 설명");
 
-            Console.SetCursorPosition(67, 13);
-            Console.WriteLine("▶ 돌아가기");
+            Console.SetCursorPosition(23, 13);
+            LeftHiText(Red, "▶", " 돌아가기");
 
             while (true)
             {
@@ -340,15 +342,15 @@ namespace W3_TeamProject
         private void DetailHP()
         {
             MakeInnerBorder();
-            Console.SetCursorPosition(58, 7);
+            Console.SetCursorPosition(14, 7);
             Console.WriteLine("체력에 대한 상세한 설명입니다.");
-            Console.SetCursorPosition(58, 9);
+            Console.SetCursorPosition(14, 9);
             Console.WriteLine("설명 설명");
-            Console.SetCursorPosition(58, 10);
+            Console.SetCursorPosition(14, 10);
             Console.WriteLine("설명 설명");
 
-            Console.SetCursorPosition(67, 13);
-            Console.WriteLine("▶ 돌아가기");
+            Console.SetCursorPosition(23, 13);
+            LeftHiText(Red, "▶", " 돌아가기");
 
             while (true)
             {
@@ -365,15 +367,15 @@ namespace W3_TeamProject
         private void DetailMP()
         {
             MakeInnerBorder();
-            Console.SetCursorPosition(58, 7);
+            Console.SetCursorPosition(14, 7);
             Console.WriteLine("마력에 대한 상세한 설명입니다.");
-            Console.SetCursorPosition(58, 9);
+            Console.SetCursorPosition(14, 9);
             Console.WriteLine("설명 설명");
-            Console.SetCursorPosition(58, 10);
+            Console.SetCursorPosition(14, 10);
             Console.WriteLine("설명 설명");
 
-            Console.SetCursorPosition(67, 13);
-            Console.WriteLine("▶ 돌아가기");
+            Console.SetCursorPosition(23, 13);
+            LeftHiText(Red, "▶", " 돌아가기");
 
             while (true)
             {
@@ -390,15 +392,15 @@ namespace W3_TeamProject
         private void DetailGold()
         {
             MakeInnerBorder();
-            Console.SetCursorPosition(58, 7);
+            Console.SetCursorPosition(14, 7);
             Console.WriteLine("소지금에 대한 상세한 설명입니다.");
-            Console.SetCursorPosition(58, 9);
+            Console.SetCursorPosition(14, 9);
             Console.WriteLine("설명 설명");
-            Console.SetCursorPosition(58, 10);
+            Console.SetCursorPosition(14, 10);
             Console.WriteLine("설명 설명");
 
-            Console.SetCursorPosition(67, 13);
-            Console.WriteLine("▶ 돌아가기");
+            Console.SetCursorPosition(23, 13);
+            LeftHiText(Red, "▶", " 돌아가기");
 
             while (true)
             {
@@ -450,6 +452,189 @@ namespace W3_TeamProject
             Console.ForegroundColor = ConsoleColor.Cyan;
             Console.WriteLine(str);
             Console.ResetColor();
+        }
+
+
+        public static void MakeRightBorder(int startXpos, int startYpos, int width, int height)
+        {
+            Console.ForegroundColor = Green;
+            Console.SetCursorPosition(startXpos, startYpos);
+            Console.Write("┏");
+            Console.Write(new string('━', width));
+            Console.WriteLine("┓");
+            Console.SetCursorPosition(startXpos + 36, startYpos + 4);
+            Console.Write(new string('━', 21));
+            for (int i = startYpos + 1; i < startYpos + height; i++)
+            {
+                Console.SetCursorPosition(startXpos, i);
+                Console.Write('┃');
+                Console.SetCursorPosition(startXpos + 36, i);
+                Console.Write('┃');
+                Console.SetCursorPosition(startXpos + width + 1, i);
+                Console.WriteLine('┃');
+            }
+            Console.SetCursorPosition(startXpos, startYpos + height - 1);
+            Console.Write("┗");
+            Console.Write(new string('━', width));
+            Console.WriteLine("┛");
+            Console.SetCursorPosition(startXpos + 36, startYpos);
+            Console.WriteLine("┳");
+            Console.SetCursorPosition(startXpos + 36, startYpos + height - 1);
+            Console.WriteLine("┻");
+            Console.SetCursorPosition(startXpos + 36, startYpos + 4);
+            Console.WriteLine("┣");
+            Console.SetCursorPosition(startXpos + 57, startYpos + 4);
+            Console.WriteLine("┫");
+            Console.ResetColor();
+        }
+
+        /// <summary>
+        /// Status에서 현재 착용하고 있는 아이템을 표시해주는 함수입니다
+        /// </summary>
+        public static void CurrentEquipment()
+        {
+            // Player 데이터에서 현재 착용중인 아이템들의 정보를 모두 받아오기
+            // 이후에 장착 중인 아이템들을 해당 위치에 맞게 표시하기
+            // 
+            CurrentEquipmentItem();
+            Console.SetCursorPosition(65, 4);
+            Console.WriteLine("       ㅁㅁㅁㅁㅁㅁ");
+            Console.SetCursorPosition(65, 5);
+            Console.WriteLine("     ㅁ            ㅁ");
+            Console.SetCursorPosition(65, 6);
+            Console.WriteLine("   ㅁ                ㅁ");
+            Console.SetCursorPosition(65, 7);
+            Console.WriteLine("   ㅁ                ㅁ");
+            Console.SetCursorPosition(65, 8);
+            Console.WriteLine("   ㅁ    ㅁ    ㅁ    ㅁ");
+            Console.SetCursorPosition(65, 9);
+            Console.WriteLine("   ㅁ    ㅁ    ㅁ    ㅁ");
+            Console.SetCursorPosition(65, 10);
+            Console.WriteLine("     ㅁ            ㅁ");
+            Console.SetCursorPosition(65, 11);
+            Console.WriteLine("       ㅁㅁㅁㅁㅁㅁㅁ");
+            Console.SetCursorPosition(65, 12);
+            Console.WriteLine("     ㅁ            ㅁ");
+            Console.SetCursorPosition(65, 13);
+            Console.WriteLine("   ㅁ  ㅁ        ㅁ  ㅁ");
+            Console.SetCursorPosition(65, 14);
+            Console.WriteLine("   ㅁㅁㅁ        ㅁㅁㅁ");
+            Console.SetCursorPosition(65, 15);
+            Console.WriteLine("       ㅁ        ㅁ");
+            Console.SetCursorPosition(65, 16);
+            Console.WriteLine("       ㅁ        ㅁ");
+            Console.SetCursorPosition(65, 17);
+            Console.WriteLine("       ㅁ  ㅁㅁ  ㅁ");
+            Console.SetCursorPosition(65, 18);
+            Console.WriteLine("       ㅁㅁ    ㅁㅁ");
+
+
+
+
+
+            // 1안 -> 착용하고 있는 아이템의 종류에 따라 그림이 다르게 표시되게
+            // 각 아이템에 맞게 그림을 제작, 장착한 아이템에 따라 표시되는 그림
+            // isEquip 으로 true면 표기 false면 비표기로
+            // 기본, 무기, 방어구, 장신구 -> 4개
+            // MakeRightBorder 시작 x 60, 시작 y 3, 너비 56, 높이 17 -> 54칸, 15칸
+            // 왼쪽에 졸라맨 그림, 오른쪽에 착용하고 있는 아이템들
+            // 무기, 방어구, 장신구 // 위아래로 2칸씩 비워서 
+            // 
+        }
+
+        /// <summary>
+        /// CurrentEquipment() 에 들어갈 데이터 -> 추후 병합
+        /// </summary>
+        public static void CurrentEquipmentItem()
+        {
+            string Equip = "착용중 아이템";
+            string Weapon = "무  기";
+            string EquipWeapon = "스파르타 검";  // 여기를 player 데이터로 받아오기
+            string Armor = "방어구";
+            string EquipArmor = "슈퍼 아머";  // 여기를 player 데이터로 받아오기
+            string Accessory = "장신구";
+            string EquipAccessory = "오크의 반지";  // 여기를 player 데이터로 받아오기
+            int EWLength = (23 - KoreanStrLength(EquipWeapon)) / 2;
+            int EALength = (23 - KoreanStrLength(EquipArmor)) / 2;
+            int ECLength = (23 - KoreanStrLength(EquipAccessory)) / 2;
+
+            Console.SetCursorPosition(100, 5);
+            Console.WriteLine(Equip);
+            Console.SetCursorPosition(100, 9);
+            Console.WriteLine(Weapon);
+            Console.SetCursorPosition(96 + EWLength, 10);
+            Console.WriteLine(EquipWeapon);
+            Console.SetCursorPosition(100, 12);
+            Console.WriteLine(Armor);
+            Console.SetCursorPosition(96 + EALength, 13);
+            Console.WriteLine(EquipArmor);
+            Console.SetCursorPosition(100, 15);
+            Console.WriteLine(Accessory);
+            Console.SetCursorPosition(96 + ECLength, 16);
+            Console.WriteLine(EquipAccessory);
+        }
+
+        public static void StatusBaseImage()
+        {
+            Console.SetCursorPosition(65, 4);
+            Console.WriteLine("       ㅁㅁㅁㅁㅁㅁ");
+            Console.SetCursorPosition(65, 5);
+            Console.WriteLine("     ㅁ            ㅁ");
+            Console.SetCursorPosition(65, 6);
+            Console.WriteLine("   ㅁ                ㅁ");
+            Console.SetCursorPosition(65, 7);
+            Console.WriteLine("   ㅁ                ㅁ");
+            Console.SetCursorPosition(65, 8);
+            Console.WriteLine("   ㅁ    ㅁ    ㅁ    ㅁ");
+            Console.SetCursorPosition(65, 9);
+            Console.WriteLine("   ㅁ    ㅁ    ㅁ    ㅁ");
+            Console.SetCursorPosition(65, 10);
+            Console.WriteLine("     ㅁ            ㅁ");
+            Console.SetCursorPosition(65, 11);
+            Console.WriteLine("       ㅁㅁㅁㅁㅁㅁㅁ");
+            Console.SetCursorPosition(65, 12);
+            Console.WriteLine("     ㅁ            ㅁ");
+            Console.SetCursorPosition(65, 13);
+            Console.WriteLine("   ㅁ  ㅁ        ㅁ  ㅁ");
+            Console.SetCursorPosition(65, 14);
+            Console.WriteLine("   ㅁㅁㅁ        ㅁㅁㅁ");
+            Console.SetCursorPosition(65, 15);
+            Console.WriteLine("       ㅁ        ㅁ");
+            Console.SetCursorPosition(65, 16);
+            Console.WriteLine("       ㅁ        ㅁ");
+            Console.SetCursorPosition(65, 17);
+            Console.WriteLine("       ㅁ  ㅁㅁ  ㅁ");
+            Console.SetCursorPosition(65, 18);
+            Console.WriteLine("       ㅁㅁ    ㅁㅁ");
+        }
+
+        /// <summary>
+        /// 한국어 길이가 다른 문제를 해결하는 길이 측정
+        /// </summary>
+        /// <param name="str"></param>
+        /// <returns></returns>
+        static int KoreanStrLength(string str)
+        {
+            int length = 0;
+
+            foreach (char c in str)
+            {
+                // 각 문자의 바이트 수를 확인하여 길이를 계산
+                length += IsKorean(c) ? 2 : 1;
+            }
+
+            return length;
+        }
+
+        /// <summary>
+        /// 한국어인지 판단
+        /// </summary>
+        /// <param name="c"></param>
+        /// <returns></returns>
+        static bool IsKorean(char c)
+        {
+            // 한글 범위에 속하는지 확인
+            return (c >= '가' && c <= '힣') || (c >= 'ㄱ' && c <= 'ㅣ') || (c >= 'ㅏ' && c <= 'ㅣ');
         }
     }
 }
