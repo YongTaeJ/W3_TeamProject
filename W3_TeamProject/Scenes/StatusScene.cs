@@ -498,39 +498,38 @@ namespace W3_TeamProject
             // 
             CurrentEquipmentItem();
             Console.SetCursorPosition(65, 4);
-            Console.WriteLine("       ㅁㅁㅁㅁㅁㅁ");
+            Console.WriteLine("       ㅇㅇㅇㅇㅇㅇ");
             Console.SetCursorPosition(65, 5);
-            Console.WriteLine("     ㅁ            ㅁ");
+            Console.WriteLine("     ㅇ            ㅇ");
             Console.SetCursorPosition(65, 6);
-            Console.WriteLine("   ㅁ                ㅁ");
+            Console.WriteLine("   ㅇ                ㅇ");
             Console.SetCursorPosition(65, 7);
-            Console.WriteLine("   ㅁ                ㅁ");
+            Console.WriteLine("   ㅇ    ㅇ    ㅇ    ㅇ");
             Console.SetCursorPosition(65, 8);
-            Console.WriteLine("   ㅁ    ㅁ    ㅁ    ㅁ");
+            Console.WriteLine("   ㅇ                ㅇ");
             Console.SetCursorPosition(65, 9);
-            Console.WriteLine("   ㅁ    ㅁ    ㅁ    ㅁ");
+            Console.WriteLine("     ㅇ            ㅇ");
             Console.SetCursorPosition(65, 10);
-            Console.WriteLine("     ㅁ            ㅁ");
+            Console.WriteLine("       ㅇㅇㅇㅇㅇㅇ");
             Console.SetCursorPosition(65, 11);
-            Console.WriteLine("       ㅁㅁㅁㅁㅁㅁㅁ");
+            Console.WriteLine("     ㅇ            ㅇ");
             Console.SetCursorPosition(65, 12);
-            Console.WriteLine("     ㅁ            ㅁ");
+            Console.WriteLine("   ㅇ                ㅇ");
             Console.SetCursorPosition(65, 13);
-            Console.WriteLine("   ㅁ  ㅁ        ㅁ  ㅁ");
+            Console.WriteLine("   ㅇ  ㅇ        ㅇ  ㅇ");
             Console.SetCursorPosition(65, 14);
-            Console.WriteLine("   ㅁㅁㅁ        ㅁㅁㅁ");
+            Console.WriteLine("   ㅇㅇㅇ        ㅇㅇㅇ");
             Console.SetCursorPosition(65, 15);
-            Console.WriteLine("       ㅁ        ㅁ");
+            Console.WriteLine("       ㅇ        ㅇ");
             Console.SetCursorPosition(65, 16);
-            Console.WriteLine("       ㅁ        ㅁ");
+            Console.WriteLine("       ㅇ        ㅇ");
             Console.SetCursorPosition(65, 17);
-            Console.WriteLine("       ㅁ  ㅁㅁ  ㅁ");
+            Console.WriteLine("       ㅇ  ㅇㅇ  ㅇ");
             Console.SetCursorPosition(65, 18);
-            Console.WriteLine("       ㅁㅁ    ㅁㅁ");
-
-
-
-
+            Console.WriteLine("       ㅇㅇ    ㅇㅇ");
+            StatusArmorImage();
+            StatusWeaponImage();
+            StatusAccessoryImage();
 
             // 1안 -> 착용하고 있는 아이템의 종류에 따라 그림이 다르게 표시되게
             // 각 아이템에 맞게 그림을 제작, 장착한 아이템에 따라 표시되는 그림
@@ -563,50 +562,104 @@ namespace W3_TeamProject
             Console.SetCursorPosition(100, 9);
             Console.WriteLine(Weapon);
             Console.SetCursorPosition(96 + EWLength, 10);
-            Console.WriteLine(EquipWeapon);
+            LeftHiText(Blue, EquipWeapon);
             Console.SetCursorPosition(100, 12);
             Console.WriteLine(Armor);
             Console.SetCursorPosition(96 + EALength, 13);
-            Console.WriteLine(EquipArmor);
+            LeftHiText(Green, EquipArmor);
             Console.SetCursorPosition(100, 15);
             Console.WriteLine(Accessory);
             Console.SetCursorPosition(96 + ECLength, 16);
-            Console.WriteLine(EquipAccessory);
+            LeftHiText(Red, EquipAccessory);
         }
 
+        /// <summary>
+        /// Status 기본 이미지
+        /// </summary>
         public static void StatusBaseImage()
         {
             Console.SetCursorPosition(65, 4);
-            Console.WriteLine("       ㅁㅁㅁㅁㅁㅁ");
+            Console.WriteLine("       ㅇㅇㅇㅇㅇㅇ");
             Console.SetCursorPosition(65, 5);
-            Console.WriteLine("     ㅁ            ㅁ");
+            Console.WriteLine("     ㅇ            ㅇ");
             Console.SetCursorPosition(65, 6);
-            Console.WriteLine("   ㅁ                ㅁ");
+            Console.WriteLine("   ㅇ                ㅇ");
             Console.SetCursorPosition(65, 7);
-            Console.WriteLine("   ㅁ                ㅁ");
+            Console.WriteLine("   ㅇ    ㅇ    ㅇ    ㅇ");
             Console.SetCursorPosition(65, 8);
-            Console.WriteLine("   ㅁ    ㅁ    ㅁ    ㅁ");
+            Console.WriteLine("   ㅇ                ㅇ");
             Console.SetCursorPosition(65, 9);
-            Console.WriteLine("   ㅁ    ㅁ    ㅁ    ㅁ");
+            Console.WriteLine("     ㅇ            ㅇ");
             Console.SetCursorPosition(65, 10);
-            Console.WriteLine("     ㅁ            ㅁ");
+            Console.WriteLine("       ㅇㅇㅇㅇㅇㅇ");
             Console.SetCursorPosition(65, 11);
-            Console.WriteLine("       ㅁㅁㅁㅁㅁㅁㅁ");
+            Console.WriteLine("     ㅇ            ㅇ");
+            Console.SetCursorPosition(65, 12);
+            Console.WriteLine("   ㅇ                ㅇ");
+            Console.SetCursorPosition(65, 13);
+            Console.WriteLine("   ㅇ  ㅇ        ㅇ  ㅇ");
+            Console.SetCursorPosition(65, 14);
+            Console.WriteLine("   ㅇㅇㅇ        ㅇㅇㅇ");
+            Console.SetCursorPosition(65, 15);
+            Console.WriteLine("       ㅇ        ㅇ");
+            Console.SetCursorPosition(65, 16);
+            Console.WriteLine("       ㅇ        ㅇ");
+            Console.SetCursorPosition(65, 17);
+            Console.WriteLine("       ㅇ  ㅇㅇ  ㅇ");
+            Console.SetCursorPosition(65, 18);
+            Console.WriteLine("       ㅇㅇ    ㅇㅇ");
+        }
+
+        /// <summary>
+        /// 무기 착용시 추가되는 이미지
+        /// </summary>
+        public static void StatusWeaponImage()
+        {
+            Console.ForegroundColor = DarkBlue;
+            Console.SetCursorPosition(65, 10);
+            Console.WriteLine("     ㅁ");
+            Console.SetCursorPosition(65, 11);
+            Console.WriteLine("   ㅁ  ㅁ");
+            Console.SetCursorPosition(65, 12);
+            Console.WriteLine("   ㅁ  ㅁ");
+            Console.SetCursorPosition(65, 13);
+            Console.WriteLine("   ㅁ  ㅁ");
+            Console.SetCursorPosition(65, 14);
+            Console.WriteLine(" ㅁㅁㅁㅁㅁ");
+            Console.SetCursorPosition(65, 15);
+            Console.WriteLine("     ㅁ");
+            Console.ResetColor();
+        }
+
+        /// <summary>
+        /// 방어구 착용시 추가되는 이미지
+        /// </summary>
+        public static void StatusArmorImage()
+        {
+            Console.ForegroundColor = DarkGreen;
+            Console.SetCursorPosition(65, 10);
+            Console.WriteLine("     ㅁㅁㅁ    ㅁㅁㅁ");
+            Console.SetCursorPosition(65, 11);
+            Console.WriteLine("     ㅁ    ㅁㅁ    ㅁ");
             Console.SetCursorPosition(65, 12);
             Console.WriteLine("     ㅁ            ㅁ");
             Console.SetCursorPosition(65, 13);
-            Console.WriteLine("   ㅁ  ㅁ        ㅁ  ㅁ");
+            Console.WriteLine("       ㅁ        ㅁ");
             Console.SetCursorPosition(65, 14);
-            Console.WriteLine("   ㅁㅁㅁ        ㅁㅁㅁ");
+            Console.WriteLine("       ㅁ        ㅁ");
             Console.SetCursorPosition(65, 15);
-            Console.WriteLine("       ㅁ        ㅁ");
-            Console.SetCursorPosition(65, 16);
-            Console.WriteLine("       ㅁ        ㅁ");
-            Console.SetCursorPosition(65, 17);
-            Console.WriteLine("       ㅁ  ㅁㅁ  ㅁ");
-            Console.SetCursorPosition(65, 18);
-            Console.WriteLine("       ㅁㅁ    ㅁㅁ");
+            Console.WriteLine("        ㅁㅁㅁㅁ");
+            Console.ResetColor();
         }
+
+        public static void StatusAccessoryImage()
+        {
+            Console.ForegroundColor = Red;
+            Console.SetCursorPosition(86, 14);
+            Console.WriteLine("ㅁ");
+            Console.ResetColor();
+        }
+
 
         /// <summary>
         /// 한국어 길이가 다른 문제를 해결하는 길이 측정
