@@ -50,10 +50,10 @@ namespace W3_TeamProject
             else
                 Console.WriteLine(_text);
         }
-        public static void SetWritePosition(string _text = " ")
+        public static void SetWritePosition(string _text = " ", int _left = 2, int _top = 0)
         {
-            int _mapPosX = Console.GetCursorPosition().Left + 2;
-            int _mapPosY = Console.GetCursorPosition().Top;
+            int _mapPosX = _left;
+            int _mapPosY = Console.GetCursorPosition().Top + _top;
             Console.SetCursorPosition(_mapPosX, _mapPosY);
             Console.Write(_text);
         }
