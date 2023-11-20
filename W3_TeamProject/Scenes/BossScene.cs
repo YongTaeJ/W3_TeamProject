@@ -64,6 +64,7 @@ namespace W3_TeamProject
 						break;
 				}
 
+				UI.MakeASCII();
 				if (endPoint != 0)
 					break;
 
@@ -96,6 +97,7 @@ namespace W3_TeamProject
 			UI.MakeUI();
 			MakeCommentBorder();
 			MakeBossHPMP();
+			UI.MakeASCII();
 			boss.UpdateHPbar();
 			boss.UpdateMPbar();
 			//WriteComment("당신은 사장실의 문 앞에 도달했습니다.");
@@ -159,13 +161,13 @@ namespace W3_TeamProject
 			int damage = 10 + Player.EquipAttack + Player.BaseAttack;
 			endPoint = boss.GetDamage(damage);
 			WriteComment($"사장님을 설득해 {damage} 만큼의 데미지를 입혔습니다!!!");
-			Thread.Sleep(1000);
+			UI.MakeASCII(ConsoleColor.Red);
 		}
 
 		private void NormalDefense()
 		{
 			WriteComment("사장님의 질문 공세에 대비해 단단히 마음을 먹습니다.");
-			Thread.Sleep(1000);
+			UI.MakeASCII(ConsoleColor.Red);
 		}
 
 		private bool UseSkill()
@@ -174,7 +176,7 @@ namespace W3_TeamProject
 			MakeSkillChoicePanel();
 			BaseSkill? currentSkill = null;
 			SkillState skillState = SkillState.None;
-
+			
 			int chooseSkillCount = skillController.InputLoop();
 			if (chooseSkillCount == 0) return false;
 			else
@@ -184,13 +186,13 @@ namespace W3_TeamProject
 				if (skillState == SkillState.LackOfMana)
 				{
 					WriteComment("MP가 부족해 스킬을 사용할 수 없습니다.");
-					Thread.Sleep(1000);
+					UI.MakeASCII(ConsoleColor.Red);
 					return false;
 				}
 				else if (skillState == SkillState.IsCoolDown)
 				{
 					WriteComment("현재 쿨타임이 남아있는 스킬입니다.");
-					Thread.Sleep(1000);
+					UI.MakeASCII(ConsoleColor.Red);
 					return false;
 				}
 				else if (skillState == SkillState.OK) // 스킬 사용 성공
@@ -198,7 +200,7 @@ namespace W3_TeamProject
 					int damage = currentSkill.FixedDamage + currentSkill.VariableDamage * Player.Level;
 					endPoint = boss.GetDamage(damage);
 					WriteComment($"{currentSkill.SkillComment} 사장님께 {damage}만큼의 데미지를 입혔습니다!");
-					Thread.Sleep(1000);
+					UI.MakeASCII(ConsoleColor.Red);
 					return true;
 				}
 				else return false;
@@ -219,14 +221,14 @@ namespace W3_TeamProject
 					if(Player.HealthPotionCount == 0)
 					{
 						WriteComment("체력 포션이 없습니다.");
-						Thread.Sleep(1000);
+						UI.MakeASCII(ConsoleColor.Red);
 						return false;
 					}
 					else
 					{
 						Player.UseHealthPotion();
 						WriteComment("당신은 체력 포션을 마셨습니다!");
-						Thread.Sleep(1000);
+						UI.MakeASCII(ConsoleColor.Red);
 						return true;
 					}
 				}
@@ -235,14 +237,14 @@ namespace W3_TeamProject
 					if (Player.ManaPotionCount == 0)
 					{
 						WriteComment("마나 포션이 없습니다.");
-						Thread.Sleep(1000);
+						UI.MakeASCII(ConsoleColor.Red);
 						return false;
 					}
 					else
 					{
 						Player.UseManaPotion();
 						WriteComment("당신은 마나 포션을 마셨습니다!");
-						Thread.Sleep(1000);
+						UI.MakeASCII(ConsoleColor.Red);
 						return true;
 					}
 				}
@@ -395,6 +397,7 @@ namespace W3_TeamProject
 			Console.SetCursorPosition(67, 26);
 			Console.Write($"남은 포션 : {Player.ManaPotionCount}개");
 		}
+
 		private void ClearChoosePanel()
 		{
 			for(int i=0; i<8; i++)
@@ -504,7 +507,7 @@ namespace W3_TeamProject
 				int damage = 30 / bias; // 계산식 필요!
 				Player.ChangeHP(-damage);
 				WriteComment($"사장님의 공격에 {damage} 만큼의 타격을 입었습니다!!");
-				Thread.Sleep(1000);
+				UI.MakeASCII(ConsoleColor.Blue);
 			}
 			else
 			{
@@ -524,7 +527,7 @@ namespace W3_TeamProject
 						isDelayTriggered = true;
 						delaySkillIndex = choose;
 						WriteComment("사장님이 기를 모으고 있습니다...!!!");
-						Thread.Sleep(1000);
+						UI.MakeASCII(ConsoleColor.Blue);
 						break;
 					}
 
@@ -560,7 +563,7 @@ namespace W3_TeamProject
 			MP -= skillList[index].cost;
 			UpdateMPbar();
 			WriteComment($"{skillList[index].description} {damage}만큼의 타격을 입었습니다!");
-			Thread.Sleep(1000);
+			UI.MakeASCII(ConsoleColor.Blue);
 		}
 	}
 

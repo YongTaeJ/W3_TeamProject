@@ -84,6 +84,8 @@ namespace W3_TeamProject
 			if (portion > 20) portion = 20;
 
 			Console.SetCursorPosition(7, 21);
+			Console.Write("                 ");
+			Console.SetCursorPosition(7, 21);
 			Console.Write($"{Player.CurrentHealth} / {Player.BaseHealth + Player.EquipHealth}");
 
 			Console.ForegroundColor = ConsoleColor.Red;
@@ -140,6 +142,34 @@ namespace W3_TeamProject
 			Console.Write('│');
 			Console.SetCursorPosition(x, y+2);
 			Console.Write("└────────────────────┘");
+		}
+
+		public static void MakeASCII(ConsoleColor color = ConsoleColor.White)
+		{
+			int x = 11, y = 4;
+			Console.ForegroundColor = color;
+			Console.SetCursorPosition(x, y);
+			string ASCII = " __  __                                __                        __                              \r\n/\\ \\/\\ \\                              /\\ \\__    __              /\\ \\__    __                     \r\n\\ \\ `\\\\ \\      __      __       ___   \\ \\ ,_\\  /\\_\\      __     \\ \\ ,_\\  /\\_\\     ___     ___    \r\n \\ \\ , ` \\   /'__`\\  /'_ `\\    / __`\\  \\ \\ \\/  \\/\\ \\   /'__`\\    \\ \\ \\/  \\/\\ \\   / __`\\ /' _ `\\  \r\n  \\ \\ \\`\\ \\ /\\  __/ /\\ \\L\\ \\  /\\ \\L\\ \\  \\ \\ \\_  \\ \\ \\ /\\ \\L\\.\\_   \\ \\ \\_  \\ \\ \\ /\\ \\L\\ \\/\\ \\/\\ \\ \r\n   \\ \\_\\ \\_\\\\ \\____\\\\ \\____ \\ \\ \\____/   \\ \\__\\  \\ \\_\\\\ \\__/.\\_\\   \\ \\__\\  \\ \\_\\\\ \\____/\\ \\_\\ \\_\\\r\n    \\/_/\\/_/ \\/____/ \\/___L\\ \\ \\/___/     \\/__/   \\/_/ \\/__/\\/_/    \\/__/   \\/_/ \\/___/  \\/_/\\/_/\r\n                       /\\____/                                                                   \r\n                       \\_/__/                                                                    \r\n";
+			foreach (char letter in ASCII)
+			{
+				if (letter == '\n') // 새 줄 문자 확인
+				{
+					y = y + 1;
+					x = 11;
+					Console.SetCursorPosition(x, y);
+				}
+				else
+				{
+					Console.Write(letter);
+					x++; // 다음 문자 위치로 이동
+				}
+			}
+			if(color != ConsoleColor.White)
+			{
+				Thread.Sleep(1000);
+			}
+			Console.ResetColor();
+			
 		}
 	}
 
