@@ -60,6 +60,7 @@ namespace W3_TeamProject
             ViewStatus(6, 5, 40, 11); // Status BorderLine, Data 출력
             MakeRightBorder(60, 3, 56, 17);
             CurrentEquipment();
+            UnderBarUIStatus();
 
             // 선택지 및 그에 따른 결과
             Console.SetCursorPosition(18, 16);
@@ -173,13 +174,13 @@ namespace W3_TeamProject
             Console.Write("┏");
             Console.Write(new string('━', 40));
             Console.WriteLine("┓");
-                for (int j = 7; j < 15; j++)
-                {
-                    Console.SetCursorPosition(10, j);
-                    Console.Write('┃');
-                    Console.SetCursorPosition(50 + 1, j);
-                    Console.WriteLine('┃');
-                }
+            for (int j = 7; j < 15; j++)
+            {
+                Console.SetCursorPosition(10, j);
+                Console.Write('┃');
+                Console.SetCursorPosition(50 + 1, j);
+                Console.WriteLine('┃');
+            }
             Console.SetCursorPosition(10, 14);
             Console.Write("┗");
             Console.Write(new string('━', 40));
@@ -510,44 +511,16 @@ namespace W3_TeamProject
         /// </summary>
         public void CurrentEquipment()
         {
-            CurrentEquipmentItem();
-            StatusBaseImage();
+            CurrentEquipmentItem();  // 현재 착용중인 아이템 리스트 불러오기
+            StatusBaseImage();  // 기본 이미지
 
+            // 해당 장비를 착용 중이면, 이미지 불러오기
             if (statusItemData != null && statusItemData.ItemType == ItemType.Weapon)
                 StatusWeaponImage();
             if (statusItemData != null && statusItemData.ItemType == ItemType.Armor)
                 StatusArmorImage();
             if (statusItemData != null && statusItemData.ItemType == ItemType.Accessory)
                 StatusAccessoryImage();
-
-
-            //StatusWeaponImage();
-
-            //if (playerItem.ItemType == ItemType.Weapon && playerItem.IsEquip == true)
-            //{
-            //    // 착용한 아이템이 기본 길이 무기면 StatusWeaponImage();
-            //    // 착용한 아이템이 짧은 무기면 StatusWeaponImageSS();
-            //    // 착용한 아이템이 긴 무기면 StatusWeaponImageLS();
-            //}
-
-            //if (playerItem.ItemType == ItemType.Armor && playerItem.IsEquip == true)
-            //{
-            //    StatusArmorImage();
-            //}
-
-            //if (playerItem.ItemType == ItemType.Accessory && playerItem.IsEquip == true)
-            //{
-            //    StatusAccessoryImage();
-            //}
-
-            // 1안 -> 착용하고 있는 아이템의 종류에 따라 그림이 다르게 표시되게
-            // 각 아이템에 맞게 그림을 제작, 장착한 아이템에 따라 표시되는 그림
-            // isEquip 으로 true면 표기 false면 비표기로
-            // 기본, 무기, 방어구, 장신구 -> 4개
-            // MakeRightBorder 시작 x 60, 시작 y 3, 너비 56, 높이 17 -> 54칸, 15칸
-            // 왼쪽에 졸라맨 그림, 오른쪽에 착용하고 있는 아이템들
-            // 무기, 방어구, 장신구 // 위아래로 2칸씩 비워서 
-            // 
         }
 
         /// <summary>
@@ -559,14 +532,14 @@ namespace W3_TeamProject
             string Weapon = "무  기";
             string Armor = "방어구";
             string Accessory = "장신구";
-            string EquipWeapon = "없  음";  // 여기를 player 데이터로 받아오기
-            string EquipArmor = "없  음";  // 여기를 player 데이터로 받아오기
-            string EquipAccessory = "없  음";  // 여기를 player 데이터로 받아오기
+            string EquipWeapon = "없  음";
+            string EquipArmor = "없  음";
+            string EquipAccessory = "없  음";
 
             if (statusItemData != null && statusItemData.ItemType == ItemType.Weapon)
-                EquipWeapon = statusItemData.Name; 
+                EquipWeapon = statusItemData.Name;
             if (statusItemData != null && statusItemData.ItemType == ItemType.Armor)
-                EquipArmor = statusItemData.Name; 
+                EquipArmor = statusItemData.Name;
             if (statusItemData != null && statusItemData.ItemType == ItemType.Accessory)
                 EquipAccessory = statusItemData.Name;
 
@@ -636,11 +609,11 @@ namespace W3_TeamProject
             Console.SetCursorPosition(65, 10);
             Console.WriteLine("     ㅁ");
             Console.SetCursorPosition(65, 11);
-            Console.WriteLine("   ㅁ  ㅁ");
+            Console.WriteLine("   ㅁㅁㅁ");
             Console.SetCursorPosition(65, 12);
-            Console.WriteLine("   ㅁ  ㅁ");
+            Console.WriteLine("   ㅁㅁㅁ");
             Console.SetCursorPosition(65, 13);
-            Console.WriteLine("   ㅁ  ㅁ");
+            Console.WriteLine("   ㅁㅁㅁ");
             Console.SetCursorPosition(65, 14);
             Console.WriteLine(" ㅁㅁㅁㅁㅁ");
             Console.SetCursorPosition(65, 15);
@@ -687,7 +660,7 @@ namespace W3_TeamProject
             Console.WriteLine("     ㅁ");
             Console.ResetColor();
         }
-        
+
 
         /// <summary>
         /// 방어구 착용시 추가되는 이미지
@@ -695,18 +668,18 @@ namespace W3_TeamProject
         public static void StatusArmorImage()
         {
             Console.ForegroundColor = DarkGreen;
-            Console.SetCursorPosition(65, 10);
-            Console.WriteLine("     ㅁㅁㅁ    ㅁㅁㅁ");
-            Console.SetCursorPosition(65, 11);
-            Console.WriteLine("     ㅁ    ㅁㅁ    ㅁ");
-            Console.SetCursorPosition(65, 12);
-            Console.WriteLine("     ㅁ            ㅁ");
-            Console.SetCursorPosition(65, 13);
-            Console.WriteLine("       ㅁ        ㅁ");
-            Console.SetCursorPosition(65, 14);
-            Console.WriteLine("       ㅁ        ㅁ");
-            Console.SetCursorPosition(65, 15);
-            Console.WriteLine("        ㅁㅁㅁㅁ");
+            Console.SetCursorPosition(70, 10);
+            Console.WriteLine("ㅁㅁㅁ    ㅁㅁㅁ");
+            Console.SetCursorPosition(70, 11);
+            Console.WriteLine("ㅁㅁㅁㅁㅁㅁㅁㅁ");
+            Console.SetCursorPosition(70, 12);
+            Console.WriteLine("ㅁㅁㅁㅁㅁㅁㅁㅁ");
+            Console.SetCursorPosition(72, 13);
+            Console.WriteLine("ㅁㅁㅁㅁㅁㅁ");
+            Console.SetCursorPosition(72, 14);
+            Console.WriteLine("ㅁㅁㅁㅁㅁㅁ");
+            Console.SetCursorPosition(74, 15);
+            Console.WriteLine("ㅁㅁㅁㅁ");
             Console.ResetColor();
         }
 
@@ -745,6 +718,55 @@ namespace W3_TeamProject
         {
             // 한글 범위에 속하는지 확인
             return (c >= '가' && c <= '힣') || (c >= 'ㄱ' && c <= 'ㅣ') || (c >= 'ㅏ' && c <= 'ㅣ');
+        }
+
+
+        public void UnderBarUIStatus()
+        {
+            for (int i = 0; i < 8; i++)
+            {
+                Console.SetCursorPosition(90, 21 + i);
+                Console.Write('|');
+            }
+
+            int totalAtk = Player.EquipAttack + Player.BaseAttack;
+            int totalDef = Player.EquipDefense + Player.BaseDefense;
+            string EquipWeapon = "없  음";
+            string EquipArmor = "없  음";
+            string EquipAccessory = "없  음";
+
+            if (statusItemData != null && statusItemData.ItemType == ItemType.Weapon)
+                EquipWeapon = statusItemData.Name;
+            if (statusItemData != null && statusItemData.ItemType == ItemType.Armor)
+                EquipArmor = statusItemData.Name;
+            if (statusItemData != null && statusItemData.ItemType == ItemType.Accessory)
+                EquipAccessory = statusItemData.Name;
+
+
+            Console.SetCursorPosition(97, 21);
+            Console.WriteLine("레  벨");
+            Console.SetCursorPosition(111 - Player.Level.ToString().Length, 22);
+            LeftHiText(Cyan, $"{Player.Level}");
+            Console.SetCursorPosition(97, 23);
+            Console.WriteLine("공격력");
+            Console.SetCursorPosition(111 - totalAtk.ToString().Length, 24);
+            LeftHiText(Red, $"{totalAtk}");
+            Console.SetCursorPosition(97, 25);
+            Console.WriteLine("방어력");
+            Console.SetCursorPosition(111 - totalDef.ToString().Length, 26);
+            LeftHiText(Blue, $"{totalDef}");
+            Console.SetCursorPosition(97, 27);
+            Console.WriteLine("소지금");
+            Console.SetCursorPosition(111 - Player.Gold.ToString().Length, 28);
+            LeftHiText(Yellow, $"{Player.Gold}");
+
+
+            //Console.SetCursorPosition(92, 26);
+            //LeftHiText(DarkBlue, EquipWeapon);
+            //Console.SetCursorPosition(92, 27);
+            //LeftHiText(DarkGreen, EquipArmor);
+            //Console.SetCursorPosition(92, 28);
+            //LeftHiText(Red, EquipAccessory);
         }
     }
 }
