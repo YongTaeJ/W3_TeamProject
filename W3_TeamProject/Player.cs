@@ -11,6 +11,7 @@ namespace W3_TeamProject
 	internal static class Player
 	{
 		public static PlayerSkillList playerSkillList;
+		private static BaseSkill currentSkill;
 
 		#region variables
 		private static int level;
@@ -71,6 +72,26 @@ namespace W3_TeamProject
 			gold = 1500;
 			playerSkillList = new PlayerSkillList();
 		}
+
+		public static BaseSkill UseSkill(int index)
+		{
+			currentSkill = playerSkillList.GetData(index);
+
+			if(currentMana >= currentSkill.Cost)
+			{
+				// 스킬 사용 성공 -> Player의 마나 후-> Scene에 스킬데이터 넘겨줌
+				currentMana -= currentSkill.Cost;
+				UI.UpdateMPBar();
+				return currentSkill;
+			}
+
+			// 스킬 사용 실패
+			return null;
+		}
+		public static BaseSkill GetSkill(int index)
+		{
+			return playerSkillList.GetData(index);
+		}
 	}
 
 	/// <summary>
@@ -80,6 +101,8 @@ namespace W3_TeamProject
 	{
 		private List<BaseSkill> skillData = new List<BaseSkill>();
 		private List<BaseSkill> availableSkill = new List<BaseSkill>();
+
+		public int SkillCount {get {return availableSkill.Count ;} }
 
 		public void availableCheck(int level)
 		{
@@ -97,7 +120,7 @@ namespace W3_TeamProject
 		{
 			if (availableSkill.Count >= index)
 			{
-				return availableSkill[index - 1];
+				return availableSkill[index];
 			}
 
 			return null;
@@ -112,7 +135,8 @@ namespace W3_TeamProject
 		// skillData.Add(new TestSkill());
 		private void Init()
 		{
-
+			availableSkill.Add(new TestSkill());
+			Console.Write("dd");
 		}
 	}
 }

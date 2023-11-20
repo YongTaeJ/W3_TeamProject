@@ -20,6 +20,18 @@ namespace W3_TeamProject
 			yList.Add(y);
 		}
 
+		public void RemoveAll()
+		{
+			if(xList.Count >0)
+			{
+				xList.RemoveRange(0, xList.Count);
+			}
+			if (yList.Count > 0)
+			{
+				yList.RemoveRange(0, yList.Count);
+			}
+		}
+
 		public int InputLoop()
 		{
 			ConsoleKeyInfo key;
