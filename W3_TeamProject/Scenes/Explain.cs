@@ -85,14 +85,6 @@ namespace W3_TeamProject
                               "\n             ㅡㅡㅡ       ㅡㅡㅡ" +
                               "\n             ㅡㅡㅡ       ㅡㅡㅡ";
 
-
-
-
-
-
-
-
-
             int charColorBlink = 0;
             while (true)
             {
