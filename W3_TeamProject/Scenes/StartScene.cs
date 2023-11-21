@@ -83,14 +83,14 @@ namespace W3_TeamProject
                 }
 
                 Thread.Sleep(500); // msec 지연
-                anykeyBlink++; 
-
+                anykeyBlink++;
                 if (Console.KeyAvailable)
                 {
-                    Console.ReadKey(false);
+                    while (Console.KeyAvailable) Console.ReadKey(false);
                     anykeyBlink = 0;
-                    break; 
+                    break;
                 }
+                
                 nextState = SceneState.Town; // 다음스테이지(캐릭터 설명화면)으로 넘어갑니다.
             }
         }

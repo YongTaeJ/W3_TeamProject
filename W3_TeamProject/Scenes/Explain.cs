@@ -118,14 +118,15 @@ namespace W3_TeamProject
                 }
                 Thread.Sleep(500); // msec 지연
                 charColorBlink++;
-
                 if (Console.KeyAvailable)
                 {
-                    Console.ReadKey(false);
+                    while (Console.KeyAvailable) Console.ReadKey(false);
                     charColorBlink = 0;
                     break;
                 }
                 
+
+
             }
             
             nextState = SceneState.Start; // 다음스테이지(캐릭터 설명화면)으로 넘어갑니다.
