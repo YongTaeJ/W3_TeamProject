@@ -55,7 +55,11 @@ namespace W3_TeamProject
 
                 void NextSelcetConsole(string _text)
                 {
+<<<<<<< Updated upstream
                     Console.SetCursorPosition(2, 26);
+=======
+                    Console.SetCursorPosition(4, 27);
+>>>>>>> Stashed changes
                     SetStringPosition(_text, 0, true);
                     Thread.Sleep(1000);
                 }
