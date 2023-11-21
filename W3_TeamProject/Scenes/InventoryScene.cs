@@ -353,7 +353,7 @@ namespace W3_TeamProject
                     Player.EquipAttack -= playerItem.EffectValue;
                 else if (playerItem.ItemType == ItemType.Armor && playerItem.IsEquip == false)//아이템 타입이 방어구 이고 장착을 해제할 때 
                     Player.EquipDefense -= playerItem.EffectValue;
-                else if (playerItem.ItemType == ItemType.Accessory && playerItem.IsEquip == true) //아이템 타입이 방어구이고 장착이 완료일 때 
+                else if (playerItem.ItemType == ItemType.Accessory && playerItem.IsEquip == false) //아이템 타입이 방어구이고 장착이 완료일 때 
                 {
                     Player.EquipHealth -= playerItem.EffectValue;//장착 체력 감소
                     Player.BaseHealth -= playerItem.EffectValue;// 베이스 체력 감소
