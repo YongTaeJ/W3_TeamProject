@@ -54,6 +54,10 @@ namespace W3_TeamProject
                 if (int.TryParse(Console.ReadLine(), out int select))
                 {
                     ProcessUserInput(select);
+                    if(select == 0)
+                    {
+                        break;
+                    }
                 }
                 else
                 {
@@ -63,30 +67,30 @@ namespace W3_TeamProject
             }
 
         }
-        private static List<BaseItem> BuyList = new List<BaseItem>();
+        private static List<BaseItem> StoreList = new List<BaseItem>(); //상점 아이템 목록이 담기는 리스트
         // BuyList.Add로 목록 추가
         private void ProcessUserInput(int select)
         {
             Console.Clear();
-            BuyList.Clear();
+            StoreList.Clear(); //리스트를 싹 비워줌.
 
             switch (select)
             {
                 case 1:
                     AddItemsToList(new OldArmor(), new SteelArmor(), new SpartaArmor()); //방어 아이템 목록
-                    ShowItemToBuy();
+                    ShowItem();
                     break;
                 case 2:
                     AddItemsToList(new RustySword(), new SteelSword(), new SpartaSword()); //공격 아이템 목록
-                    ShowItemToBuy();
+                    ShowItem();
                     break;
                 case 3:
                     AddItemsToList(new OrkRing(), new HealthRing(), new ManaRing()); //악세사리 아이템 목록
-                    ShowItemToBuy();
+                    ShowItem();
                     break;
                 case 4:
                     AddItemsToList(new HealthPotion()); //포션 아이템 목록
-                    ShowItemToBuy();
+                    ShowItem();
                     break;
                 case 0:
                     nextState = beforeState;
@@ -98,17 +102,17 @@ namespace W3_TeamProject
         }
         private void AddItemsToList(params BaseItem[] items)
         {
-            BuyList.AddRange(items);
+            StoreList.AddRange(items); //리스트에 요소를 Add는 지정하여(한개) AddRange는 범위로(여러개) 추가함.
         }
         public override SceneState ExitScene()
         {
             return nextState;
         }
-        private void ShowItemToBuy()
+        private void ShowItem()
         {
             while (true)
             {
-                List<BaseItem> playerItemList = Inventory.GetItemList(BuyList[0].ItemType);
+                List<BaseItem> playerItemList = Inventory.GetItemList(StoreList[0].ItemType); //타입에 따라 인벤토리의 아이템 리스트를 가져옴
                 Console.Write("인벤토리이 존재하는 아이템:");
                 Console.ForegroundColor = ConsoleColor.DarkCyan;
                 Console.WriteLine("파란색");
@@ -117,14 +121,14 @@ namespace W3_TeamProject
                 Console.ForegroundColor = ConsoleColor.DarkRed;
                 Console.WriteLine("빨간색");
                 Console.ResetColor();
-                for (int i = 0; i < BuyList.Count; i++)
+                for (int i = 0; i < StoreList.Count; i++)
                 {
-                    bool isItemInInventory = playerItemList.Any(item => item.Name == BuyList[i].Name);
+                    bool isItemInInventory = playerItemList.Any(item => item.Name == StoreList[i].Name); //인벤토리 아이템과 상점 아이템의 이름이 같으면 true를 반환함.
                     if (isItemInInventory)
                     {
                         Console.ForegroundColor = ConsoleColor.DarkCyan; // 인벤토리에 이미 있는 아이템이라면 청록색으로 표시                     
                     }
-                    else if (BuyList[i].Cost > Player.Gold)
+                    else if (StoreList[i].Cost > Player.Gold)
                     {
                         Console.ForegroundColor = ConsoleColor.DarkRed; //돈이 부족하면 빨간색으로 표시
                     }
@@ -133,11 +137,11 @@ namespace W3_TeamProject
                         Console.ForegroundColor = ConsoleColor.White; //둘다 아니라면 흰색으로 표시
                     }
 
-                    Console.WriteLine($"{i + 1}. {BuyList[i].Name} | {BuyList[i].Status} + {BuyList[i].EffectValue} | {BuyList[i].Description} | 구매 비용:{BuyList[i].Cost}gold | 판매 비용:{BuyList[i].Cost - (BuyList[i].Cost / 10)}gold"); //아이템목록을 보여주는 코드
+                    Console.WriteLine($"{i + 1}. {StoreList[i].Name} | {StoreList[i].Status} + {StoreList[i].EffectValue} | {StoreList[i].Description} | 구매 비용:{StoreList[i].Cost}gold | 판매 비용:{StoreList[i].Cost - (StoreList[i].Cost / 10)}gold"); //아이템목록을 보여주는 코드
                     Console.ResetColor();
                 }
-                Console.WriteLine($"가진 돈:{Player.Gold} gold");
                 Console.WriteLine("0. 돌아가기");
+                Console.WriteLine($"가진 돈:{Player.Gold} gold");
                 Console.Write("어떤 아이템을 사고 파실건가요?:");
                 if (int.TryParse(Console.ReadLine(), out int num))
                 {
@@ -146,7 +150,7 @@ namespace W3_TeamProject
                         Console.Clear();
                         break;
                     }
-                    else if (num <= BuyList.Count)
+                    else if (num <= StoreList.Count)
                     {
                         Console.WriteLine("1. 판매하기");
                         Console.WriteLine("2. 구매하기");
@@ -157,11 +161,11 @@ namespace W3_TeamProject
                             if (num2 == 1)
                             {
                                 Console.Clear();
-                                if (playerItemList.Any(item => item.Name == BuyList[num - 1].Name))
+                                if (playerItemList.Any(item => item.Name == StoreList[num - 1].Name))
                                 {
-                                    Player.Gold += (BuyList[num - 1].Cost - (BuyList[num - 1].Cost / 10));
-                                    // 판매 기능 추가: 아이템을 판매하고 해당 아이템을 인벤토리에서 제거
-                                    Inventory.RemoveItemFromInventory(BuyList[num - 1].Name, BuyList[num - 1].ItemType);
+                                    Player.Gold += (StoreList[num - 1].Cost - (StoreList[num - 1].Cost / 10)); //판매 할 때는 수수료 10% 뗌
+                                    // 판매 기능: 아이템을 판매하고 해당 아이템을 인벤토리에서 제거
+                                    Inventory.RemoveItemFromInventory(StoreList[num - 1].Name, StoreList[num - 1].ItemType);
                                 }
                                 else
                                 {
@@ -170,12 +174,12 @@ namespace W3_TeamProject
                             }
                             else if (num2 == 2)
                             {
-                                if (BuyList[num - 1].Cost <= Player.Gold)
+                                if (StoreList[num - 1].Cost <= Player.Gold)
                                 {
                                     Console.Clear();
-                                    Player.Gold -= BuyList[num - 1].Cost;
-                                    // 구매 기능 추가: 아이템을 구매하고 해당 아이템을 인벤토리에 추가
-                                    Inventory.AddItemToInventory(BuyList[num - 1]);
+                                    Player.Gold -= StoreList[num - 1].Cost;
+                                    // 구매 기능: 아이템을 구매하고 해당 아이템을 인벤토리에 추가
+                                    Inventory.AddItemToInventory(StoreList[num - 1]);
                                 }
                                 else
                                 {

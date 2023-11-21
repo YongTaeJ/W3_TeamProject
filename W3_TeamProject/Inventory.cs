@@ -41,7 +41,7 @@ namespace W3_TeamProject
             else
                 return AccessoryList[index];
         }
-        public static List<BaseItem> GetItemList(ItemType itemtype)
+        public static List<BaseItem> GetItemList(ItemType itemtype) //아이템 타입에 대한 리스트 반환
         {
             switch (itemtype)
             {
@@ -55,12 +55,13 @@ namespace W3_TeamProject
                     return new List<BaseItem>(); // 유효하지 않은 아이템 타입일 경우 빈 리스트 반환
             }
         }
-        public static void RemoveItemFromInventory(string itemName, ItemType itemType)
+        public static void RemoveItemFromInventory(string itemName, ItemType itemType) //아이템 타입에 따른 리스트 중 지정된 이름과 일치하면 제거한다.
         {
+            //Findindex는 리스트에서 특정 아이템의 인덱스 값을 리턴해주는 녀석으로 없을 시 -1이 반환된다.
             switch (itemType)
             {
                 case ItemType.Weapon:
-                    var weaponIndex = WeaponItemList.FindIndex(item => item.Name == itemName); //Findindex 리스트에서 특정 아이템의 값을 리턴해주는 녀석으로 없을 시 -1이 리턴된다.
+                    var weaponIndex = WeaponItemList.FindIndex(item => item.Name == itemName); 
                     if (weaponIndex != -1)
                         WeaponItemList.RemoveAt(weaponIndex);
                     break;
@@ -82,7 +83,7 @@ namespace W3_TeamProject
             }
         }
 
-        public static void AddItemToInventory(BaseItem item)
+        public static void AddItemToInventory(BaseItem item) //인벤토리에 지정된 아이템을 추가한다.
         {
             switch (item.ItemType)
             {
