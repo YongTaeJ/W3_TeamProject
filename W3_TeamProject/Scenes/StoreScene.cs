@@ -64,6 +64,7 @@ namespace W3_TeamProject
                 controller.AddRotation(46, 12);
                 controller.AddRotation(46, 13);
                 controller.AddRotation(46, 14);
+                controller.AddRotation(46, 17);
                 Console.SetCursorPosition(48, 9);
                 Console.WriteLine("무엇을 찾으시나요?");
                 Console.SetCursorPosition(48, 10);
@@ -79,8 +80,7 @@ namespace W3_TeamProject
                 Console.SetCursorPosition(48, 16);
                 Console.WriteLine("0.돌아가기");
                 Console.SetCursorPosition(48, 17);
-                Console.WriteLine(">> ");
-                Console.SetCursorPosition(53, 17);
+                Console.WriteLine("관리자 설정");
                 int select;
                 select = controller.InputLoop();
                 ProcessUserInput(select);
@@ -211,6 +211,11 @@ namespace W3_TeamProject
                     AddItemsToList(new RustySword(), new RustySword(), new RustySword(), new RustySword(), new RustySword(), new SteelSword(), new SteelSword(), new SteelSword(), new SpartaSword(), new SpartaSword(), new OldArmor(), new OldArmor(), new OldArmor(), new OldArmor(), new OldArmor(), new SteelArmor(), new SteelArmor(), new SteelArmor(), new SpartaArmor(), new SpartaArmor(), new OrkRing(), new OrkRing(), new HealthRing(), new HealthRing(), new HealthRing(), new ManaRing(), new ManaRing(), new ManaRing(), new ManaRing(), new ManaRing()); //가챠 아이템 목록
                     ShowRandomItem();
                     break;
+                case 6:
+                    AddItemsToList(new SecreetSword(), new SecreetArmor());
+                    ShowSecreetItem();
+                    break;
+                   
                 case 0:
                     nextState = beforeState;
                     break;
@@ -227,6 +232,22 @@ namespace W3_TeamProject
         public override SceneState ExitScene()
         {
             return nextState;
+        }
+        private void ShowSecreetItem()
+        {
+            Console.SetCursorPosition(50, 9);
+            Console.Write("비밀번호:");
+            if (int.TryParse(Console.ReadLine(), out int password));
+            {
+                if (password == 1030)
+                {
+                    for (int i = 0; i < StoreList.Count; i++)
+                    {
+                        Console.Clear();
+                        ShowItem();
+                    }
+                }
+            }
         }
         private void ShowRandomItem()
         {

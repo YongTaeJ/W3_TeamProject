@@ -49,4 +49,17 @@ namespace W3_TeamProject
             isEquip = false;
         }
     }
+    internal class SecreetSword : BaseItem
+    {
+        protected override void Init()
+        {
+            name = "숨겨진 검";
+            description = "우씨!! 다덤벼!!";
+            cost = 10;
+            status = Status.Attack;
+            effectValue = 20000;
+            itemType = ItemType.Weapon;
+            isEquip = false;
+        }
+    }
 }
