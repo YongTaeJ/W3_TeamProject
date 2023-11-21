@@ -43,8 +43,8 @@ namespace W3_TeamProject
 		private static int currentHealth = 0;
 		private static int currentMana = 0;
 
-		private static int healthPotionCount = 0;
-		private static int manaPotionCount = 0;
+		public static int healthPotionCount = 0;
+		public static int manaPotionCount = 0;
 
 		private static int gold = 0;
 		private static bool isDie = false;
