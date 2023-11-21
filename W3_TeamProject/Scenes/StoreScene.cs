@@ -63,12 +63,14 @@ namespace W3_TeamProject
                 Console.SetCursorPosition(50, 12);
                 Console.WriteLine("3.악세서리 아이템");
                 Console.SetCursorPosition(50, 13);
-                Console.WriteLine("4.아이템 가챠!!(단돈 1000gold)");
-                Console.SetCursorPosition(50, 15);
-                Console.WriteLine("0.돌아가기");
+                Console.WriteLine("4.포션 아이템 상점");
+                Console.SetCursorPosition(50, 14);
+                Console.WriteLine("5.아이템 가챠!!(단돈 1000gold)");
                 Console.SetCursorPosition(50, 16);
+                Console.WriteLine("0.돌아가기");
+                Console.SetCursorPosition(50, 17);
                 Console.WriteLine(">> ");
-                Console.SetCursorPosition(53, 16);
+                Console.SetCursorPosition(53, 17);
                 if (int.TryParse(Console.ReadLine(), out int select))
                 {
                     ProcessUserInput(select);
@@ -80,6 +82,8 @@ namespace W3_TeamProject
                 else
                 {
                     Console.Clear();
+                    BoarderLine();
+                    Console.SetCursorPosition(50, 8);
                     Console.WriteLine("숫자를 입력해 주세요.");
                 }
             }
@@ -112,6 +116,7 @@ namespace W3_TeamProject
             Console.SetCursorPosition(118, 29);
             Console.Write('┛');
         }
+
         private void RandonItemLine()
         {
             Console.SetCursorPosition(0, 12);
@@ -140,6 +145,34 @@ namespace W3_TeamProject
             Console.SetCursorPosition(118, 16);
             Console.Write('┛');
         }
+        private void PotionItemLine()
+        {
+            Console.SetCursorPosition(0, 9);
+            Console.Write('┏');
+            Console.SetCursorPosition(1, 9);
+            for (int i = 0; i < 118; i++)
+            {
+                Console.Write('-');
+            }
+            Console.SetCursorPosition(118, 9);
+            Console.Write('┓');
+            for (int i = 0; i < 5; i++)
+            {
+                Console.SetCursorPosition(0, i + 10);
+                Console.Write('|');
+                Console.SetCursorPosition(118, i + 10);
+                Console.Write('|');
+            }
+            Console.SetCursorPosition(0, 15);
+            Console.Write('┗');
+            Console.SetCursorPosition(1, 15);
+            for (int i = 0; i < 118; i++)
+            {
+                Console.Write('-');
+            }
+            Console.SetCursorPosition(118, 15);
+            Console.Write('┛');
+        }
         private static List<BaseItem> StoreList = new List<BaseItem>(); //상점 아이템 목록이 담기는 리스트
         // StoreList.Add로 목록 추가
         private void ProcessUserInput(int select)
@@ -163,6 +196,9 @@ namespace W3_TeamProject
                     ShowItem();
                     break;
                 case 4:
+                    ShowPotion();
+                    break;
+                case 5:
                     AddItemsToList(new RustySword(), new SteelSword(), new SpartaSword(), new OldArmor(), new SteelArmor(), new SpartaArmor(), new OrkRing(), new HealthRing(), new ManaRing()); //가챠 아이템 목록
                     ShowRandomItem();
                     break;
@@ -220,6 +256,74 @@ namespace W3_TeamProject
                 break;
             }
         }
+        private void ShowPotion()
+        {
+
+            while (true)
+            {
+                Console.Clear();
+                PotionItemLine();
+
+                Console.SetCursorPosition(49, 7);
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                Console.WriteLine($"가진 돈:{Player.Gold} gold");
+                Console.ResetColor();
+                Console.SetCursorPosition(5, 11);
+                Console.WriteLine($"1. 빨간 포션 | 현재 {Player.HealthPotionCount}개 | 최대 체력의 절반만큼 회복 |  그다지 맛은 없다...   | 500gold");
+                Console.SetCursorPosition(5, 12);
+                Console.WriteLine($"2. 파란 포션 | 현재 {Player.ManaPotionCount}개 | 최대 마나의 절반만큼 회복 | 빨간 포션 보다는 낫다... | 500gold");
+                Console.SetCursorPosition(46, 13);
+                Console.WriteLine("0. 돌아가기");
+                Console.SetCursorPosition(5, 17);
+                Console.Write("입력해 주세요:");
+
+                Console.SetCursorPosition(19, 17);
+                if (int.TryParse(Console.ReadLine(), out int potionSelect))
+                {
+                    if (potionSelect == 0)
+                    {
+                        Console.Clear();
+                        BoarderLine();
+                        break;
+                    }
+                    else if (500 <= Player.Gold)
+                    {
+                        if (potionSelect == 1)
+                        {
+                            Player.Gold -= 500;
+                            Player.HealthPotionCount += 1;
+                            Console.Clear();
+                        }
+                        else if (potionSelect == 2)
+                        {
+                            Player.Gold -= 500;
+                            Player.ManaPotionCount += 1;
+                            Console.Clear();
+                        }
+                        else
+                        {
+                            Console.WriteLine("다시 입력해 주세요");
+                        }
+                    }
+                    else
+                    {
+                        Console.Clear();
+                        PotionItemLine();
+                        Console.SetCursorPosition(46, 12);
+                        Console.ForegroundColor = ConsoleColor.DarkRed;
+                        Console.WriteLine("돈이 부족합니다.");
+                        Console.ResetColor();
+                        Thread.Sleep(1000);
+                        Console.Clear();
+                    }
+                }
+                else
+                {
+                    Console.SetCursorPosition(50, 8);
+                    Console.WriteLine("숫자를 입력해 주세요.");
+                }
+            }
+        }
         private void ShowItem()
         {
             while (true)
@@ -230,7 +334,7 @@ namespace W3_TeamProject
                 Console.SetCursorPosition(46, 1);
                 Console.Write("인벤토리에 존재하는 아이템");
                 Console.SetCursorPosition(55, 2);
-                Console.ForegroundColor = ConsoleColor.DarkCyan;
+                Console.ForegroundColor = ConsoleColor.DarkGreen;
                 Console.WriteLine("파란색");
                 Console.ResetColor();
                 Console.SetCursorPosition(49, 3);
@@ -249,7 +353,7 @@ namespace W3_TeamProject
                     bool isItemInInventory = playerItemList.Any(item => item.Name == StoreList[i].Name); //인벤토리 아이템과 상점 아이템의 이름이 같으면 true를 반환함.
                     if (isItemInInventory)
                     {
-                        Console.ForegroundColor = ConsoleColor.DarkCyan; // 인벤토리에 이미 있는 아이템이라면 파란색으로 표시                     
+                        Console.ForegroundColor = ConsoleColor.DarkGreen; // 인벤토리에 이미 있는 아이템이라면 파란색으로 표시                     
                     }
                     else if (StoreList[i].Cost > Player.Gold)
                     {
@@ -282,7 +386,7 @@ namespace W3_TeamProject
                         Console.SetCursorPosition(46, 1);
                         Console.Write("인벤토리에 존재하는 아이템");
                         Console.SetCursorPosition(55, 2);
-                        Console.ForegroundColor = ConsoleColor.DarkCyan;
+                        Console.ForegroundColor = ConsoleColor.DarkGreen;
                         Console.WriteLine("파란색");
                         Console.ResetColor();
                         Console.SetCursorPosition(49, 3);
@@ -299,7 +403,9 @@ namespace W3_TeamProject
                         Console.WriteLine("1. 판매하기");
                         Console.SetCursorPosition(52, 14);
                         Console.WriteLine("2. 구매하기");
-                        Console.SetCursorPosition(47, 15);
+                        Console.SetCursorPosition(52, 15);
+                        Console.WriteLine("0. 돌아가기");
+                        Console.SetCursorPosition(47, 16);
                         Console.Write("어떤 것을 하실건가요?");
 
                         if (int.TryParse(Console.ReadLine(), out int num2))

@@ -43,8 +43,8 @@ namespace W3_TeamProject
 		private static int currentHealth = 0;
 		private static int currentMana = 0;
 
-		public static int healthPotionCount = 0;
-		public static int manaPotionCount = 0;
+		private static int healthPotionCount = 0;
+		private static int manaPotionCount = 0;
 
 		private static int gold = 0;
 		private static bool isDie = false;
@@ -61,8 +61,8 @@ namespace W3_TeamProject
 		public static string PlayerName { get {  return playerName; } }
 		public static int CurrentHealth { get { return currentHealth; } set { currentHealth = value; } }
 		public static int CurrentMana {  get { return currentMana; } }
-		public static int HealthPotionCount { get { return healthPotionCount; } }
-		public static int ManaPotionCount { get { return manaPotionCount; } }
+		public static int HealthPotionCount { get { return healthPotionCount; } set { healthPotionCount = value; } }
+		public static int ManaPotionCount { get { return manaPotionCount; } set { manaPotionCount = value; } }
 		public static int BaseAttack { get { return baseAttack; } }
 		public static int BaseDefense { get {  return baseDefense; } } 
 		public static int BaseHealth { get { return baseHealth; } set { currentHealth = value; } }//체력이 올라가면 같이 베이스 체력도 같이 올림
@@ -117,7 +117,7 @@ namespace W3_TeamProject
 			baseMana = 50;
 			currentHealth = baseHealth;
 			currentMana = baseMana;
-			gold = 1500;
+			gold = 10000;
 			playerSkillList = new PlayerSkillList();
 		}
 
