@@ -75,6 +75,10 @@ namespace W3_TeamProject
 		public static bool IsDie {  get { return isDie; } }
 		#endregion
 
+		public static void Alive()
+		{
+			isDie = false;
+		}
 		public static void ChangeHP(int value)
 		{
 			if(baseHealth + equipHealth < currentHealth + value)
