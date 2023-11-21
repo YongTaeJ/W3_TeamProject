@@ -79,8 +79,6 @@ namespace W3_TeamProject
                 Console.WriteLine("5.아이템 가챠!!(단돈 1000gold)");
                 Console.SetCursorPosition(48, 16);
                 Console.WriteLine("0.돌아가기");
-                Console.SetCursorPosition(48, 17);
-                Console.WriteLine("관리자 설정");
                 int select;
                 select = controller.InputLoop();
                 ProcessUserInput(select);
@@ -235,8 +233,8 @@ namespace W3_TeamProject
         }
         private void ShowSecreetItem()
         {
-            Console.SetCursorPosition(50, 9);
-            Console.Write("비밀번호:");
+            Console.SetCursorPosition(35, 12);
+            Console.Write("버그인듯 하다 아무거나 입력해 돌아가자");
             if (int.TryParse(Console.ReadLine(), out int password));
             {
                 if (password == 1030)
@@ -247,6 +245,7 @@ namespace W3_TeamProject
                         ShowItem();
                     }
                 }
+                else { }
             }
         }
         private void ShowRandomItem()
