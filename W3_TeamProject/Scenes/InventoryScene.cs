@@ -63,7 +63,7 @@ namespace W3_TeamProject
                 switch (userinput)
                 {
                     case 0:
-                        nextState = SceneState.Town;
+                        nextState = SceneState.Status;
                         Console.Clear();
                         break;
                     case 1:
