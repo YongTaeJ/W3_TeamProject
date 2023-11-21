@@ -615,19 +615,27 @@ namespace W3_TeamProject
         private static void ShowPlayer()
         {
             Console.SetCursorPosition(21, 5);
-            Console.WriteLine("---------------");
+            Console.WriteLine("    /＼＼＼＼＼＼＼＼");
             Console.SetCursorPosition(21, 6);
-            Console.WriteLine("    PLAYER     ");
+            Console.WriteLine("   /＼＼＼＼＼＼＼＼＼＼");
             Console.SetCursorPosition(21, 7);
-            Console.WriteLine("---------------");
+            Console.WriteLine("     |┘└            |");
             Console.SetCursorPosition(21, 8);
-            Console.WriteLine("플레이어 이미지");
+            Console.WriteLine("     |┐┌     ㅡ   ㅡ|");
             Console.SetCursorPosition(21, 9);
-            Console.WriteLine("---------------");
+            Console.WriteLine("     |         ┌ㅡ┐ |");
             Console.SetCursorPosition(21, 10);
-            Console.WriteLine("  추가  예정   ");
+            Console.WriteLine("     |         └ㅡ┘ |");
             Console.SetCursorPosition(21, 11);
-            Console.WriteLine("---------------");
+            Console.WriteLine("      ㅡㅡㅡㅡㅡㅡㅡ");
+            Console.SetCursorPosition(21, 12);
+            Console.WriteLine("            ㅣ");
+            Console.SetCursorPosition(21, 13);
+            Console.WriteLine("         ┌ㅡ┼ㅡ┘");
+            Console.SetCursorPosition(21, 14);
+            Console.WriteLine("            ㅣ");
+            Console.SetCursorPosition(21, 15);
+            Console.WriteLine("            ㅅ");
         }
 
 		private void InitSkillController()
