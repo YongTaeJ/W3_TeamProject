@@ -69,9 +69,9 @@ namespace W3_TeamProject
             for (int i = 0; i < 29; i++) // 테두리_세로선 양쪽
             {
                 Console.SetCursorPosition(0, i + 1);
-                Console.Write('ㅣ');
-                Console.SetCursorPosition(118, i + 1);
-                Console.Write('ㅣ');
+                Console.Write('|');
+                Console.SetCursorPosition(119, i + 1);
+                Console.Write('|');
             }
             if (_isWidth)
             {

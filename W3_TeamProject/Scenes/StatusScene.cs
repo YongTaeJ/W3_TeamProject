@@ -521,20 +521,44 @@ namespace W3_TeamProject
             StatusBaseImage();  // 기본 이미지
 
             // 해당 장비를 착용 중이면, 이미지 불러오기
-            if (statusArmor != null && statusArmor.ItemType == ItemType.Armor)
+            for (int i = 0; i < Inventory.GetListCount(ItemType.Armor); i++)
             {
-                if (statusArmor != null && statusArmor.IsEquip == true)
-                    StatusArmorImage();
+                statusArmor = Inventory.GetItem(i, ItemType.Armor);
+
+                if (statusArmor != null && statusArmor.ItemType == ItemType.Armor)
+                {
+                    if (statusArmor.IsEquip == true)
+                    {
+                        StatusArmorImage();
+                    }
+                }
             }
-            if (statusWeapon != null && statusWeapon.ItemType == ItemType.Weapon)
+            for (int i = 0; i < Inventory.GetListCount(ItemType.Weapon); i++)
             {
-                if (statusWeapon != null && statusWeapon.IsEquip == true)
-                    StatusWeaponImage();
+                statusWeapon = Inventory.GetItem(i, ItemType.Weapon);
+
+                if (statusWeapon != null && statusWeapon.ItemType == ItemType.Weapon)
+                {
+                    if (statusWeapon.IsEquip == true)
+                    {
+                        StatusWeaponImage();
+                    }
+                }
             }
-            if (statusAccessory != null && statusAccessory.ItemType == ItemType.Accessory)
+
+
+
+            for (int i = 0; i < Inventory.GetListCount(ItemType.Accessory); i++)
             {
-                if (statusAccessory != null && statusAccessory.IsEquip == true)
-                    StatusAccessoryImage();
+                statusAccessory = Inventory.GetItem(i, ItemType.Accessory);
+
+                if (statusAccessory != null && statusAccessory.ItemType == ItemType.Accessory)
+                {
+                    if (statusAccessory.IsEquip == true)
+                    {
+                        StatusAccessoryImage();
+                    }
+                }
             }
         }
 
@@ -552,20 +576,45 @@ namespace W3_TeamProject
             string EquipAccessory = "없  음";
 
             // 해당 장비를 착용 중이면, 이름 불러오기
-            if (statusWeapon != null && statusWeapon.ItemType == ItemType.Weapon)
+
+
+            for (int i = 0; i < Inventory.GetListCount(ItemType.Armor); i++)
             {
-                if (statusWeapon != null && statusWeapon.IsEquip == true)
-                    EquipWeapon = statusWeapon.Name;
+                statusArmor = Inventory.GetItem(i, ItemType.Armor);
+
+                if (statusArmor != null && statusArmor.ItemType == ItemType.Armor)
+                {
+                    if (statusArmor.IsEquip == true)
+                    {
+                        EquipArmor = statusArmor.Name;
+                    }
+                }
             }
-            if (statusArmor != null && statusArmor.ItemType == ItemType.Armor)
+
+            for (int i = 0; i < Inventory.GetListCount(ItemType.Weapon); i++)
             {
-                if (statusArmor != null && statusArmor.IsEquip == true)
-                    EquipArmor = statusArmor.Name;
+                statusWeapon = Inventory.GetItem(i, ItemType.Weapon);
+
+                if (statusWeapon != null && statusWeapon.ItemType == ItemType.Weapon)
+                {
+                    if (statusWeapon.IsEquip == true)
+                    {
+                        EquipWeapon = statusWeapon.Name;
+                    }
+                }
             }
-            if (statusAccessory != null && statusAccessory.ItemType == ItemType.Accessory)
+
+            for (int i = 0; i < Inventory.GetListCount(ItemType.Accessory); i++)
             {
-                if (statusAccessory != null && statusAccessory.IsEquip == true)
-                    EquipAccessory = statusAccessory.Name;
+                statusAccessory = Inventory.GetItem(i, ItemType.Accessory);
+
+                if (statusAccessory != null && statusAccessory.ItemType == ItemType.Accessory)
+                {
+                    if (statusAccessory.IsEquip == true)
+                    {
+                        EquipAccessory = statusAccessory.Name;
+                    }
+                }
             }
 
             int EWLength = (23 - KoreanStrLength(EquipWeapon)) / 2;

@@ -253,7 +253,7 @@ namespace W3_TeamProject
 				}
 				else if (skillState == SkillState.IsCoolDown)
 				{
-					WriteComment("현재 쿨타임이 남아있는 스킬입니다.");
+					WriteComment(" 현재 쿨타임이 남아있는 스킬입니다.");
 					Thread.Sleep(1000);
 					return true;
 				}
