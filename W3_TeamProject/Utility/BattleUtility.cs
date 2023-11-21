@@ -13,24 +13,30 @@ namespace W3_TeamProject
 	{
 		Random random = new Random();
 
-		public List<BaseEnemy> GetEnemyList()
+		public List<BaseEnemy> GetEnemyList(int _level) //레벨 값을 받으면 층에 해당하는 레벨을 출력
 		{
 			List<BaseEnemy> enemyList = new List<BaseEnemy>();
-			int level = random.Next(1, 6);
+
 
 			for(int i=0; i <random.Next(1,5); i++)
 			{
-				SpawnEnemy(i, enemyList);
+				SpawnEnemy(i, enemyList, _level);
 			}
 			return enemyList;
 		}
 
-		public void SpawnEnemy(int idx , List<BaseEnemy> enemyList)
+		public void SpawnEnemy(int idx , List<BaseEnemy> enemyList, int _levelValue)
 		{
 			// 생성할 몬스터의 범위와 맞아야 함!!
 			int rng = random.Next(0, 3);
-			int level = random.Next(1, 6);
-			switch (rng)
+
+			int level;
+            if (_levelValue == 1) //1층이면 1 ~ 3렙 몬스터 
+                level = random.Next(1, 4);
+            else
+                level = random.Next(4, 7);
+
+            switch (rng)
 			{
 				case 0:
 					{

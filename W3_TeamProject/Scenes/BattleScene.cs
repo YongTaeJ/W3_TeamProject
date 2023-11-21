@@ -23,40 +23,6 @@ namespace W3_TeamProject
         public override void EnterScene()
         {
             Controller controller = new Controller();
-            InitSkillController();
-            InitItemController();
-
-			Console.Clear();
-
-            Console.WriteLine("던전입구로 왔따.");
-            Console.WriteLine();
-            Console.WriteLine("  던전 입장");
-            Console.WriteLine("  마을로 돌아가기");
-            Console.WriteLine();
-
-            controller.AddRotation(0, 2);
-            controller.AddRotation(0, 3);
-            userInput = controller.InputLoop();
-            switch (userInput)
-            {
-                case 0: // 던전 입장
-                    EnterDungeon();
-                    break;
-                case 1: // 마을로 돌아가기
-                    nextState = SceneState.Town;
-                    break;
-            }
-        }
-
-        public override SceneState ExitScene()
-        {
-            return nextState;
-        }
-
-
-        private void EnterDungeon()
-        {
-            Controller controller = new Controller();
 
             /* 스테이지들이 여럿 있다고 가정.
              * e.g. 1층, 2층, 3층(= 보스, BossScene 과 연결)
@@ -91,12 +57,12 @@ namespace W3_TeamProject
                 case 1: // 2층 스테이지 입장
                     WriteComment(" 2층으로 입장합니다.");
                     Thread.Sleep(1000);
-                    EnterStage(2);
+                    EnterStage(2, 2);
                     break;
                 case 2: // 1층 스테이지 입장
                     WriteComment(" 1층으로 입장합니다.");
                     Thread.Sleep(1000);
-                    EnterStage(1);
+                    EnterStage(1, 1);
                     break;
                 case 3: // 마을로 돌아가기
                     nextState = SceneState.Town;
@@ -104,7 +70,11 @@ namespace W3_TeamProject
             }
         }
 
-        private void EnterStage(int _index) //숫자를 넣어 스테이지 이름 변경 - 박정혁
+        public override SceneState ExitScene()
+        {
+            return nextState;
+        }
+        private void EnterStage(int _index, int _level) //숫자를 넣어 스테이지 이름 변경 - 박정혁
         {
 
             DrawStage(); // 스테이지 화면 그리기 (UI, 말풍선, 중간 세로선, )
@@ -123,7 +93,7 @@ namespace W3_TeamProject
                 }
             }
             // 적 랜덤 출현
-            enemyListForStage = battleUtility.GetEnemyList();
+            enemyListForStage = battleUtility.GetEnemyList(_level);
 
             for (int i = 0; i < enemyListForStage.Count; i++)
             {
