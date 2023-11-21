@@ -250,7 +250,7 @@ namespace W3_TeamProject
         public static void ViewMP()
         {
             int totalMana = Player.EquipMana + Player.BaseMana;
-            Console.Write("● 마  력 : ");
+            Console.Write("● 마  나 : ");
             LeftHiText(Blue, $"{Player.CurrentMana} ", $"/ {totalMana} ");
         }
 
@@ -261,11 +261,11 @@ namespace W3_TeamProject
         {
             MakeInnerBorder();
             Console.SetCursorPosition(14, 7);
-            Console.WriteLine("레벨에 대한 상세한 설명입니다.");
+            Console.WriteLine("나의 레벨이다.");
             Console.SetCursorPosition(14, 9);
-            Console.WriteLine("설명 설명");
+            Console.WriteLine("레벨이 오르면");
             Console.SetCursorPosition(14, 10);
-            Console.WriteLine("설명 설명");
+            Console.WriteLine("숨겨진 스킬을 배울 수 있다던데");
 
             Console.SetCursorPosition(23, 13);
             LeftHiText(Red, "▶", " 돌아가기");
@@ -287,11 +287,11 @@ namespace W3_TeamProject
         {
             MakeInnerBorder();
             Console.SetCursorPosition(14, 7);
-            Console.WriteLine("이름에 대한 상세한 설명입니다.");
+            Console.WriteLine("나의 이름이다.");
             Console.SetCursorPosition(14, 9);
-            Console.WriteLine("H. 매니저");
+            Console.WriteLine("나는.. H. 매니저");
             Console.SetCursorPosition(14, 10);
-            Console.WriteLine("설명 설명");
+            Console.WriteLine("크윽.. 갑자기 머리가");
 
             Console.SetCursorPosition(23, 13);
             LeftHiText(Red, "▶", " 돌아가기");
@@ -312,11 +312,11 @@ namespace W3_TeamProject
         {
             MakeInnerBorder();
             Console.SetCursorPosition(14, 7);
-            Console.WriteLine("공격력에 대한 상세한 설명입니다.");
+            Console.WriteLine("나의 공격력이다.");
             Console.SetCursorPosition(14, 9);
-            Console.WriteLine("설명 설명");
+            Console.WriteLine("아이템을 장착하면");
             Console.SetCursorPosition(14, 10);
-            Console.WriteLine("설명 설명");
+            Console.WriteLine("공격력이 오르는 것 같다.");
 
             Console.SetCursorPosition(23, 13);
             LeftHiText(Red, "▶", " 돌아가기");
@@ -337,11 +337,11 @@ namespace W3_TeamProject
         {
             MakeInnerBorder();
             Console.SetCursorPosition(14, 7);
-            Console.WriteLine("방어력에 대한 상세한 설명입니다.");
+            Console.WriteLine("나의 방어력이다.");
             Console.SetCursorPosition(14, 9);
-            Console.WriteLine("설명 설명");
+            Console.WriteLine("아이템을 장착하면");
             Console.SetCursorPosition(14, 10);
-            Console.WriteLine("설명 설명");
+            Console.WriteLine("방어력이 오르는 것 같다.");
 
             Console.SetCursorPosition(23, 13);
             LeftHiText(Red, "▶", " 돌아가기");
@@ -362,11 +362,13 @@ namespace W3_TeamProject
         {
             MakeInnerBorder();
             Console.SetCursorPosition(14, 7);
-            Console.WriteLine("체력에 대한 상세한 설명입니다.");
+            Console.WriteLine("나의 체력이다.");
             Console.SetCursorPosition(14, 9);
-            Console.WriteLine("설명 설명");
+            Console.WriteLine("아이템을 장착하면");
             Console.SetCursorPosition(14, 10);
-            Console.WriteLine("설명 설명");
+            Console.WriteLine("최대 체력이 오르는 것 같다.");
+            Console.SetCursorPosition(14, 11);
+            Console.WriteLine("체력 포션으로 체력을 회복할 수 있다.");
 
             Console.SetCursorPosition(23, 13);
             LeftHiText(Red, "▶", " 돌아가기");
@@ -387,11 +389,11 @@ namespace W3_TeamProject
         {
             MakeInnerBorder();
             Console.SetCursorPosition(14, 7);
-            Console.WriteLine("마력에 대한 상세한 설명입니다.");
+            Console.WriteLine("나의 마나이다.");
             Console.SetCursorPosition(14, 9);
-            Console.WriteLine("설명 설명");
+            Console.WriteLine("마나가 떨어졌을 때는");
             Console.SetCursorPosition(14, 10);
-            Console.WriteLine("설명 설명");
+            Console.WriteLine("마나 포션으로 회복할 수 있다.");
 
             Console.SetCursorPosition(23, 13);
             LeftHiText(Red, "▶", " 돌아가기");
@@ -412,11 +414,13 @@ namespace W3_TeamProject
         {
             MakeInnerBorder();
             Console.SetCursorPosition(14, 7);
-            Console.WriteLine("소지금에 대한 상세한 설명입니다.");
+            Console.WriteLine("소지금");
             Console.SetCursorPosition(14, 9);
-            Console.WriteLine("설명 설명");
+            Console.WriteLine("내가 보유하고 있는 소지금이다");
             Console.SetCursorPosition(14, 10);
-            Console.WriteLine("설명 설명");
+            Console.WriteLine("상점에서 장비와 아이템을 구한 뒤에");
+            Console.SetCursorPosition(14, 11);
+            Console.WriteLine("던전에 도전하자");
 
             Console.SetCursorPosition(23, 13);
             LeftHiText(Red, "▶", " 돌아가기");
