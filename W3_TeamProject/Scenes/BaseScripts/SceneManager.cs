@@ -22,7 +22,8 @@ namespace W3_TeamProject
 		Store,
 		Boss,
 		FinalWin,
-		FinalLose
+		FinalLose,
+		Ending,
   }
 
 	internal class SceneManager
@@ -56,7 +57,8 @@ namespace W3_TeamProject
             Scenes.Add(SceneState.Store, new StoreScene()); // 상점 장면
 			Scenes.Add(SceneState.FinalWin, new FinalWinScene()); // 상점 장면
 			Scenes.Add(SceneState.FinalLose, new FinalLoseScene()); // 상점 장면
-		}
+            Scenes.Add(SceneState.Ending, new EndingScene()); // 엔딩 장면
+        }
 
 		public SceneState Update()
 		{
