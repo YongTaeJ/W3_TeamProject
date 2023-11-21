@@ -119,7 +119,7 @@ namespace W3_TeamProject
                 enemyListForFirstStage[i].Show(); // 첫번째 스테이지의 적 나타나라 얍
             }
 
-           // 랜덤 출현과 컨트롤러 연동
+            // 랜덤 출현과 컨트롤러 연동
             for (int i = 0; i < enemyListForFirstStage.Count; i++)
             {
                 selectEnemyController.AddRotation(enemyListForFirstStage[i].X - 3, enemyListForFirstStage[i].Y + 1);
@@ -128,10 +128,23 @@ namespace W3_TeamProject
             switch (userInput)
             {
                 case 0:
+                    enemyListForFirstStage[0].GetDamage(10);
+                    Console.WriteLine(" 1번 적 공격받음");
                     break;
                 case 1:
+                    enemyListForFirstStage[1].GetDamage(10);
+                    Console.WriteLine(" 2번 적 공격받음");
+
                     break;
                 case 2:
+                    enemyListForFirstStage[2].GetDamage(10);
+                    Console.WriteLine(" 3번 적 공격받음");
+
+                    break;
+                case 3:
+                    enemyListForFirstStage[3].GetDamage(10);
+                    Console.WriteLine(" 4번 적 공격받음");
+
                     break;
             }
 
