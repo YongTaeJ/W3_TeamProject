@@ -22,7 +22,10 @@ namespace W3_TeamProject
 		private static BaseSkill currentSkill;
 
 		#region variables
-		private static int level;
+		private static int level = 1;
+		private static int requiredExp = 10;
+		private static int currentExp = 0;
+
 		private static string playerName;
 
 		// 장비 아이템으로 인한 스탯 상승과 구분하기 위해 나누었습니다.
@@ -43,7 +46,7 @@ namespace W3_TeamProject
 		private static int healthPotionCount = 0;
 		private static int manaPotionCount = 0;
 
-		private static int gold;
+		private static int gold = 0;
 		private static bool isDie = false;
 		#endregion
 
@@ -53,6 +56,8 @@ namespace W3_TeamProject
 		// 팀원의 논의가 필요한 부분이라고 생각하여 미리 구현을 하지 않은 것일 뿐이니 걱정하실 필요는 없습니다.
 		// 필드에 값 할당이 필요하신 경우에는 이야기해주세요!!
 		public static int Level { get { return level; } }
+		public static int RequiredExp {  get { return requiredExp; } }
+		public static int CurrentExp {  get { return currentExp; } }
 		public static string PlayerName { get {  return playerName; } }
 		public static int CurrentHealth { get { return currentHeatlh; } set { currentHeatlh = value; } }
 		public static int CurrentMana {  get { return currentMana; } }
@@ -83,6 +88,7 @@ namespace W3_TeamProject
 
 			if(currentHeatlh <= 0)
 			{
+				currentHeatlh = 0;
 				isDie = true;
 			}
 
@@ -157,6 +163,28 @@ namespace W3_TeamProject
 			manaPotionCount--;
 			int value = (baseMana + equipMana) / 2;
 			ChangeMP(value);
+		}
+		public static void GetExp(int value)
+		{
+			if(requiredExp <= currentExp + value)
+			{
+				// 경험치 초과분은 다 사라짐!!
+				level++;
+				currentExp = 0;
+				requiredExp = level * 10;
+				// 이하는 UI 변경 필요(레벨 변경)
+			}
+			else
+			{
+				// 현재 경험치 증가
+				currentExp += value;
+			}
+			
+		}
+		public static void GetGold(int value)
+		{
+			gold += value;
+			// 이하는 UI 변경 필요(소지금 변경)
 		}
 	}
 

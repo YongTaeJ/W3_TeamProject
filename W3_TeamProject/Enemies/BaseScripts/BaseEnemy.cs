@@ -74,6 +74,7 @@ namespace W3_TeamProject
 		}
 		public void Show()
 		{
+			Clear();
 			if(isDie)
 			{
 				Console.ForegroundColor = ConsoleColor.DarkGray;
@@ -81,15 +82,15 @@ namespace W3_TeamProject
 			Console.SetCursorPosition(x, y);
 			Console.Write("---------------");
 			Console.SetCursorPosition(x, y+1);
-			Console.Write($"   {name} ({level})");
+			Console.Write($" {name} Lv.{level}");
 			Console.SetCursorPosition(x, y+2);
 			Console.Write("---------------");
 			Console.SetCursorPosition(x, y+3);
-			Console.Write($"  Atk : {attack}");
+			Console.Write($"    Atk : {attack}");
 			Console.SetCursorPosition(x, y+4);
 			Console.Write("---------------");
 			Console.SetCursorPosition(x, y+5);
-			Console.WriteLine($"HP : {CurrentHealth} / {health}");
+			Console.WriteLine($" HP : {CurrentHealth} / {health}");
 			Console.SetCursorPosition(x, y+6);
 			Console.Write("---------------");
 			Console.ResetColor();
