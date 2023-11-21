@@ -51,22 +51,30 @@ namespace W3_TeamProject
                         Thread.Sleep(1000);
                         EnterStage(2, 2, ref isSecondClear);
                     }
-                    WriteComment("2층을 가기 위해 이 전층을 클리어해주세요.");
-                    Thread.Sleep(1000);
-                    EnterScene();
-                    break;
-                case 2: // 1층 스테이지 입장
+					else
+					{
+						WriteComment("2층을 가기 위해 이 전층을 클리어해주세요.");
+						Thread.Sleep(1000);
+						EnterScene();
+						
+					}
+					break;
+				case 2: // 1층 스테이지 입장
 					if (isSecondClear)
 					{
 						WriteComment(" 3층으로 입장합니다.");
 						Thread.Sleep(1000);
 						nextState = SceneState.Boss;
 					}
-					WriteComment("보스를 가기 위해 이 전층을 클리어해주세요.");
-					Thread.Sleep(1000);
-					EnterScene();
+					else
+					{
+						WriteComment("보스를 가기 위해 이 전층을 클리어해주세요.");
+						Thread.Sleep(1000);
+						EnterScene();
+					}
 					break;
-                case 3: // 마을로 돌아가기
+
+				case 3: // 마을로 돌아가기
                     nextState = SceneState.Town;
                     break;
             }
@@ -104,6 +112,7 @@ namespace W3_TeamProject
             WriteComment(" 원하시는 행동을 선택하세요.");
 
             bool isPlayerTurn = true;
+			endPoint = 0;
 
             while (endPoint == 0)
             {
@@ -130,10 +139,10 @@ namespace W3_TeamProject
                         isPlayerTurn = false;
                         break;
                     case 2: // 스킬 목록
-                        isPlayerTurn = ShowSkillList(); // 구현 not yet
+                        isPlayerTurn = ShowSkillList();
                         break;
                     case 3: // 아이템 목록
-                        isPlayerTurn = ShowItemList(); // 구현 not yet
+                        isPlayerTurn = ShowItemList();
                         break;
                 }
 
@@ -143,7 +152,7 @@ namespace W3_TeamProject
 				// 적의 턴
 				if (isPlayerTurn == false)
 				{
-					for (int i = 0; i < enemyListForStage.Count; i++) // 4 아님... 생성된 적 만큼!
+					for (int i = 0; i < enemyListForStage.Count; i++)
 					{
 						if (!enemyListForStage[i].IsDie) // 살아있으면
 						{
@@ -169,7 +178,7 @@ namespace W3_TeamProject
             {
                 StageClear();
 				_isStageClear = true;
-				nextState = SceneState.Town;
+				EnterScene();
             }
             else if (endPoint == 2) // 플레이어 패배 (플레이어 체력 0)
             {
@@ -250,11 +259,11 @@ namespace W3_TeamProject
 				}
 				else if (skillState == SkillState.OK) // 스킬 사용 성공
 				{
-					int damage = currentSkill.FixedDamage + currentSkill.VariableDamage * Player.Level;
+					int enemyIdx = ShowSkillTarget();
+					int damage = currentSkill.FixedDamage + currentSkill.VariableDamage * (Player.BaseAttack + Player.EquipAttack);
 
-					// 여기에 적을 지정하거나 지정된 적을 공격하는 로직을 작성해야합니다!!!!
-
-					WriteComment($"{currentSkill.SkillComment} 사장님께 {damage}만큼의 데미지를 입혔습니다!");
+					enemyListForStage[enemyIdx].GetDamage(damage);
+					WriteComment($"{currentSkill.SkillComment} {enemyListForStage[enemyIdx].Name}에게 {damage}만큼의 피해를 입혔습니다!");
 					Thread.Sleep(1000);
 					return false;
 				}
@@ -262,7 +271,31 @@ namespace W3_TeamProject
 			}
 		}
 
-        private void NormalDefense()
+		private int ShowSkillTarget()
+		{
+			Controller selectEnemyController = new Controller(); // 콘트롤러가 전역이면 그 전값이 살아있음 지역으로 옮겨서 값 초기화 - 박정혁
+
+			// 랜덤하게 생성된 몬스터에 수만큼 컨트롤러 생성
+			for (int i = 0; i < enemyListForStage.Count; i++)
+			{
+				selectEnemyController.AddRotation(enemyListForStage[i].X - 3, enemyListForStage[i].Y + 1);
+			}
+
+			while (true)
+			{
+				WriteComment(" 공격하고 싶은 적을 선택하세요");
+				userInput = selectEnemyController.InputLoop(); // 몬스터를 선택하기 위한 화살표
+				if (enemyListForStage[userInput].IsDie)
+				{
+					WriteComment("선택하신 적은 이미 죽었습니다. 다른 적을 선택해주세요");
+					Thread.Sleep(1000);
+					continue;
+				}
+				return userInput;
+			}
+		}
+
+		private void NormalDefense()
         {
             WriteComment(" 최고의 공격은 방어죠 하하");
             Thread.Sleep(1500);
@@ -651,7 +684,7 @@ namespace W3_TeamProject
 			Console.Write($"물리친 동료 : {enemyListForStage.Count}명"); // 추후 추가 필요
 										   // UI 갱신 필요!! (아직 없음)
 			MakeCommentBoarder();
-			WriteComment("잠시 후, 마을로 돌아갑니다.");
+			WriteComment("잠시 후, 회사 입구로 돌아갑니다.");
 			Thread.Sleep(4000);
 		}
 
