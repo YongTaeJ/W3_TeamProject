@@ -157,7 +157,7 @@ namespace W3_TeamProject
 						if (!enemyListForStage[i].IsDie) // 살아있으면
 						{
 							// 공격
-							int damage = enemyListForStage[i].Attack * 100 / (100 - Player.BaseDefense - Player.EquipDefense);
+							int damage = enemyListForStage[i].Attack * 100 / (100 - Player.BaseDefense - Player.EquipDefense) - random.Next(0, 5);
 							string comment = $"{enemyListForStage[i].Name}의 설득에 {damage}만큼의 피해를 입었습니다!";
 							WriteComment(comment);
 							Player.ChangeHP(-damage);
@@ -321,8 +321,8 @@ namespace W3_TeamProject
                 Thread.Sleep(1000);
                 return true;
             }
-
-			int damage = Player.BaseAttack + Player.EquipAttack;
+		
+			int damage = random.Next(Player.BaseAttack, Player.BaseAttack + Player.EquipAttack);
 			WriteComment($"{enemyListForStage[userInput].Name}를 압박하여 {damage}만큼의 피해를 입혔습니다!");
 			enemyListForStage[userInput].GetDamage(damage);
 			Thread.Sleep(1000);
@@ -425,9 +425,9 @@ namespace W3_TeamProject
 
         public void WriteComment(string comment = "")
         {
-            Console.SetCursorPosition(11, 18);
+            Console.SetCursorPosition(12, 18);
             Console.Write(clearString);
-            Console.SetCursorPosition(11, 18);
+            Console.SetCursorPosition(12, 18);
             Console.Write(comment);
         }
 
