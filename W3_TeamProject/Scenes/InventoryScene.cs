@@ -24,7 +24,7 @@ namespace W3_TeamProject
 
             //리스트의 크기만큼 밑으로 위치시킴
             Controller controller = new Controller();
-            for (int i = 0; i < 5; i++)
+            for (int i = 0; i < 4; i++)
             {
                 controller.AddRotation(2, i + 19);
             }
@@ -42,20 +42,20 @@ namespace W3_TeamProject
                 SetStringPosition("[ - 장신구 - ]", 0, true);
                 PlayerEquipConsole(ItemType.Accessory);
                 SetStringPosition("[ - 아이템 - ]", 0, true);
-
+                HealthPotionConsole((Player.HealthPotionCount == 0) ? ConsoleColor.Red : ConsoleColor.Green);
+                ManaPotionConsole((Player.ManaPotionCount == 0) ? ConsoleColor.Red : ConsoleColor.Green);
                 Console.SetCursorPosition(0, 19);
                 SetStringPosition("   뒤로가기");
                 SetStringPosition("   무기 선택");
                 SetStringPosition("   방어구 선택");
                 SetStringPosition("   장신구 선택");
-                SetStringPosition("   아이템 선택");
-                SetStringPosition("원하시는 행동을 입력해주세요.", 1);
+                SetStringPosition("원하시는 행동을 입력해주세요.", 2);
                 SetWritePosition(">>");
                 userinput = controller.InputLoop();
 
                 void NextSelcetConsole(string _text)
                 {
-                    Console.SetCursorPosition(2, 26);
+                    Console.SetCursorPosition(4, 26);
                     SetStringPosition(_text, 0, true);
                     Thread.Sleep(1000);
                 }
@@ -77,10 +77,6 @@ namespace W3_TeamProject
                     case 3:
                         NextSelcetConsole("장신구 선택 화면으로 넘어갑니다.");
                         InvenAccessoryEquip();
-                        break;
-                    case 4:
-                        NextSelcetConsole("아이템 선택 화면으로 넘어갑니다.");
-                        InvenItemEquip();
                         break;
                 }
                 if (nextState != SceneState.None)
@@ -222,42 +218,26 @@ namespace W3_TeamProject
                 }
             }
         }
-        public void InvenItemEquip()
+        public void HealthPotionConsole(ConsoleColor _consoleColor) //인벤토리 메인 창에 플레이어가 장착한 아이템만 보여주기 위한 함수
         {
-            Controller controller = new Controller();
-            controller.AddRotation(2, 20);
-            isInvenEquip = true; //장착관리 들어갈 시
-
-            Console.Clear();
-            SceneBase();
-            SetStringPosition("[인벤토리 - 아이템 관리]", 0, true);
-            SetStringPosition("여기서는 아이템을 장착, 해제할 수 있습니다.");
-            SetStringPosition("[장신구 목록]", 1);
-            Console.SetCursorPosition(0, 19);
-            SetStringPosition("  뒤로가기", 1);
-            SetStringPosition("원하시는 행동을 입력해주세요.", 1);
-            SetWritePosition(">>");
-
-            userinput = controller.InputLoop();
-            for (int i = 0; i < Inventory.GetListCount(ItemType.None) + 1; i++) //반복으로 내가 가지고 있는 아이템 List와 뒤로가기의 크기만큼 돌림
-            {
-                if (userinput == 0) //뒤로가기는 0번 Enter를 누를 시 작동
-                {
-                    nextState = SceneState.Inventory;
-                    break;
-                }
-                else if (userinput == 1)
-                {
-                    Inventory.ListSort(ItemType.Accessory);
-                    InvenAccessoryEquip(); //다시 재생성
-                }
-                else if (userinput == i)//해당 아이템의 위치로 가 Enter를 누를 시 해당 하는 번호의 아이템 작동
-                {
-                    OneItemEquip(userinput - 2, ItemType.None); //아이템 하나만 장착
-                    InvenItemEquip(); //다시 재생성
-                    break;
-                }
-            }
+            Console.ForegroundColor = _consoleColor;
+            SetWritePosition($"{((Player.HealthPotionCount == 0) ? "[X]" : "[O]")}", 3);
+            SetWritePosition("| 빨간 포션", 7);
+            SetWritePosition($"| 최대 체력의 절반이 찬다.", 19);
+            SetWritePosition($"| {((Player.HealthPotionCount == 0) ? "상점에서 구매해 활성화 시켜주세요" : $"{Player.HealthPotionCount} 개 사용가능 합니다.")}", 47);
+            SetStringPosition();
+            Console.ResetColor();
+            //Player.ManaPotionCount;
+        }
+        public void ManaPotionConsole(ConsoleColor _consoleColor) //인벤토리 메인 창에 플레이어가 장착한 아이템만 보여주기 위한 함수
+        {
+            Console.ForegroundColor = _consoleColor;
+            SetWritePosition($"{((Player.HealthPotionCount == 0) ? "[X]" : "[O]")}", 3);
+            SetWritePosition("| 파란 포션", 7);
+            SetWritePosition($"| 최대 마나의 절반이 찬다.", 19);
+            SetWritePosition($"| {((Player.ManaPotionCount == 0) ? "상점에서 구매해 활성화 시켜주세요" : $"{Player.ManaPotionCount} 개 사용가능 합니다.")}", 47);
+            SetStringPosition();
+            Console.ResetColor();
         }
         public void PlayerEquipConsole(ItemType _itemType) //인벤토리 메인 창에 플레이어가 장착한 아이템만 보여주기 위한 함수
         {
