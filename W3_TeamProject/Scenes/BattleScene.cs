@@ -117,6 +117,7 @@ namespace W3_TeamProject
             while (endPoint == 0)
             {
                 Controller mainController = new Controller();
+				int bias = 1;
 
                 mainController.AddRotation(34, 23);
                 mainController.AddRotation(62, 23);
@@ -133,9 +134,7 @@ namespace W3_TeamProject
                         break;
                     case 1: // 방어
                         NormalDefense();
-                        //
-                        // 방어하면 방어력이 올라가는 것 구현해야 함. e.g. 받는 공격력 감소 like BossScene
-                        //
+						bias = 2;
                         isPlayerTurn = false;
                         break;
                     case 2: // 스킬 목록
@@ -158,6 +157,7 @@ namespace W3_TeamProject
 						{
 							// 공격
 							int damage = enemyListForStage[i].Attack * 100 / (100 - Player.BaseDefense - Player.EquipDefense) - random.Next(0, 5);
+							damage /= bias; // 방어하면 데미지 절반!!
 							string comment = $"{enemyListForStage[i].Name}의 설득에 {damage}만큼의 피해를 입었습니다!";
 							WriteComment(comment);
 							Player.ChangeHP(-damage);
