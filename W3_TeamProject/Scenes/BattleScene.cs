@@ -143,18 +143,15 @@ namespace W3_TeamProject
 				// 적의 턴
 				if (isPlayerTurn == false)
 				{
-					WriteComment("적이 공격을 준비합니다!!");
-					Thread.Sleep(1000);
-					for (int i = 0; i < 4; i++) // 4 아님... 생성된 적 만큼!
+					for (int i = 0; i < enemyListForStage.Count; i++) // 4 아님... 생성된 적 만큼!
 					{
-						BaseEnemy temp = new Goblin(1);
-						if (true) // 살아있으면
+						if (!enemyListForStage[i].IsDie) // 살아있으면
 						{
 							// 공격
-							int damage = temp.Attack * 100 / (100 - Player.BaseDefense - Player.EquipDefense);
-							string comment = $"{temp.Name}의 설득에 {damage}만큼의 피해를 입었습니다!";
+							int damage = enemyListForStage[i].Attack * 100 / (100 - Player.BaseDefense - Player.EquipDefense);
+							string comment = $"{enemyListForStage[i].Name}의 설득에 {damage}만큼의 피해를 입었습니다!";
 							WriteComment(comment);
-							Player.ChangeHP(damage);
+							Player.ChangeHP(-damage);
 							Thread.Sleep(1000);
 						}
 					}
