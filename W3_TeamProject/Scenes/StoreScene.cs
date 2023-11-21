@@ -199,7 +199,7 @@ namespace W3_TeamProject
                     ShowPotion();
                     break;
                 case 5:
-                    AddItemsToList(new RustySword(), new SteelSword(), new SpartaSword(), new OldArmor(), new SteelArmor(), new SpartaArmor(), new OrkRing(), new HealthRing(), new ManaRing()); //가챠 아이템 목록
+                    AddItemsToList(new RustySword(), new RustySword(), new RustySword(), new RustySword(), new RustySword(), new SteelSword(), new SteelSword(), new SteelSword(), new SpartaSword(), new SpartaSword(), new OldArmor(), new OldArmor(), new OldArmor(), new OldArmor(), new OldArmor(), new SteelArmor(), new SteelArmor(), new SteelArmor(), new SpartaArmor(), new SpartaArmor(), new OrkRing(), new OrkRing(), new HealthRing(), new HealthRing(), new HealthRing(), new ManaRing(), new ManaRing(), new ManaRing(), new ManaRing(), new ManaRing()); //가챠 아이템 목록
                     ShowRandomItem();
                     break;
                 case 0:
