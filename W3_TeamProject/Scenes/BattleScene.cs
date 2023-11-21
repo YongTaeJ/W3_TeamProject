@@ -156,7 +156,13 @@ namespace W3_TeamProject
 						}
 					}
 					isPlayerTurn = true;
-				}
+
+                    // 플레이어가 죽으면 endPoint = 2
+                    if (Player.IsDie == true)
+                    {
+                        endPoint = 2;
+                    }
+                }
 			}
 
             if (endPoint == 1) // 플레이어 승리 (모든 적이 DEAD)
