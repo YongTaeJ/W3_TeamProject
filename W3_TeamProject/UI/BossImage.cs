@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace W3_TeamProject.UI
+namespace W3_TeamProject
 {
     internal class BossImage
     {

@@ -27,6 +27,8 @@ namespace W3_TeamProject
 		public int Attack { get { return attack; } }
 		public int CurrentHealth { get { return currentHealth; } }
 		public bool IsDie { get { return isDie; } }
+		public int X { get { return x; } }
+		public int Y { get { return y; } }
 		#endregion
 
 		public BaseEnemy(int level)
