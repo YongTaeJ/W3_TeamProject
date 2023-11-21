@@ -19,6 +19,7 @@ namespace W3_TeamProject
 
         List<BaseEnemy>? enemyListForStage; // first 삭제 - 박정혁
 
+
         public override void EnterScene()
         {
             Controller controller = new Controller();
