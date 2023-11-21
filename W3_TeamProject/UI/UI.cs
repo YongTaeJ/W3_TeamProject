@@ -19,7 +19,9 @@ namespace W3_TeamProject
 			MakeHPMPPart();
 			UpdateHPBar();
 			UpdateMPBar();
-		}
+			UnderBarUIStatus();
+
+        }
 		public static void MakeBorder()
 		{
 			// UI의 전체적인 테두리를 그리는 기능입니다.
@@ -177,6 +179,9 @@ namespace W3_TeamProject
         private static BaseItem statusAccessory;
 
 
+		/// <summary>
+		/// UI 오른쪽 하단 플레이어 상태 표시용 함수입니다.
+		/// </summary>
         public static void UnderBarUIStatus()
         {
             for (int i = 0; i < 8; i++)
@@ -187,62 +192,34 @@ namespace W3_TeamProject
 
             int totalAtk = Player.EquipAttack + Player.BaseAttack;
             int totalDef = Player.EquipDefense + Player.BaseDefense;
-            string EquipWeapon = "없  음";
-            string EquipArmor = "없  음";
-            string EquipAccessory = "없  음";
-
-            if (statusWeapon != null && statusWeapon.ItemType == ItemType.Weapon)
-                EquipWeapon = statusWeapon.Name;
-            if (statusArmor != null && statusArmor.ItemType == ItemType.Armor)
-                EquipArmor = statusArmor.Name;
-            if (statusAccessory != null && statusAccessory.ItemType == ItemType.Accessory)
-                EquipAccessory = statusAccessory.Name;
-
 
             Console.SetCursorPosition(97, 21);
             Console.WriteLine("레  벨");
             Console.SetCursorPosition(111 - Player.Level.ToString().Length, 22);
-            LeftHiText(ConsoleColor.Cyan, $"{Player.Level}");
+			HilightedText(ConsoleColor.Cyan, $"{Player.Level}");
             Console.SetCursorPosition(97, 23);
             Console.WriteLine("공격력");
             Console.SetCursorPosition(111 - totalAtk.ToString().Length, 24);
-            LeftHiText(ConsoleColor.Red, $"{totalAtk}");
+            HilightedText(ConsoleColor.Red, $"{totalAtk}");
             Console.SetCursorPosition(97, 25);
             Console.WriteLine("방어력");
             Console.SetCursorPosition(111 - totalDef.ToString().Length, 26);
-            LeftHiText(ConsoleColor.Blue, $"{totalDef}");
+            HilightedText(ConsoleColor.Blue, $"{totalDef}");
             Console.SetCursorPosition(97, 27);
             Console.WriteLine("소지금");
             Console.SetCursorPosition(111 - Player.Gold.ToString().Length, 28);
-            LeftHiText(ConsoleColor.Yellow, $"{Player.Gold}");
-
-
-            //Console.SetCursorPosition(92, 26);
-            //LeftHiText(DarkBlue, EquipWeapon);
-            //Console.SetCursorPosition(92, 27);
-            //LeftHiText(DarkGreen, EquipArmor);
-            //Console.SetCursorPosition(92, 28);
-            //LeftHiText(Red, EquipAccessory);
-        }
-        public static void LeftHiText(ConsoleColor col, string text1, string text2 = "")
-        {
-            Console.ForegroundColor = col;
-            Console.Write(text1);
-            Console.ResetColor();
-            Console.WriteLine(text2);
+            HilightedText(ConsoleColor.Yellow, $"{Player.Gold}");
         }
 
-        /// <summary>
-        /// 선택한 color로 text2를 표시합니다.
-        /// </summary>
-        /// <param name="color"></param>
-        /// <param name="text1"></param>
-        /// <param name="text2"></param>
-        public static void RightHiText(ConsoleColor col, string text1 = " ", string text2 = " ")
+		/// <summary>
+		/// UnderBarUIStatus 용 글씨 색 변경하는 함수입니다.
+		/// </summary>
+		/// <param name="col"></param>
+		/// <param name="text"></param>
+        public static void HilightedText(ConsoleColor col, string text)
         {
-            Console.Write(text1);
             Console.ForegroundColor = col;
-            Console.WriteLine(text2);
+            Console.Write(text);
             Console.ResetColor();
         }
     }
