@@ -17,10 +17,10 @@ namespace W3_TeamProject
             int x = 5;
             int y = 8;
             string sentence = "\n      _____________" +
-                              "\n    /      Shop     ＼" +
+                              "\n    /               ＼" +
                               "\n    ------------------" +
                               "\n      |            |" +
-                              "\n      |            |" +
+                              "\n      |    Shop    |" +
                               "\n      |            |" +
                               "\n       ------------";
 
@@ -76,8 +76,8 @@ namespace W3_TeamProject
                        "\n        〔_____〕" +
                        "\n         |     |" +
                        "\n        /       ＼" +
-                       "\n       /          ＼" +
-                       "\n      |   Inven    |" +
+                       "\n       /  Inven   ＼" +
+                       "\n      |            |" +
                        "\n      └-----------┘";
 
 

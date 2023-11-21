@@ -12,6 +12,12 @@ namespace W3_TeamProject
 		public override void EnterScene()
 		{
 			Console.Clear();
+            Console.SetCursorPosition(12, 14);
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine("[이 게임에 등장하는 모든 인물,이름,사건은 허구이며, 실존하는 것들을 기반으로 하지 않습니다.]");
+            Console.ReadKey();
+            Console.Clear();
+            Console.ForegroundColor = ConsoleColor.White;
             Console.SetCursorPosition(0, 0); // 테두리_가로선 맨 윗줄
             for (int i = 0; i < 120; i++)
             {
@@ -38,7 +44,7 @@ namespace W3_TeamProject
             //Console.ForegroundColor = ConsoleColor.Green;
             string sentence = "2023년, 어느 날\n능력,성과가 뛰어난 H.매니저의 연봉협상이 동결되었다...." +
                               "\n이에 부당하다고 생각한 H.매니저 !!" +
-                              "\n각오를 하고 Boss에게 최후통첩을 하려는 이를 막으려는 동료들" +
+                              "\n각오를 하고 Boss에게 최후통첩을 하려는 그를 막아서는 동료들" +
                               "\n과연 동료를 뚫고 Boss와 협상을 잘 타결 할 수 있을 것인가 ?!!";
 
             foreach (char letter in sentence)
@@ -55,7 +61,7 @@ namespace W3_TeamProject
                    x++; // 다음 문자 위치로 이동
                }
                
-                Thread.Sleep(10); // msec 지연
+                Thread.Sleep(50); // msec 지연
             }
 
             // 주인공 캐릭터
@@ -84,7 +90,6 @@ namespace W3_TeamProject
                               "\n             ㅡㅡㅡ       ㅡㅡㅡ" +
                               "\n             ㅡㅡㅡ       ㅡㅡㅡ" +
                               "\n             ㅡㅡㅡ       ㅡㅡㅡ";
-
             int charColorBlink = 0;
             while (true)
             {
