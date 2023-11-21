@@ -79,6 +79,7 @@ namespace W3_TeamProject
                         break;
                     case 1:
                         Thread.Sleep(300);
+                        StatusSecretNameImage();
                         DetailName();
                         break;
                     case 2:
@@ -99,6 +100,7 @@ namespace W3_TeamProject
                         break;
                     case 6:
                         Thread.Sleep(300);
+                        StatusSecretGoldImage();
                         DetailGold();
                         break;
                     case 7:  // 인벤토리 선택 시 -> Inventory로
@@ -598,9 +600,9 @@ namespace W3_TeamProject
             Console.SetCursorPosition(65, 7);
             Console.WriteLine("   ㅇ    ㅇ    ㅇ    ㅇ");
             Console.SetCursorPosition(65, 8);
-            Console.WriteLine("   ㅇ                ㅇ");
+            Console.WriteLine("   ㅇ       ＜       ㅇ");
             Console.SetCursorPosition(65, 9);
-            Console.WriteLine("     ㅇ            ㅇ");
+            Console.WriteLine("     ㅇ    ㅡㅡ    ㅇ");
             Console.SetCursorPosition(65, 10);
             Console.WriteLine("       ㅇㅇㅇㅇㅇㅇ");
             Console.SetCursorPosition(65, 11);
@@ -619,6 +621,72 @@ namespace W3_TeamProject
             Console.WriteLine("       ㅇ  ㅇㅇ  ㅇ");
             Console.SetCursorPosition(65, 18);
             Console.WriteLine("       ㅇㅇ    ㅇㅇ");
+        }
+        public static void StatusSecretNameImage()
+        {
+            Console.SetCursorPosition(61, 4);
+            Console.WriteLine("⠀⠀⠀⠀⢐⣽⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠇⠀⠀⠀⠀");
+            Console.SetCursorPosition(61, 5);
+            Console.WriteLine("⠀⠀⠀⠀⠀⢿⣿⢿⣟⢿⣿⣟⣿⣿⢻⢟⢟⢟⢿⣿⣻⣿⣿⣻⣿⢿⣻⣿⣟⣟⠀⠀⠀⠀⠀");
+            Console.SetCursorPosition(61, 6);
+            Console.WriteLine("⠀⠀⠀⠀⠀⢘⡿⡹⡸⡱⣸⢸⢢⢫⡪⡪⡣⡫⡪⡲⡱⡱⣸⢸⡸⡱⡍⣟⣿⠀⠀⠀⠀⠀⠀");
+            Console.SetCursorPosition(61, 7);
+            Console.WriteLine("⠀⠀⠀⠀⠀⠀⡯⡺⡸⡱⣓⢷⢷⣣⡣⡫⡪⡣⡫⣪⡮⣷⡷⢵⢕⢕⡕⣕⡿⡁⠀⠀⠀⠀⠀");
+            Console.SetCursorPosition(61, 8);
+            Console.WriteLine("⠀⠀⠀⠀⠀⠀⢕⢕⢝⡜⡼⡸⡱⡱⡱⡹⡸⡱⡹⡸⡱⣱⢹⢸⢜⢕⢕⢵⢹⠀⠀⠀⠀⠀⠀");
+            Console.SetCursorPosition(61, 9);
+            Console.WriteLine("⠀⠀⠀⠀⠀⠀⢘⢜⢕⢕⡕⡵⡹⡸⡪⡣⡫⡪⡣⡫⣪⢪⡪⡣⡣⡳⡹⡸⡂⠀⠀⠀⠀⠀⠀");
+            Console.SetCursorPosition(61, 10);
+            Console.WriteLine("⠀⠀⠀⠀⠀⠀⠀⡣⡫⣪⢪⡪⡺⡸⡪⡪⡣⡫⡪⡣⣣⢣⡣⡫⣪⢺⢸⠊⠀⠀⠀⠀⠀⠀⠀");
+            Console.SetCursorPosition(61, 11);
+            Console.WriteLine("⠀⠀⠀⠀⠀⠀⠀⠸⡸⡜⣜⢜⢎⢞⢜⢇⢏⢞⢇⢏⢎⢎⢮⢪⡪⡎⡎⣇⢏⢇⢗⢔⢤⢠⡠");
+            Console.SetCursorPosition(61, 12);
+            Console.WriteLine("⠀⠀⠀⠀⠀⠀⠀⠀⡇⡧⡣⣣⢳⢱⢣⢫⡪⡎⡮⡪⡣⡳⡱⡕⣕⢕⢝⢜⢜⢎⢇⢗⢕⢵⢱");
+            Console.SetCursorPosition(61, 13);
+            Console.WriteLine("⠀⠀⠀⣀⢔⢴⢱⡹⡸⡜⡎⣎⢮⢺⡼⣵⢵⡵⡧⡷⡝⡜⡎⣎⢎⡎⡇⡗⡕⡇⡗⣕⢝⢜⡜");
+            Console.SetCursorPosition(61, 14);
+            Console.WriteLine("⡠⡠⡕⣕⢕⢵⢱⢕⢵⢱⢕⢕⢕⡕⣕⢕⡕⣝⢜⢎⢇⢗⢭⢪⢾⡗⡝⡜⡎⡞⣜⢜⢜⢕⢕");
+            Console.SetCursorPosition(61, 15);
+            Console.WriteLine("⡪⡎⡮⡪⡪⡎⡮⡪⡎⡮⡪⡣⣣⢣⡣⣣⢣⡣⡣⡳⡱⡕⡵⣵⣟⢎⢞⢜⢎⢮⢪⡪⡣⡳⡹");
+            Console.SetCursorPosition(61, 16);
+            Console.WriteLine("⢕⢕⢵⢹⢸⢪⡪⡎⡮⡪⡺⡸⡜⣜⢜⡜⣜⢜⢎⢇⢧⡳⡻⡾⡱⣝⢜⢕⢵⢱⢕⢕⢝⢜⢎");
+            Console.SetCursorPosition(61, 17);
+            Console.WriteLine("⡵⡹⡸⡜⡎⣎⢎⢎⢮⢺⢸⢪⡪⡪⡣⣫⢺⢺⢺⢩⢇⡯⡟⡕⡽⣸⢸⢱⡱⡕⡵⡹⡸⡱⡱");
+            Console.SetCursorPosition(61, 18);
+            Console.WriteLine("⣣⢳⡱⣕⢵⢵⢧⢯⢮⡮⡾⡾⢾⢾⢷⣷⣿⡿⣿⣿⣟⣾⣧⢿⣯⣾⠾⣷⢵⡵⣵⢵⡽⡼⡵");
+        }
+        public static void StatusSecretGoldImage()
+        {
+            Console.SetCursorPosition(65, 4);
+            Console.WriteLine("       ㅡㅡㅡㅡㅡㅡ");
+            Console.SetCursorPosition(65, 5);
+            Console.WriteLine("     ㅣ            ㅣ");
+            Console.SetCursorPosition(65, 6);
+            Console.WriteLine("   ㅣ                ㅣ");
+            Console.SetCursorPosition(65, 7);
+            Console.WriteLine("   ㅣ    ㅇ    ㅇ    ㅣ");
+            Console.SetCursorPosition(65, 8);
+            Console.WriteLine("   ㅣ       ＜       ㅣ");
+            Console.SetCursorPosition(65, 9);
+            Console.WriteLine("     ㅣ    ㅡㅡ    ㅣ");
+            Console.SetCursorPosition(65, 10);
+            Console.WriteLine("       ㅡㅡㅡㅡㅡㅡ");
+            Console.SetCursorPosition(65, 11);
+            Console.WriteLine("     ㅣ            ㅣ");
+            Console.SetCursorPosition(65, 12);
+            Console.WriteLine("   ㅣ                ㅣ");
+            Console.SetCursorPosition(65, 13);
+            Console.WriteLine("   ㅣ  ㅣ        ㅣ  ㅣ");
+            Console.SetCursorPosition(65, 14);
+            Console.WriteLine("   ㅣ  ㅣ        ㅣ  ㅣ");
+            Console.SetCursorPosition(65, 15);
+            Console.WriteLine("     ㅇㅣ        ㅣㅇ");
+            Console.SetCursorPosition(65, 16);
+            Console.WriteLine("       ㅣ        ㅣ");
+            Console.SetCursorPosition(65, 17);
+            Console.WriteLine("       ㅣ  ㅣㅣ  ㅣ");
+            Console.SetCursorPosition(65, 18);
+            Console.WriteLine("       ㅣㅇㅣㅣㅇㅣ");
         }
 
         /// <summary>
