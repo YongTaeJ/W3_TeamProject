@@ -12,6 +12,7 @@ namespace W3_TeamProject
 {
     internal class StoreScene : BaseScene
     {
+        
         public override void EnterScene()
         {
             StoreIntro();
@@ -50,40 +51,46 @@ namespace W3_TeamProject
 			*/
             Console.Clear();
             BoarderLine();
-            Console.SetCursorPosition(50, 8);
+            Console.SetCursorPosition(48, 8);
             Console.WriteLine("상점에 온걸 환영합니다.");
             while (true)
             {
-                Console.SetCursorPosition(50, 9);
+                Controller controller = new Controller();
+                controller.AddRotation(46, 16);
+                controller.AddRotation(46, 10);
+                controller.AddRotation(46, 11);
+                controller.AddRotation(46, 12);
+                controller.AddRotation(46, 13);
+                controller.AddRotation(46, 14);
+                Console.SetCursorPosition(48, 9);
                 Console.WriteLine("무엇을 찾으시나요?");
-                Console.SetCursorPosition(50, 10);
+                Console.SetCursorPosition(48, 10);
                 Console.WriteLine("1.공격 아이템");
-                Console.SetCursorPosition(50, 11);
+                Console.SetCursorPosition(48, 11);
                 Console.WriteLine("2.방어 아이템");
-                Console.SetCursorPosition(50, 12);
+                Console.SetCursorPosition(48, 12);
                 Console.WriteLine("3.악세서리 아이템");
-                Console.SetCursorPosition(50, 13);
+                Console.SetCursorPosition(48, 13);
                 Console.WriteLine("4.포션 아이템 상점");
-                Console.SetCursorPosition(50, 14);
+                Console.SetCursorPosition(48, 14);
                 Console.WriteLine("5.아이템 가챠!!(단돈 1000gold)");
-                Console.SetCursorPosition(50, 16);
+                Console.SetCursorPosition(48, 16);
                 Console.WriteLine("0.돌아가기");
-                Console.SetCursorPosition(50, 17);
+                Console.SetCursorPosition(48, 17);
                 Console.WriteLine(">> ");
                 Console.SetCursorPosition(53, 17);
-                if (int.TryParse(Console.ReadLine(), out int select))
+                int select;
+                select = controller.InputLoop();
+                ProcessUserInput(select);
+                if (select == 0)
                 {
-                    ProcessUserInput(select);
-                    if (select == 0)
-                    {
-                        break;
-                    }
+                    break;
                 }
                 else
                 {
                     Console.Clear();
                     BoarderLine();
-                    Console.SetCursorPosition(50, 8);
+                    Console.SetCursorPosition(48, 8);
                     Console.WriteLine("숫자를 입력해 주세요.");
                 }
             }
@@ -233,13 +240,13 @@ namespace W3_TeamProject
                     BaseItem randomItem = shuffledList.First(); //셔플된 리스트의 첫번째 리스트를 불러옴
                     Console.SetCursorPosition(46, 3);
                     Console.WriteLine("1000gold를 지불하셨습니다.");
+                    Player.Gold -= 1000;
                     Console.SetCursorPosition(49, 7);
                     Console.ForegroundColor = ConsoleColor.Yellow;
                     Console.WriteLine($"가진 돈:{Player.Gold} gold");
                     Console.ResetColor();
                     Console.SetCursorPosition(5, 14);
                     Console.WriteLine($"{randomItem.Name} | {randomItem.Status} + {randomItem.EffectValue} | {randomItem.Description}");
-                    Player.Gold -= 1000;
                     // 구매 기능: 아이템을 구매하고 해당 아이템을 인벤토리에 추가
                     Inventory.AddItemToInventory(randomItem);
                 }
@@ -250,7 +257,7 @@ namespace W3_TeamProject
                     Console.WriteLine("돈이 부족합니다.");
                     Console.ResetColor();
                 }
-                Thread.Sleep(1000);
+                Thread.Sleep(2000);
                 Console.Clear();
                 BoarderLine();
                 break;
@@ -261,9 +268,12 @@ namespace W3_TeamProject
 
             while (true)
             {
+                Controller controller = new Controller();
                 Console.Clear();
                 PotionItemLine();
-
+                controller.AddRotation(44, 13);
+                controller.AddRotation(3, 11);
+                controller.AddRotation(3, 12);
                 Console.SetCursorPosition(49, 7);
                 Console.ForegroundColor = ConsoleColor.Yellow;
                 Console.WriteLine($"가진 돈:{Player.Gold} gold");
@@ -274,53 +284,44 @@ namespace W3_TeamProject
                 Console.WriteLine($"2. 파란 포션 | 현재 {Player.ManaPotionCount}개 | 최대 마나의 절반만큼 회복 | 빨간 포션 보다는 낫다... | 500gold");
                 Console.SetCursorPosition(46, 13);
                 Console.WriteLine("0. 돌아가기");
-                Console.SetCursorPosition(5, 17);
-                Console.Write("입력해 주세요:");
 
-                Console.SetCursorPosition(19, 17);
-                if (int.TryParse(Console.ReadLine(), out int potionSelect))
+                int potionSelect;
+                potionSelect = controller.InputLoop();
+                if (potionSelect == 0)
                 {
-                    if (potionSelect == 0)
+                    Console.Clear();
+                    BoarderLine();
+                    break;
+                }
+                else if (500 <= Player.Gold)
+                {
+                    if (potionSelect == 1)
                     {
+                        Player.Gold -= 500;
+                        Player.HealthPotionCount += 1;
                         Console.Clear();
-                        BoarderLine();
-                        break;
                     }
-                    else if (500 <= Player.Gold)
+                    else if (potionSelect == 2)
                     {
-                        if (potionSelect == 1)
-                        {
-                            Player.Gold -= 500;
-                            Player.HealthPotionCount += 1;
-                            Console.Clear();
-                        }
-                        else if (potionSelect == 2)
-                        {
-                            Player.Gold -= 500;
-                            Player.ManaPotionCount += 1;
-                            Console.Clear();
-                        }
-                        else
-                        {
-                            Console.WriteLine("다시 입력해 주세요");
-                        }
+                        Player.Gold -= 500;
+                        Player.ManaPotionCount += 1;
+                        Console.Clear();
                     }
                     else
                     {
-                        Console.Clear();
-                        PotionItemLine();
-                        Console.SetCursorPosition(46, 12);
-                        Console.ForegroundColor = ConsoleColor.DarkRed;
-                        Console.WriteLine("돈이 부족합니다.");
-                        Console.ResetColor();
-                        Thread.Sleep(1000);
-                        Console.Clear();
+                        Console.WriteLine("다시 입력해 주세요");
                     }
                 }
                 else
                 {
-                    Console.SetCursorPosition(50, 8);
-                    Console.WriteLine("숫자를 입력해 주세요.");
+                    Console.Clear();
+                    PotionItemLine();
+                    Console.SetCursorPosition(46, 12);
+                    Console.ForegroundColor = ConsoleColor.DarkRed;
+                    Console.WriteLine("돈이 부족합니다.");
+                    Console.ResetColor();
+                    Thread.Sleep(1000);
+                    Console.Clear();
                 }
             }
         }
@@ -328,6 +329,8 @@ namespace W3_TeamProject
         {
             while (true)
             {
+                Controller controller = new Controller();
+                controller.RemoveAll();
                 Console.Clear();
                 BoarderLine();
                 List<BaseItem> playerItemList = Inventory.GetItemList(StoreList[0].ItemType); //타입에 따라 인벤토리의 아이템 리스트를 가져옴
@@ -335,7 +338,7 @@ namespace W3_TeamProject
                 Console.Write("인벤토리에 존재하는 아이템");
                 Console.SetCursorPosition(55, 2);
                 Console.ForegroundColor = ConsoleColor.DarkGreen;
-                Console.WriteLine("파란색");
+                Console.WriteLine("초록색");
                 Console.ResetColor();
                 Console.SetCursorPosition(49, 3);
                 Console.Write("골드가 부족한 아이템");
@@ -347,13 +350,15 @@ namespace W3_TeamProject
                 Console.ForegroundColor = ConsoleColor.Yellow;
                 Console.WriteLine($"가진 돈:{Player.Gold} gold");
                 Console.ResetColor();
+                controller.AddRotation(51, 15);
                 for (int i = 0; i < StoreList.Count; i++)
                 {
-                    Console.SetCursorPosition(3, 12+i);
+                    controller.AddRotation(3, 12+i);
+                    Console.SetCursorPosition(5, 12+i);
                     bool isItemInInventory = playerItemList.Any(item => item.Name == StoreList[i].Name); //인벤토리 아이템과 상점 아이템의 이름이 같으면 true를 반환함.
                     if (isItemInInventory)
                     {
-                        Console.ForegroundColor = ConsoleColor.DarkGreen; // 인벤토리에 이미 있는 아이템이라면 파란색으로 표시                     
+                        Console.ForegroundColor = ConsoleColor.DarkGreen; // 인벤토리에 이미 있는 아이템이라면 초록색으로 표시                     
                     }
                     else if (StoreList[i].Cost > Player.Gold)
                     {
@@ -369,104 +374,88 @@ namespace W3_TeamProject
                 }
                 Console.SetCursorPosition(53, 15);
                 Console.WriteLine("0. 돌아가기");
-                Console.SetCursorPosition(3, 16);
-                Console.Write("어떤 아이템을 사고 파실건가요?:");
-                if (int.TryParse(Console.ReadLine(), out int num))
-                {
-                    if (num == 0)
-                    {
-                        Console.Clear();
-                        BoarderLine();
-                        break;
-                    }
-                    else if (num <= StoreList.Count)
-                    {
-                        Console.Clear();
-                        BoarderLine();
-                        Console.SetCursorPosition(46, 1);
-                        Console.Write("인벤토리에 존재하는 아이템");
-                        Console.SetCursorPosition(55, 2);
-                        Console.ForegroundColor = ConsoleColor.DarkGreen;
-                        Console.WriteLine("파란색");
-                        Console.ResetColor();
-                        Console.SetCursorPosition(49, 3);
-                        Console.Write("골드가 부족한 아이템");
-                        Console.SetCursorPosition(55, 4);
-                        Console.ForegroundColor = ConsoleColor.DarkRed;
-                        Console.WriteLine("빨간색");
-                        Console.ResetColor();
-                        Console.SetCursorPosition(49, 7);
-                        Console.ForegroundColor = ConsoleColor.Yellow;
-                        Console.WriteLine($"가진 돈:{Player.Gold} gold");
-                        Console.ResetColor();
-                        Console.SetCursorPosition(52, 13);
-                        Console.WriteLine("1. 판매하기");
-                        Console.SetCursorPosition(52, 14);
-                        Console.WriteLine("2. 구매하기");
-                        Console.SetCursorPosition(52, 15);
-                        Console.WriteLine("0. 돌아가기");
-                        Console.SetCursorPosition(47, 16);
-                        Console.Write("어떤 것을 하실건가요?");
-
-                        if (int.TryParse(Console.ReadLine(), out int num2))
-                        {
-                            if (num2 == 1)
-                            {
-                                Console.Clear();
-                                BoarderLine();
-                                if (playerItemList.Any(item => item.Name == StoreList[num - 1].Name))
-                                {
-                                    Player.Gold += (StoreList[num - 1].Cost - (StoreList[num - 1].Cost / 10)); //판매 할 때는 수수료 10% 뗌
-                                    // 판매 기능: 아이템을 판매하고 해당 아이템을 인벤토리에서 제거
-                                    Inventory.RemoveItemFromInventory(StoreList[num - 1].Name, StoreList[num - 1].ItemType);
-                                }
-                                else
-                                {
-                                    Console.SetCursorPosition(46, 1);
-                                    Console.WriteLine("판매할 아이템이 인벤토리에 없습니다.");
-                                }
-                            }
-                            else if (num2 == 2)
-                            {
-                                if (StoreList[num - 1].Cost <= Player.Gold)
-                                {
-                                    Console.Clear();
-                                    BoarderLine();
-                                    Player.Gold -= StoreList[num - 1].Cost;
-                                    // 구매 기능: 아이템을 구매하고 해당 아이템을 인벤토리에 추가
-                                    Inventory.AddItemToInventory(StoreList[num - 1]);
-                                }
-                                else
-                                {
-                                    Console.Clear();
-                                    BoarderLine();
-                                    Console.SetCursorPosition(46, 1);
-                                    Console.WriteLine("돈이 부족합니다:");
-                                }
-                            }
-                            else 
-                            {
-                                Console.Clear();
-                                BoarderLine();
-                                Console.SetCursorPosition(46, 1);
-                                Console.WriteLine("다시 입력해주세요:");
-                            }
-                        }
-                    }
-                    else
-                    {
-                        Console.Clear();
-                        BoarderLine();
-                        Console.SetCursorPosition(46, 1);
-                        Console.WriteLine("다시 입력해주세요:");
-                    }
-                }
-                else
+                int selectNumber;
+                selectNumber = controller.InputLoop();
+                if (selectNumber == 0)
                 {
                     Console.Clear();
                     BoarderLine();
+                    break;
+                }
+                else if (selectNumber <= StoreList.Count)
+                {
+                    Controller controller2 = new Controller();
+                    controller2.RemoveAll();
+                    controller2.AddRotation(50, 15);
+                    controller2.AddRotation(50, 13);
+                    controller2.AddRotation(50, 14);
+                    Console.Clear();
+                    BoarderLine();
                     Console.SetCursorPosition(46, 1);
-                    Console.WriteLine("숫자를 입력해주세요:");
+                    Console.Write("인벤토리에 존재하는 아이템");
+                    Console.SetCursorPosition(55, 2);
+                    Console.ForegroundColor = ConsoleColor.DarkGreen;
+                    Console.WriteLine("초록색");
+                    Console.ResetColor();
+                    Console.SetCursorPosition(49, 3);
+                    Console.Write("골드가 부족한 아이템");
+                    Console.SetCursorPosition(55, 4);
+                    Console.ForegroundColor = ConsoleColor.DarkRed;
+                    Console.WriteLine("빨간색");
+                    Console.ResetColor();
+                    Console.SetCursorPosition(49, 7);
+                    Console.ForegroundColor = ConsoleColor.Yellow;
+                    Console.WriteLine($"가진 돈:{Player.Gold} gold");
+                    Console.ResetColor();
+                    Console.SetCursorPosition(52, 13);
+                    Console.WriteLine("1. 판매하기");
+                    Console.SetCursorPosition(52, 14);
+                    Console.WriteLine("2. 구매하기");
+                    Console.SetCursorPosition(52, 15);
+                    Console.WriteLine("0. 돌아가기");
+                    int chooseNumber;
+                    chooseNumber = controller2.InputLoop();
+                    if (chooseNumber == 1)
+                    {
+                        Console.Clear();
+                        BoarderLine();
+                        if (playerItemList.Any(item => item.Name == StoreList[selectNumber - 1].Name))
+                        {
+                            Player.Gold += (StoreList[selectNumber - 1].Cost - (StoreList[selectNumber - 1].Cost / 10)); //판매 할 때는 수수료 10% 뗌
+                                                                                                                         // 판매 기능: 아이템을 판매하고 해당 아이템을 인벤토리에서 제거
+                            Inventory.RemoveItemFromInventory(StoreList[selectNumber - 1].Name, StoreList[selectNumber - 1].ItemType);
+                        }
+                        else
+                        {
+                            Console.Clear();
+                            RandonItemLine();
+                            Console.SetCursorPosition(46, 14);
+                            Console.ForegroundColor = ConsoleColor.DarkRed;
+                            Console.WriteLine("판매 할 아이템이 없습니다.");
+                            Console.ResetColor();
+                            Thread.Sleep(1000);
+                            
+                        }
+                    }
+                    else if (chooseNumber == 2)
+                    {
+                        if (StoreList[selectNumber - 1].Cost <= Player.Gold)
+                        {
+                            Console.Clear();
+                            BoarderLine();
+                            Player.Gold -= StoreList[selectNumber - 1].Cost;
+                            // 구매 기능: 아이템을 구매하고 해당 아이템을 인벤토리에 추가
+                            Inventory.AddItemToInventory(StoreList[selectNumber - 1]);
+                        }
+                        else
+                        {
+                            Console.Clear();
+                            BoarderLine();
+                            Console.SetCursorPosition(46, 1);
+                            Console.WriteLine("돈이 부족합니다:");
+                        }
+                    }
+                    else { }
                 }
             }
         }
