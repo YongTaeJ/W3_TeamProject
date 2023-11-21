@@ -109,12 +109,11 @@ namespace W3_TeamProject
 
             DrawStage(); // 스테이지 화면 그리기 (UI, 말풍선, 중간 세로선, )
 
-            Controller selectEnemyController = new Controller(); //콘트롤러가 전역이면 그 전값이 살아있음 지역으로 옮겨서 값 초기화 - 박정혁
-
             Console.SetCursorPosition(0, 0);
             Console.WriteLine($"[{_index}층]");
             
             ShowPlayer();
+
             if (enemyListForStage != null) //NUll값이 아니고 값이 있으면 초기화 - 박정혁
             {   //리스트는 뒤에서부터 삭제해야 에러가 안생김
                 for (int i = enemyListForStage.Count() - 1; i >= 0; i--)
@@ -129,14 +128,6 @@ namespace W3_TeamProject
             {
                 enemyListForStage[i].Show(); // 첫번째 스테이지의 적 나타나라 얍
             }
-
-            // 랜덤하게 생성된 몬스터에 수만큼 컨트롤러 생성
-            for (int i = 0; i < enemyListForStage.Count; i++)
-            {
-                selectEnemyController.AddRotation(enemyListForStage[i].X - 3, enemyListForStage[i].Y + 1);
-            }
-
-            userInput = selectEnemyController.InputLoop(); // 몬스터를 선택하기 위한 화살표
 
             WriteComment(" 원하시는 행동을 선택하세요.");
 
@@ -157,7 +148,7 @@ namespace W3_TeamProject
                 switch (userInput)
                 {
                     case 0: // 공격
-                        NormalAttack(enemyListForStage.Count());
+                        NormalAttack(); // NomalAttack 안에 enemyListForStage.Count() 지움.
                         isPlayerTurn = false;
                         break;
                     case 1: // 방어
@@ -293,45 +284,66 @@ namespace W3_TeamProject
             Thread.Sleep(1500);
         }
 
-        private void NormalAttack(int _index)
+        private void NormalAttack() // NormalAttack 함수 안에 int _index 지움.
         {
             int damage = Player.BaseAttack + Player.EquipAttack;
             WriteComment(" 공격하고 싶은 적을 선택하세요");
             // 공격하고 싶은 적을 선택.
             // 적의 HP 깎아야함.
-            Controller controller = new Controller(); //몬스터의 리스트의 크기를 받아와 해당하는 크기만큼 열림
-            if (_index >= 1)
-                controller.AddRotation(68, 2);
-            if (_index >= 2)
-                controller.AddRotation(93, 3);
-            if (_index >= 3)
-                controller.AddRotation(71, 10);
-            if (_index >= 4)
-                controller.AddRotation(96, 11);
-            userInput = controller.InputLoop();
-            switch (userInput)
+
+            Controller selectEnemyController = new Controller(); // 콘트롤러가 전역이면 그 전값이 살아있음 지역으로 옮겨서 값 초기화 - 박정혁
+
+            // 랜덤하게 생성된 몬스터에 수만큼 컨트롤러 생성
+            for (int i = 0; i < enemyListForStage.Count; i++)
             {
-                case 0: // ENEMY 1 공격
-                    // ENEMY 체력 -= damage;
-                    // ENEMY 의 체력이 공격보다 낮으면 ENEMY DEAD
-                    // if (ENEMY currentHealth < damage){WriteComment("ENEMY 죽었따.");}
-                    break;
-                case 1: // ENEMY 2 공격
-                    // ENEMY 체력 -= damage;
-                    // ENEMY 의 체력이 공격보다 낮으면 ENEMY DEAD
-                    // if (ENEMY currentHealth < damage){WriteComment("ENEMY 죽었따.");}
-                    break;
-                case 2: // ENEMY 3 공격
-                    // ENEMY 체력 -= damage;
-                    // ENEMY 의 체력이 공격보다 낮으면 ENEMY DEAD
-                    // if (ENEMY currentHealth < damage){WriteComment("ENEMY 죽었따.");}
-                    break;
-                case 3: // ENEMY 4 공격
-                    // ENEMY 체력 -= damage;
-                    // ENEMY 의 체력이 공격보다 낮으면 ENEMY DEAD
-                    // if (ENEMY currentHealth < damage){WriteComment("ENEMY 죽었따.");}
-                    break;
+                selectEnemyController.AddRotation(enemyListForStage[i].X - 3, enemyListForStage[i].Y + 1);
             }
+
+            userInput = selectEnemyController.InputLoop(); // 몬스터를 선택하기 위한 화살표
+            enemyListForStage[userInput].GetDamage(10);
+
+            if (enemyListForStage[userInput].IsDie)
+            {
+                WriteComment("몬스터는 이미 죽었습니다");
+            }
+
+
+            // --------- 정혁님 작성파트 ------------
+            //Controller controller = new Controller(); //몬스터의 리스트의 크기를 받아와 해당하는 크기만큼 열림
+            //if (_index >= 1)
+            //    controller.AddRotation(68, 2);
+            //if (_index >= 2)
+            //    controller.AddRotation(93, 3);
+            //if (_index >= 3)
+            //    controller.AddRotation(71, 10);
+            //if (_index >= 4)
+            //    controller.AddRotation(96, 11);
+            //userInput = controller.InputLoop();
+            //---------------------------------------
+
+            //switch (userInput)
+            //{
+            //    case 0: // ENEMY 1 공격
+            //        // ENEMY 체력 -= damage;
+            //        // ENEMY 의 체력이 공격보다 낮으면 ENEMY DEAD
+            //        // if (ENEMY currentHealth < damage){WriteComment("ENEMY 죽었따.");}
+            //        break;
+            //    case 1: // ENEMY 2 공격
+            //        // ENEMY 체력 -= damage;
+            //        // ENEMY 의 체력이 공격보다 낮으면 ENEMY DEAD
+            //        // if (ENEMY currentHealth < damage){WriteComment("ENEMY 죽었따.");}
+            //        break;
+            //    case 2: // ENEMY 3 공격
+            //        // ENEMY 체력 -= damage;
+            //        // ENEMY 의 체력이 공격보다 낮으면 ENEMY DEAD
+            //        // if (ENEMY currentHealth < damage){WriteComment("ENEMY 죽었따.");}
+            //        break;
+            //    case 3: // ENEMY 4 공격
+            //        // ENEMY 체력 -= damage;
+            //        // ENEMY 의 체력이 공격보다 낮으면 ENEMY DEAD
+            //        // if (ENEMY currentHealth < damage){WriteComment("ENEMY 죽었따.");}
+            //        break;
+            //}
         }
 
         private void DrawStage()
