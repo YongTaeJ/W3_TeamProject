@@ -24,7 +24,7 @@ namespace W3_TeamProject
 
             //리스트의 크기만큼 밑으로 위치시킴
             Controller controller = new Controller();
-            for (int i = 0; i < 4; i++)
+            for (int i = 0; i < 5; i++)
             {
                 controller.AddRotation(2, i + 19);
             }
@@ -46,6 +46,7 @@ namespace W3_TeamProject
                 ManaPotionConsole((Player.ManaPotionCount == 0) ? ConsoleColor.Red : ConsoleColor.Green);
                 Console.SetCursorPosition(0, 19);
                 SetStringPosition("   뒤로가기");
+                SetStringPosition("   상태보기");
                 SetStringPosition("   무기 선택");
                 SetStringPosition("   방어구 선택");
                 SetStringPosition("   장신구 선택");
@@ -63,18 +64,22 @@ namespace W3_TeamProject
                 switch (userinput)
                 {
                     case 0:
-                        nextState = SceneState.Status;
+                        nextState = SceneState.Town;
                         Console.Clear();
                         break;
                     case 1:
+                        nextState = SceneState.Status;
+                        Console.Clear();
+                        break;
+                    case 2:
                         NextSelcetConsole("무기 선택 화면으로 넘어갑니다.");    
                         InvenWeaponEquip();
                         break;
-                    case 2:
+                    case 3:
                         NextSelcetConsole("방어구 선택 화면으로 넘어갑니다.");
                         InvenArmorEquip();
                         break;
-                    case 3:
+                    case 4:
                         NextSelcetConsole("장신구 선택 화면으로 넘어갑니다.");
                         InvenAccessoryEquip();
                         break;
