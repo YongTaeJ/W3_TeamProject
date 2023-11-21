@@ -9,13 +9,18 @@ namespace W3_TeamProject
         int userInput = 0;
         int endPoint = 0; // 0 계속, 1 플레이어 승리, 2 플레이어 패배.(BossScene 과 동일하게)
 
-        int enemyType; // ENEMY 의 타입 지정 (0 = None, 1 = ENEMY 1 , 2 = ENEMY 2 , 3 = ENEMY 3), 무조건 적이 최소 1명은 나오도록 구현하자.
-		    Controller itemController = new Controller();
-		    Controller skillController = new Controller();
-		    Random random = new Random();
+
+        Controller itemController = new Controller();
+        Controller skillController = new Controller();
+        
+        Random random = new Random();
+
+        BattleUtility battleUtility = new BattleUtility();
+
+        List<BaseEnemy>? enemyListForStage; // first 삭제 - 박정혁
 
 
-		public override void EnterScene()
+        public override void EnterScene()
         {
             Controller controller = new Controller();
             InitSkillController();
@@ -86,12 +91,12 @@ namespace W3_TeamProject
                 case 1: // 2층 스테이지 입장
                     WriteComment(" 2층으로 입장합니다.");
                     Thread.Sleep(1000);
-                    EnterSecondStage();
+                    EnterStage(2);
                     break;
                 case 2: // 1층 스테이지 입장
                     WriteComment(" 1층으로 입장합니다.");
                     Thread.Sleep(1000);
-                    EnterFirstStage();
+                    EnterStage(1);
                     break;
                 case 3: // 마을로 돌아가기
                     nextState = SceneState.Town;
@@ -99,41 +104,39 @@ namespace W3_TeamProject
             }
         }
 
-        private void EnterFirstStage()
+        private void EnterStage(int _index) //숫자를 넣어 스테이지 이름 변경 - 박정혁
         {
+
             DrawStage(); // 스테이지 화면 그리기 (UI, 말풍선, 중간 세로선, )
 
+            Controller selectEnemyController = new Controller(); //콘트롤러가 전역이면 그 전값이 살아있음 지역으로 옮겨서 값 초기화 - 박정혁
+
             Console.SetCursorPosition(0, 0);
-            Console.WriteLine("[1층]");
-
-			    ShowPlayer();
-
-            //
-            // 적 랜덤 출현 구현 thinking..
-            //
-            int enemyCount = random.Next(1, 5); // Enemy 스폰 수( 최소 1 ~ 최대 4 마리 스폰)
-            for (int i = 0; i < enemyCount; i++)
-            {
-                int selectEnemy = random.Next(0, 3); // Enemy 종류 (슬라임, 고블린, 르탄이 중에서) 랜덤 생성
-                switch (selectEnemy)
+            Console.WriteLine($"[{_index}층]");
+            
+            ShowPlayer();
+            if (enemyListForStage != null) //NUll값이 아니고 값이 있으면 초기화 - 박정혁
+            {   //리스트는 뒤에서부터 삭제해야 에러가 안생김
+                for (int i = enemyListForStage.Count() - 1; i >= 0; i--)
                 {
-                    case 0: // e.g. Slime
-
-                        break;
-                    case 1: // e.g. Goblin
-
-                        break;
-                    case 2: // Rtan
-
-                        break;
+                    enemyListForStage.RemoveAt(i);
                 }
             }
+            // 적 랜덤 출현
+            enemyListForStage = battleUtility.GetEnemyList();
 
-            // 가능하다면, x y 좌표값 받아서 아래 ShowEnemy 메서드들 단순하게 만들기 츄라이해보자 !
-            ShowEnemy1();
-            ShowEnemy2();
-            ShowEnemy3();
-            ShowEnemy4();
+            for (int i = 0; i < enemyListForStage.Count; i++)
+            {
+                enemyListForStage[i].Show(); // 첫번째 스테이지의 적 나타나라 얍
+            }
+
+            // 랜덤하게 생성된 몬스터에 수만큼 컨트롤러 생성
+            for (int i = 0; i < enemyListForStage.Count; i++)
+            {
+                selectEnemyController.AddRotation(enemyListForStage[i].X - 3, enemyListForStage[i].Y + 1);
+            }
+
+            userInput = selectEnemyController.InputLoop(); // 몬스터를 선택하기 위한 화살표
 
             WriteComment(" 원하시는 행동을 선택하세요.");
 
@@ -191,28 +194,12 @@ namespace W3_TeamProject
 
             if (endPoint == 1) // 플레이어 승리 (모든 적이 DEAD)
             {
-                // 플레이어 WIN
-                // 보상으로 Gold 지급 ?
-                // 스테이지 목록으로 돌려보내기
-                // 클리어한 스테이지 에 대해서는 CLEAR 라고 옆에 따로 표시할까 고민중 ..
+                StageClear();
+
             }
             else if (endPoint == 2) // 플레이어 패배 (플레이어 체력 0)
             {
-                // 플레이어 DEAD
-                // maybe 마을에서 부활
-                WriteComment(" 플레이어는 정신을 잃고 말았습니다... :-(");
-                Thread.Sleep(1000);
-                WriteComment(" 마을에서 부활합니다 뾰로롱");
-                Thread.Sleep(1000);
-                WriteComment(" 3");
-                Thread.Sleep(1000);
-                WriteComment(" 2");
-                Thread.Sleep(1000);
-                WriteComment(" 1");
-                Thread.Sleep(1000);
-                WriteComment(" 얍");
-                Thread.Sleep(300);
-                nextState = SceneState.Town;
+                StageFail();
             }
         }
 
@@ -340,103 +327,6 @@ namespace W3_TeamProject
                     // ENEMY 의 체력이 공격보다 낮으면 ENEMY DEAD
                     // if (ENEMY currentHealth < damage){WriteComment("ENEMY 죽었따.");}
                     break;
-            }
-        }
-
-        private void EnterSecondStage()
-        {
-            //
-            // EnterFirstStage() 내용 수정 후 여기도 수정사항 반영해주는 것 잊지말기 !
-            //
-
-            DrawStage(); // 스테이지 화면 그리기 (UI, 말풍선, 중간 세로선, )
-
-            Console.SetCursorPosition(0, 0);
-            Console.WriteLine("[2층]");
-
-            ShowPlayer();
-            //
-            // 적 랜덤 출현 구현 thinking..
-            // 적마다 int type 을 지정해서 random.Range(1,4) 이런 식으로 호출할까 ?
-            //
-            ShowEnemy1();
-            ShowEnemy2();
-            ShowEnemy3();
-            ShowEnemy4();
-
-            WriteComment(" 원하시는 행동을 선택하세요.");
-
-            bool isPlayerTurn = true;
-
-			while (endPoint == 0)
-            {
-                Controller mainController = new Controller();
-
-                mainController.AddRotation(34, 23);
-                mainController.AddRotation(62, 23);
-                mainController.AddRotation(34, 26);
-                mainController.AddRotation(62, 26);
-
-				ClearChoosePanel();
-				MakeMainChoicePanel();
-
-				userInput = mainController.InputLoop();
-                switch (userInput)
-                {
-                    case 0: // 공격
-                        NormalAttack();
-                        isPlayerTurn = false;
-                        break;
-                    case 1: // 방어
-                        NormalDefense();
-                        isPlayerTurn = false;
-                        break;
-                    case 2: // 스킬 목록
-                        ShowSkillList(); // 구현 not yet
-                        break;
-                    case 3: // 아이템 목록
-                        ShowItemList(); // 구현 not yet
-                        break;
-                }
-
-                // 적의 턴
-                if (isPlayerTurn == false)
-                {
-                    WriteComment(" 적이 공격합니다.");
-                    // 적의 공격 구현
-                    // ENEMY 의 공격
-                    // Player currentHealth -= Enemy 의 attack
-                    // Player currentHealth 가 ENEMY 의 공격보다 낮으면 PLAYER DEAD
-                    // if (Player currentHealth < damage){WriteComment("Player 기절 사망 꿲.");}
-                    isPlayerTurn = true;
-                }
-            }
-
-            if (endPoint == 1) // 플레이어 승리 (모든 적이 DEAD)
-            {
-                // 플레이어 WIN
-                // 보상으로 Gold 지급 ?
-                // 스테이지 목록으로 돌려보내기
-                // 클리어한 스테이지 에 대해서는 CLEAR 라고 옆에 따로 표시하기 ?
-            }
-            else if (endPoint == 2) // 플레이어 패배 (플레이어 체력 0)
-            {
-                // 플레이어 DEAD
-                // maybe 마을에서 부활
-                WriteComment(" 플레이어는 정신을 잃고 말았습니다... :-(");
-                Thread.Sleep(1000);
-                WriteComment(" 마을에서 부활합니다 뾰로롱");
-                Thread.Sleep(1000);
-                WriteComment(" 3");
-                Thread.Sleep(1000);
-                WriteComment(" 2");
-                Thread.Sleep(1000);
-                WriteComment(" 1");
-                Thread.Sleep(1000);
-                WriteComment(" 얍!");
-                Thread.Sleep(300);
-                nextState = SceneState.Town;
-
             }
         }
 
@@ -667,6 +557,26 @@ namespace W3_TeamProject
 			itemController.AddRotation(37, 26); // 체력 할당
 			itemController.AddRotation(65, 26); // 마나 할당
 		}
+        private void StageClear()
+        {
+            int beforeGold = Player.Gold;
+            int beforeLevel = Player.Level;
+            int beforeExp = Player.CurrentExp;
+
+            // 골드, 경험치 지급(생성된 몬스터 수, 레벨 기준)
+            Player.GetExp(10);
+            Player.GetGold(1000);
+
+            // 정보에 따른 완료 패널 생성
+            MakeStageClearPanel(beforeGold, beforeLevel, beforeExp);
+
+		}
+
+		private void StageFail()
+        {
+			// 패배 패널 생성
+			// 체력을 1로 만들고 마을로 씬 전환(혹은 회복수단이 포션말고 없으니 100으로)
+		}
 
 		private void MakeItemChoicePanel()
 		{
@@ -730,6 +640,36 @@ namespace W3_TeamProject
 
 			Console.SetCursorPosition(67, 26);
 			Console.Write($"남은 포션 : {Player.ManaPotionCount}개");
+		}
+        private void MakeStageClearPanel(int beforeGold, int beforeLevel, int beforeExp)
+        {
+            // 싹 청소하고 클리어패널만 
+            UI.MakeUI();
+
+			#region ASCII&Border
+
+            int x = 30, y = 4;
+			Console.SetCursorPosition(20, 3);
+			string ASCII = " _____  _                    \r\n/  __ \\| |                   \r\n| /  \\/| |  ___   __ _  _ __ \r\n| |    | | / _ \\ / _` || '__|\r\n| \\__/\\| ||  __/| (_| || |   \r\n \\____/|_| \\___| \\__,_||_|   ";
+			foreach (char letter in ASCII)
+			{
+				if (letter == '\n') // 새 줄 문자 확인
+				{
+					y = y + 1;
+					Console.SetCursorPosition(x, y);
+				}
+				else
+				{
+					Console.Write(letter);
+					x++; // 다음 문자 위치로 이동
+				}
+			}
+
+
+
+			#endregion
+
+			// 골드, 레벨, 스킬, 잡은 몬스터수
 		}
 	}
 }
