@@ -573,6 +573,7 @@ namespace W3_TeamProject
 			WriteComment("잠시 후, 마을로 돌아갑니다.");
 			Thread.Sleep(2000);
 			Player.ChangeHP(9999);
+			Player.Alive();
 		}
 
 		private void MakeItemChoicePanel()
