@@ -42,14 +42,14 @@ namespace W3_TeamProject
                 case 0: // 3층 최종 스테이지 입장
 					WriteComment(" 1층으로 입장합니다.");
 					Thread.Sleep(1000);
-					EnterStage(1, 1, isFirstClear);
+					EnterStage(1, 1, ref isFirstClear);
 					break;
 				case 1: // 2층 스테이지 입장
                     if (isFirstClear)
                     {
                         WriteComment(" 2층으로 입장합니다.");
                         Thread.Sleep(1000);
-                        EnterStage(2, 2, isSecondClear);
+                        EnterStage(2, 2, ref isSecondClear);
                     }
                     WriteComment("2층을 가기 위해 이 전층을 클리어해주세요.");
                     Thread.Sleep(1000);
@@ -76,7 +76,7 @@ namespace W3_TeamProject
         {
             return nextState;
         }
-        private void EnterStage(int _index, int _level, bool _isStageClear) //숫자를 넣어 스테이지 이름 변경 - 박정혁
+        private void EnterStage(int _index, int _level, ref bool _isStageClear) //숫자를 넣어 스테이지 이름 변경 - 박정혁
         {
 
             DrawStage(); // 스테이지 화면 그리기 (UI, 말풍선, 중간 세로선, )
@@ -161,8 +161,9 @@ namespace W3_TeamProject
 
             if (endPoint == 1) // 플레이어 승리 (모든 적이 DEAD)
             {
-                StageClear(_isStageClear);
-                nextState = SceneState.Town;
+                StageClear();
+				_isStageClear = true;
+				nextState = SceneState.Town;
             }
             else if (endPoint == 2) // 플레이어 패배 (플레이어 체력 0)
             {
@@ -281,8 +282,12 @@ namespace W3_TeamProject
                 Thread.Sleep(1000);
                 return true;
             }
+
+			int damage = Player.BaseAttack + Player.EquipAttack;
+			WriteComment($"{enemyListForStage[userInput].Name}를 압박하여 {damage}만큼의 피해를 입혔습니다!");
+			enemyListForStage[userInput].GetDamage(damage);
+			Thread.Sleep(1000);
             
-            enemyListForStage[userInput].GetDamage(10);
 
             //
             // 몬스터 다 죽었으면 endPoint = 1
@@ -495,7 +500,7 @@ namespace W3_TeamProject
 			enterController.AddRotation(48, 15);
 		}
 
-		private void StageClear(bool isStageClear)
+		private void StageClear()
         { 
             int beforeGold = Player.Gold;
             int beforeLevel = Player.Level;
@@ -512,7 +517,6 @@ namespace W3_TeamProject
             1층방 클리어시 2층방 언락
             2층방 클리어시 
             */
-            isStageClear = true;
         }
 
 		private void StageFail()
@@ -591,18 +595,21 @@ namespace W3_TeamProject
 		private void MakeStageClearPanel(int beforeGold, int beforeLevel, int beforeExp)
 		{
 			// 싹 청소하고 클리어패널만 
+			Thread.Sleep(1000);
 			UI.MakeUI();
 
 			#region ASCII&Border
 
 			int x = 30, y = 4;
-			Console.SetCursorPosition(20, 3);
+			int temp = x;
+			Console.SetCursorPosition(30, 4);
 			string ASCII = " _____  _                    \r\n/  __ \\| |                   \r\n| /  \\/| |  ___   __ _  _ __ \r\n| |    | | / _ \\ / _` || '__|\r\n| \\__/\\| ||  __/| (_| || |   \r\n \\____/|_| \\___| \\__,_||_|   ";
 			foreach (char letter in ASCII)
 			{
 				if (letter == '\n') // 새 줄 문자 확인
 				{
 					y = y + 1;
+					x = temp;
 					Console.SetCursorPosition(x, y);
 				}
 				else
@@ -635,7 +642,7 @@ namespace W3_TeamProject
 			Console.SetCursorPosition(64, 7);
 			Console.Write($"레벨 : {beforeLevel}({beforeExp}) -> {Player.Level}({Player.CurrentExp})");
 			Console.SetCursorPosition(64, 8);
-			Console.Write($"물리친 동료 : n명"); // 추후 추가 필요
+			Console.Write($"물리친 동료 : {enemyListForStage.Count}명"); // 추후 추가 필요
 										   // UI 갱신 필요!! (아직 없음)
 			MakeCommentBoarder();
 			WriteComment("잠시 후, 마을로 돌아갑니다.");
