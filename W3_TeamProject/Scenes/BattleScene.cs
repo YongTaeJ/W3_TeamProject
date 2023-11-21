@@ -145,7 +145,20 @@ namespace W3_TeamProject
                         break;
                 }
 
-                if (endPoint != 0)
+				int countIsDie = 0;
+				for (int i = 0; i < enemyListForStage.Count; i++)
+				{
+					if (enemyListForStage[i].IsDie == true)
+					{
+						countIsDie++;
+					}
+				}
+				if (countIsDie == enemyListForStage.Count)
+				{
+					endPoint = 1;
+				}
+
+				if (endPoint != 0)
                     break;
 
 				// 적의 턴
@@ -326,24 +339,6 @@ namespace W3_TeamProject
 			WriteComment($"{enemyListForStage[userInput].Name}를 압박하여 {damage}만큼의 피해를 입혔습니다!");
 			enemyListForStage[userInput].GetDamage(damage);
 			Thread.Sleep(1000);
-            
-
-            //
-            // 몬스터 다 죽었으면 endPoint = 1
-            //
-            int countIsDie = 0;
-            for(int i = 0; i < enemyListForStage.Count; i++)
-            {
-                if (enemyListForStage[i].IsDie == true)
-                {
-                    countIsDie++;
-                }
-            }
-            if (countIsDie == enemyListForStage.Count)
-            {
-                endPoint = 1;
-            }
-
 
             return false;
 
