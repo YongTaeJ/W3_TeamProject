@@ -56,7 +56,7 @@ namespace W3_TeamProject
 
                 void NextSelcetConsole(string _text)
                 {
-                    Console.SetCursorPosition(4, 26);
+                    Console.SetCursorPosition(4, 27);
                     SetStringPosition(_text, 0, true);
                     Thread.Sleep(1000);
                 }
