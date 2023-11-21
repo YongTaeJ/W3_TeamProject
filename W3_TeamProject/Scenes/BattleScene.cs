@@ -9,6 +9,8 @@ namespace W3_TeamProject
         int userInput = 0;
         int endPoint = 0; // 0 계속, 1 플레이어 승리, 2 플레이어 패배.(BossScene 과 동일하게)
 
+        bool isFirstClear = false; //1층 클리어
+        bool isSecondClear = false; //2층 클리어
 
         Controller itemController = new Controller();
         Controller skillController = new Controller();
@@ -50,19 +52,31 @@ namespace W3_TeamProject
             switch (userInput)
             {
                 case 0: // 3층 최종 스테이지 입장
-                    WriteComment(" 3층으로 입장합니다.");
+                    if (isSecondClear)
+                    {
+                        WriteComment(" 3층으로 입장합니다.");
+                        Thread.Sleep(1000);
+                        nextState = SceneState.Boss;
+                    }
+                    WriteComment("보스를 가기 위해 이 전층을 클리어해주세요.");
                     Thread.Sleep(1000);
-                    nextState = SceneState.Boss;
+                    EnterScene();
                     break;
                 case 1: // 2층 스테이지 입장
-                    WriteComment(" 2층으로 입장합니다.");
+                    if (isFirstClear)
+                    {
+                        WriteComment(" 2층으로 입장합니다.");
+                        Thread.Sleep(1000);
+                        EnterStage(2, 2, isSecondClear);
+                    }
+                    WriteComment("2층을 가기 위해 이 전층을 클리어해주세요.");
                     Thread.Sleep(1000);
-                    EnterStage(2, 2);
+                    EnterScene();
                     break;
                 case 2: // 1층 스테이지 입장
                     WriteComment(" 1층으로 입장합니다.");
                     Thread.Sleep(1000);
-                    EnterStage(1, 1);
+                    EnterStage(1, 1, isFirstClear);
                     break;
                 case 3: // 마을로 돌아가기
                     nextState = SceneState.Town;
@@ -74,7 +88,7 @@ namespace W3_TeamProject
         {
             return nextState;
         }
-        private void EnterStage(int _index, int _level) //숫자를 넣어 스테이지 이름 변경 - 박정혁
+        private void EnterStage(int _index, int _level, bool _isStageClear) //숫자를 넣어 스테이지 이름 변경 - 박정혁
         {
 
             DrawStage(); // 스테이지 화면 그리기 (UI, 말풍선, 중간 세로선, )
@@ -155,7 +169,7 @@ namespace W3_TeamProject
 
             if (endPoint == 1) // 플레이어 승리 (모든 적이 DEAD)
             {
-                StageClear();
+                StageClear(_isStageClear);
 
             }
             else if (endPoint == 2) // 플레이어 패배 (플레이어 체력 0)
@@ -543,8 +557,8 @@ namespace W3_TeamProject
 			itemController.AddRotation(37, 26); // 체력 할당
 			itemController.AddRotation(65, 26); // 마나 할당
 		}
-        private void StageClear()
-        {
+        private void StageClear(bool isStageClear)
+        { 
             int beforeGold = Player.Gold;
             int beforeLevel = Player.Level;
             int beforeExp = Player.CurrentExp;
@@ -555,10 +569,15 @@ namespace W3_TeamProject
 
             // 정보에 따른 완료 패널 생성
             MakeStageClearPanel(beforeGold, beforeLevel, beforeExp);
+            /*
+            스테이지 정보를 받기 클리어시 해당 스테이지에 대한 2층 언락
+            1층방 클리어시 2층방 언락
+            2층방 클리어시 
+            */
+            isStageClear = true;
+        }
 
-		}
-
-		private void StageFail()
+        private void StageFail()
         {
 			// 패배 패널 생성
 			// 체력을 1로 만들고 마을로 씬 전환(혹은 회복수단이 포션말고 없으니 100으로)
