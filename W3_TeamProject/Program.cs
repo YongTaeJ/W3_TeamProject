@@ -18,7 +18,7 @@ namespace W3_TeamProject
 
 			// 맨 처음 시작화면은 StartScene으로 만들어주세요
 			Player.Init();
-			SceneState sceneState = SceneState.Explain;
+			SceneState sceneState = SceneState.Battle;
 			while(sceneState != SceneState.None)
 			{
 				// SceneManager를 통해 게임 루프를 구현합니다.
