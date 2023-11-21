@@ -9,10 +9,11 @@ namespace W3_TeamProject
         int userInput = 0;
         int endPoint = 0; // 0 계속, 1 플레이어 승리, 2 플레이어 패배.(BossScene 과 동일하게)
 
-        int enemyType; // ENEMY 의 타입 지정 (0 = None, 1 = ENEMY 1 , 2 = ENEMY 2 , 3 = ENEMY 3), 무조건 적이 최소 1명은 나오도록 구현하자.
-		    Controller itemController = new Controller();
-		    Controller skillController = new Controller();
-		    Random random = new Random();
+
+        Controller itemController = new Controller();
+        Controller skillController = new Controller();
+        Controller selectEnemyController = new Controller();
+        Random random = new Random();
 
 
 		public override void EnterScene()
@@ -108,6 +109,15 @@ namespace W3_TeamProject
 
 			    ShowPlayer();
 
+
+            // 적 랜덤 출현
+            List<BaseEnemy> enemyListForFirstStage = battleUtility.GetEnemyList();
+
+            for (int i = 0; i < enemyListForFirstStage.Count; i++)
+            {
+                enemyListForFirstStage[i].Show(); // 첫번째 스테이지의 적 나타나라 얍
+            }
+
             //
             // 적 랜덤 출현 구현 thinking..
             //
@@ -129,11 +139,22 @@ namespace W3_TeamProject
                 }
             }
 
-            // 가능하다면, x y 좌표값 받아서 아래 ShowEnemy 메서드들 단순하게 만들기 츄라이해보자 !
-            ShowEnemy1();
-            ShowEnemy2();
-            ShowEnemy3();
-            ShowEnemy4();
+
+            for (int i = 0; i < enemyListForFirstStage.Count; i++)
+            {
+                selectEnemyController.AddRotation(enemyListForFirstStage[i].X - 3, enemyListForFirstStage[i].Y + 1);
+            }
+            userInput = selectEnemyController.InputLoop();
+            switch (userInput)
+            {
+                case 0:
+                    break;
+                case 1:
+                    break;
+                case 2:
+                    break;
+            }
+
 
             WriteComment(" 원하시는 행동을 선택하세요.");
 
