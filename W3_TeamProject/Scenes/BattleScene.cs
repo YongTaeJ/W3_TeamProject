@@ -157,7 +157,7 @@ namespace W3_TeamProject
                 switch (userInput)
                 {
                     case 0: // 공격
-                        NormalAttack();
+                        NormalAttack(enemyListForStage.Count());
                         isPlayerTurn = false;
                         break;
                     case 1: // 방어
@@ -293,17 +293,21 @@ namespace W3_TeamProject
             Thread.Sleep(1500);
         }
 
-        private void NormalAttack()
+        private void NormalAttack(int _index)
         {
             int damage = Player.BaseAttack + Player.EquipAttack;
             WriteComment(" 공격하고 싶은 적을 선택하세요");
             // 공격하고 싶은 적을 선택.
             // 적의 HP 깎아야함.
-            Controller controller = new Controller();
-            controller.AddRotation(70, 2);
-            controller.AddRotation(95, 3);
-            controller.AddRotation(73, 10);
-            controller.AddRotation(98, 11);
+            Controller controller = new Controller(); //몬스터의 리스트의 크기를 받아와 해당하는 크기만큼 열림
+            if (_index >= 1)
+                controller.AddRotation(68, 2);
+            if (_index >= 2)
+                controller.AddRotation(93, 3);
+            if (_index >= 3)
+                controller.AddRotation(71, 10);
+            if (_index >= 4)
+                controller.AddRotation(96, 11);
             userInput = controller.InputLoop();
             switch (userInput)
             {
