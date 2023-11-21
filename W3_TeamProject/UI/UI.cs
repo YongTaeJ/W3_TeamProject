@@ -204,7 +204,7 @@ namespace W3_TeamProject
             Console.SetCursorPosition(97, 25);
             Console.WriteLine("방어력");
             Console.SetCursorPosition(111 - totalDef.ToString().Length, 26);
-            HilightedText(ConsoleColor.Blue, $"{totalDef}");
+            HilightedText(ConsoleColor.DarkCyan, $"{totalDef}");
             Console.SetCursorPosition(97, 27);
             Console.WriteLine("소지금");
             Console.SetCursorPosition(111 - Player.Gold.ToString().Length, 28);
