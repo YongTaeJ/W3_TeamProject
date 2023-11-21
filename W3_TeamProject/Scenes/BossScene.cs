@@ -88,7 +88,7 @@ namespace W3_TeamProject
 				WriteComment("사장님과의 논쟁에서 승리했습니다! (아무 키나 눌러 다음으로...)");
 				UI.MakeASCII(ConsoleColor.Yellow);
 				Console.ReadKey(true);
-				nextState = SceneState.FinalWin;
+				nextState = SceneState.EndingWin;
 			}
 			else
 			{
@@ -96,7 +96,7 @@ namespace W3_TeamProject
 				WriteComment("사장님의 압도적인 언변에 당해 패배했습니다 ㅠㅠ  (아무 키나 눌러 다음으로...)");
 				UI.MakeASCII(ConsoleColor.Yellow);
 				Console.ReadKey(true);
-				nextState = SceneState.FinalLose;
+				nextState = SceneState.EndingLose;
 			}
 		}
 		private void Init()
@@ -208,7 +208,7 @@ namespace W3_TeamProject
 				}
 				else if (skillState == SkillState.OK) // 스킬 사용 성공
 				{
-					int damage = currentSkill.FixedDamage + currentSkill.VariableDamage * Player.Level;
+					int damage = currentSkill.FixedDamage + currentSkill.VariableDamage * (Player.BaseAttack+Player.EquipAttack);
 					endPoint = boss.GetDamage(damage);
 					WriteComment($"{currentSkill.SkillComment} 사장님께 {damage}만큼의 데미지를 입혔습니다!");
 					UI.MakeASCII(ConsoleColor.Red);
