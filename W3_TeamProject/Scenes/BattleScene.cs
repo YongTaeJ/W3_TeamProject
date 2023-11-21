@@ -17,7 +17,7 @@ namespace W3_TeamProject
 
         BattleUtility battleUtility = new BattleUtility();
 
-        List<BaseEnemy>? enemyListForFirstStage;
+        List<BaseEnemy>? enemyList;
 
         public override void EnterScene()
         {
@@ -114,25 +114,25 @@ namespace W3_TeamProject
             Console.WriteLine($"[{_index}층]");
             
             ShowPlayer();
-            if (enemyListForFirstStage != null) //리스트 초기화 
+            if (enemyList != null) //리스트 초기화 
             {
-                for (int i = enemyListForFirstStage.Count() - 1; i >= 0; i--)
+                for (int i = enemyList.Count() - 1; i >= 0; i--)
                 {
-                    enemyListForFirstStage.RemoveAt(i);
+                    enemyList.RemoveAt(i);
                 }
             }
             // 적 랜덤 출현
-            enemyListForFirstStage = battleUtility.GetEnemyList();
+            enemyList = battleUtility.GetEnemyList();
 
-            for (int i = 0; i < enemyListForFirstStage.Count; i++)
+            for (int i = 0; i < enemyList.Count; i++)
             {
-                enemyListForFirstStage[i].Show(); // 첫번째 스테이지의 적 나타나라 얍
+                enemyList[i].Show(); // 첫번째 스테이지의 적 나타나라 얍
             }
 
             // 랜덤 출현과 컨트롤러 연동
-            for (int i = 0; i < enemyListForFirstStage.Count; i++)
+            for (int i = 0; i < enemyList.Count; i++)
             {
-                selectEnemyController.AddRotation(enemyListForFirstStage[i].X - 3, enemyListForFirstStage[i].Y + 1);
+                selectEnemyController.AddRotation(enemyList[i].X - 3, enemyList[i].Y + 1);
             }
 
             userInput = selectEnemyController.InputLoop(); // 몬스터 선택
@@ -179,7 +179,7 @@ namespace W3_TeamProject
                 }
                 if (nextState != SceneState.None)
                 {
-                    Console.WriteLine(enemyListForFirstStage.Count());
+                    Console.WriteLine(enemyList.Count());
                     Thread.Sleep(1000);
                     break;
                 }
