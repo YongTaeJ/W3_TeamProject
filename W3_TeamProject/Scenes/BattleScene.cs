@@ -545,12 +545,19 @@ namespace W3_TeamProject
             int beforeLevel = Player.Level;
             int beforeExp = Player.CurrentExp;
 
-            // 골드, 경험치 지급(생성된 몬스터 수, 레벨 기준)
-            Player.GetExp(10);
-            Player.GetGold(1000);
+			int stageExp = 0;
+			int stageGold = 0;
+			for (int i = 0; i < enemyListForStage.Count; i++)
+			{
+				stageExp += 2 + enemyListForStage[i].Level * 1;
+				stageGold += 200 + enemyListForStage[i].Level * 50;
+			}
+			// 골드, 경험치 지급(생성된 몬스터 수, 레벨 기준)
+			Player.GetExp(stageExp);
+			Player.GetGold(stageGold);
 
-            // 정보에 따른 완료 패널 생성
-            MakeStageClearPanel(beforeGold, beforeLevel, beforeExp);
+			// 정보에 따른 완료 패널 생성
+			MakeStageClearPanel(beforeGold, beforeLevel, beforeExp);
             /*
             스테이지 정보를 받기 클리어시 해당 스테이지에 대한 2층 언락
             1층방 클리어시 2층방 언락
