@@ -54,7 +54,6 @@ namespace W3_TeamProject
             // 제목, 상태 표시
             Console.SetCursorPosition(2, 1);
             LeftHiText(Cyan, "상태보기");
-            Console.WriteLine(new string('ㅡ', 60));
             Console.SetCursorPosition(2, 3);
             Console.WriteLine("플레이어의 상태를 확인할 수 있습니다.");
             Console.SetCursorPosition(2, 4);
@@ -517,12 +516,21 @@ namespace W3_TeamProject
             StatusBaseImage();  // 기본 이미지
 
             // 해당 장비를 착용 중이면, 이미지 불러오기
-            if (statusWeapon != null && statusWeapon.ItemType == ItemType.Weapon)
-                StatusWeaponImage();
             if (statusArmor != null && statusArmor.ItemType == ItemType.Armor)
-                StatusArmorImage();
+            {
+                if (statusArmor != null && statusArmor.IsEquip == true)
+                    StatusArmorImage();
+            }
+            if (statusWeapon != null && statusWeapon.ItemType == ItemType.Weapon)
+            {
+                if (statusWeapon != null && statusWeapon.IsEquip == true)
+                    StatusWeaponImage();
+            }
             if (statusAccessory != null && statusAccessory.ItemType == ItemType.Accessory)
-                StatusAccessoryImage();
+            {
+                if (statusAccessory != null && statusAccessory.IsEquip == true)
+                    StatusAccessoryImage();
+            }
         }
 
         /// <summary>
@@ -538,12 +546,22 @@ namespace W3_TeamProject
             string EquipArmor = "없  음";
             string EquipAccessory = "없  음";
 
-            if (statusWeapon != null && statusWeapon.ItemType == ItemType.Weapon)
-                EquipWeapon = statusWeapon.Name;
+            // 해당 장비를 착용 중이면, 이름 불러오기
             if (statusArmor != null && statusArmor.ItemType == ItemType.Armor)
-                EquipArmor = statusArmor.Name;
+            {
+                if (statusArmor != null && statusArmor.IsEquip == true)
+                    EquipWeapon = statusWeapon.Name;
+            }
+            if (statusWeapon != null && statusWeapon.ItemType == ItemType.Weapon)
+            {
+                if (statusWeapon != null && statusWeapon.IsEquip == true)
+                    EquipArmor = statusArmor.Name;
+            }
             if (statusAccessory != null && statusAccessory.ItemType == ItemType.Accessory)
-                EquipAccessory = statusAccessory.Name;
+            {
+                if (statusAccessory != null && statusAccessory.IsEquip == true)
+                    EquipAccessory = statusAccessory.Name;
+            }
 
             int EWLength = (23 - KoreanStrLength(EquipWeapon)) / 2;
             int EALength = (23 - KoreanStrLength(EquipArmor)) / 2;
