@@ -210,7 +210,7 @@ namespace W3_TeamProject
                     ShowRandomItem();
                     break;
                 case 6:
-                    AddItemsToList(new SecreetSword(), new SecreetArmor());
+                    AddItemsToList(new SecreetSword());
                     ShowSecreetItem();
                     break;
                    
