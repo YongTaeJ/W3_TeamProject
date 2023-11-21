@@ -56,7 +56,7 @@ namespace W3_TeamProject
 		}
 	}
 
-	internal class HearthAttack : BaseSkill
+	internal class HeartAttack : BaseSkill
 	{
 		protected override void Init()
 		{

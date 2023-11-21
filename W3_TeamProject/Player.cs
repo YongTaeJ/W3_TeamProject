@@ -249,7 +249,7 @@ namespace W3_TeamProject
 		{
 			skillData.Add(new Presentation());
 			skillData.Add(new ResignationThrow());
-			skillData.Add(new HearthAttack());
+			skillData.Add(new HeartAttack());
 			skillData.Add(new Ultimate());
 		}
 	}

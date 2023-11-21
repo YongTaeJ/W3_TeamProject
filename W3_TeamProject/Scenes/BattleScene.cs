@@ -14,6 +14,7 @@ namespace W3_TeamProject
 
         Controller itemController = new Controller();
         Controller skillController = new Controller();
+        Controller enterController = new Controller();
         
         Random random = new Random();
 
@@ -21,48 +22,29 @@ namespace W3_TeamProject
 
         List<BaseEnemy>? enemyListForStage; // first 삭제 - 박정혁
 
+		public BattleScene()
+		{
+			InitItemController();
+			InitEnterController();
+		}
 
-        public override void EnterScene()
+		public override void EnterScene()
         {
-            Controller controller = new Controller();
+			InitSkillController();
+			UI.MakeUI();
+			MakeStage();
+			MakeCommentBoarder();
+			WriteComment("스테이지를 선택하세요.");
 
-            /* 스테이지들이 여럿 있다고 가정.
-             * e.g. 1층, 2층, 3층(= 보스, BossScene 과 연결)
-            */
-            Console.Clear();
-
-            MakeCommentBoarder();
-            WriteComment(" 스테이지를 선택하세요 !");
-
-            Console.SetCursorPosition(0, 0);
-            Console.WriteLine("스테이지를 선택하시라 !");
-            Console.WriteLine();
-            Console.WriteLine("  3층 (최종 - 보스) ■■■");
-            Console.WriteLine("  2층               ■■■");
-            Console.WriteLine("  1층               ■■■");
-            Console.WriteLine();
-            Console.WriteLine("  마을로 돌아가기");
-            Console.WriteLine();
-
-            controller.AddRotation(0, 2);
-            controller.AddRotation(0, 3);
-            controller.AddRotation(0, 4);
-            controller.AddRotation(0, 6);
-            userInput = controller.InputLoop();
+			userInput = enterController.InputLoop();
             switch (userInput)
             {
                 case 0: // 3층 최종 스테이지 입장
-                    if (isSecondClear)
-                    {
-                        WriteComment(" 3층으로 입장합니다.");
-                        Thread.Sleep(1000);
-                        nextState = SceneState.Boss;
-                    }
-                    WriteComment("보스를 가기 위해 이 전층을 클리어해주세요.");
-                    Thread.Sleep(1000);
-                    EnterScene();
-                    break;
-                case 1: // 2층 스테이지 입장
+					WriteComment(" 1층으로 입장합니다.");
+					Thread.Sleep(1000);
+					EnterStage(1, 1, isFirstClear);
+					break;
+				case 1: // 2층 스테이지 입장
                     if (isFirstClear)
                     {
                         WriteComment(" 2층으로 입장합니다.");
@@ -74,10 +56,16 @@ namespace W3_TeamProject
                     EnterScene();
                     break;
                 case 2: // 1층 스테이지 입장
-                    WriteComment(" 1층으로 입장합니다.");
-                    Thread.Sleep(1000);
-                    EnterStage(1, 1, isFirstClear);
-                    break;
+					if (isSecondClear)
+					{
+						WriteComment(" 3층으로 입장합니다.");
+						Thread.Sleep(1000);
+						nextState = SceneState.Boss;
+					}
+					WriteComment("보스를 가기 위해 이 전층을 클리어해주세요.");
+					Thread.Sleep(1000);
+					EnterScene();
+					break;
                 case 3: // 마을로 돌아가기
                     nextState = SceneState.Town;
                     break;
@@ -152,29 +140,38 @@ namespace W3_TeamProject
                 if (endPoint != 0)
                     break;
 
-                // 적의 턴
-                if (isPlayerTurn == false)
-                {
-                    WriteComment(" 적이 공격합니다.");
-                    // 적의 공격 구현
-                    // ENEMY 의 공격
-                    // Player currentHealth -= Enemy 의 attack
-                    // Player currentHealth 가 ENEMY 의 공격보다 낮으면 PLAYER DEAD
-                    // if (Player currentHealth < damage){WriteComment("Player 기절 사망 꿲.");}
-                    // endPoint 도 상황에 맞춰 변경해줘야 함!
-                    isPlayerTurn = true;
-                }
-            }
+				// 적의 턴
+				if (isPlayerTurn == false)
+				{
+					WriteComment("적이 공격을 준비합니다!!");
+					Thread.Sleep(1000);
+					for (int i = 0; i < 4; i++) // 4 아님... 생성된 적 만큼!
+					{
+						BaseEnemy temp = new Goblin(1);
+						if (true) // 살아있으면
+						{
+							// 공격
+							int damage = temp.Attack * 100 / (100 - Player.BaseDefense - Player.EquipDefense);
+							string comment = $"{temp.Name}의 설득에 {damage}만큼의 피해를 입었습니다!";
+							WriteComment(comment);
+							Player.ChangeHP(damage);
+							Thread.Sleep(1000);
+						}
+					}
+					isPlayerTurn = true;
+				}
+			}
 
             if (endPoint == 1) // 플레이어 승리 (모든 적이 DEAD)
             {
                 StageClear(_isStageClear);
-
+                nextState = SceneState.Town;
             }
             else if (endPoint == 2) // 플레이어 패배 (플레이어 체력 0)
             {
                 StageFail();
-            }
+				nextState = SceneState.Town;
+			}
         }
 
         private bool ShowItemList()
@@ -492,7 +489,16 @@ namespace W3_TeamProject
 			itemController.AddRotation(37, 26); // 체력 할당
 			itemController.AddRotation(65, 26); // 마나 할당
 		}
-        private void StageClear(bool isStageClear)
+
+		private void InitEnterController()
+		{
+			enterController.AddRotation(16, 12);
+			enterController.AddRotation(52, 12);
+			enterController.AddRotation(90, 12);
+			enterController.AddRotation(48, 15);
+		}
+
+		private void StageClear(bool isStageClear)
         { 
             int beforeGold = Player.Gold;
             int beforeLevel = Player.Level;
@@ -512,10 +518,14 @@ namespace W3_TeamProject
             isStageClear = true;
         }
 
-        private void StageFail()
+		private void StageFail()
         {
-			// 패배 패널 생성
-			// 체력을 1로 만들고 마을로 씬 전환(혹은 회복수단이 포션말고 없으니 100으로)
+			// 우선 따로 표현 없이 코멘트만 적용 후 마을로
+			WriteComment("당신은 동료들의 설득에 정신이 혼미해집니다...");
+			Thread.Sleep(2000);
+			WriteComment("잠시 후, 마을로 돌아갑니다.");
+			Thread.Sleep(2000);
+			Player.ChangeHP(9999);
 		}
 
 		private void MakeItemChoicePanel()
@@ -581,14 +591,14 @@ namespace W3_TeamProject
 			Console.SetCursorPosition(67, 26);
 			Console.Write($"남은 포션 : {Player.ManaPotionCount}개");
 		}
-        private void MakeStageClearPanel(int beforeGold, int beforeLevel, int beforeExp)
-        {
-            // 싹 청소하고 클리어패널만 
-            UI.MakeUI();
+		private void MakeStageClearPanel(int beforeGold, int beforeLevel, int beforeExp)
+		{
+			// 싹 청소하고 클리어패널만 
+			UI.MakeUI();
 
 			#region ASCII&Border
 
-            int x = 30, y = 4;
+			int x = 30, y = 4;
 			Console.SetCursorPosition(20, 3);
 			string ASCII = " _____  _                    \r\n/  __ \\| |                   \r\n| /  \\/| |  ___   __ _  _ __ \r\n| |    | | / _ \\ / _` || '__|\r\n| \\__/\\| ||  __/| (_| || |   \r\n \\____/|_| \\___| \\__,_||_|   ";
 			foreach (char letter in ASCII)
@@ -605,11 +615,104 @@ namespace W3_TeamProject
 				}
 			}
 
-
+			// 박스는 x 62~91, y 3~11
+			Console.SetCursorPosition(62, 3); // 62시작, 92끝
+			Console.Write("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ");
+			for (int i = 0; i < 7; i++)
+			{
+				Console.SetCursorPosition(62, 4 + i);
+				Console.Write('|');
+				Console.SetCursorPosition(95, 4 + i);
+				Console.Write('|');
+			}
+			Console.SetCursorPosition(62, 11);
+			Console.Write("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ");
 
 			#endregion
 
 			// 골드, 레벨, 스킬, 잡은 몬스터수
+			Console.SetCursorPosition(72, 4);
+			Console.Write("회사 탐사 결과");
+			Console.SetCursorPosition(64, 6);
+			Console.Write($"골드 : {beforeGold}G -> {Player.Gold}G");
+			Console.SetCursorPosition(64, 7);
+			Console.Write($"레벨 : {beforeLevel}({beforeExp}) -> {Player.Level}({Player.CurrentExp})");
+			Console.SetCursorPosition(64, 8);
+			Console.Write($"물리친 동료 : n명"); // 추후 추가 필요
+										   // UI 갱신 필요!! (아직 없음)
+			MakeCommentBoarder();
+			WriteComment("잠시 후, 마을로 돌아갑니다.");
+			Thread.Sleep(4000);
+		}
+
+		private void MakeStage()
+		{
+			for (int i = 0; i < 3; i++)
+			{
+				MakeStageButton(i);
+			}
+			Console.SetCursorPosition(50, 15);
+			Console.Write("마을로 돌아가기");
+		}
+		private void MakeStageButton(int floor)
+		{
+			int x = 0, y = 3;
+			string ASCII = "";
+			switch (floor)
+			{
+				case 0:
+					{
+						x = 6;
+						ASCII = " __  ______ \r\n/  | |  ___|\r\n`| | | |_   \r\n | | |  _|  \r\n_| |_| |    \r\n\\___/\\_|    ";
+					}
+					break;
+				case 1:
+					{
+						x = 42;
+						ASCII = " _____ ______ \r\n/ __  \\|  ___|\r\n`' / /'| |_   \r\n  / /  |  _|  \r\n./ /___| |    \r\n\\_____/\\_|    ";
+
+					}
+					break;
+				case 2:
+					{
+						x = 80;
+						ASCII = "______  _____  _____  _____ \r\n| ___ \\|  _  |/  ___|/  ___|\r\n| |_/ /| | | |\\ `--. \\ `--. \r\n| ___ \\| | | | `--. \\ `--. \\\r\n| |_/ /\\ \\_/ //\\__/ //\\__/ /\r\n\\____/  \\___/ \\____/ \\____/ ";
+					}
+					break;
+			}
+			Console.SetCursorPosition(x, y);
+			Console.Write("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ");
+			for (int i = 0; i < 7; i++)
+			{
+				Console.SetCursorPosition(x, y + i + 1);
+				Console.Write('|');
+				Console.SetCursorPosition(x + 33, y + 1 + i);
+				Console.Write('|');
+			}
+			Console.SetCursorPosition(x, y + 8);
+			Console.Write("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ");
+
+			Console.SetCursorPosition(x + 12, y + 9);
+			Console.Write("입장하기");
+
+			x += 2;
+			y += 1;
+			int temp = x;
+			Console.SetCursorPosition(x, y);
+			foreach (char letter in ASCII)
+			{
+				if (letter == '\n') // 새 줄 문자 확인
+				{
+					y = y + 1;
+					x = temp;
+					Console.SetCursorPosition(x, y);
+				}
+				else
+				{
+					Console.Write(letter);
+					x++; // 다음 문자 위치로 이동
+				}
+			}
 		}
 	}
 }
