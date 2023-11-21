@@ -52,10 +52,12 @@ namespace W3_TeamProject
             controller.AddRotation(16, 17);
 
             // 제목, 상태 표시
-            Console.SetCursorPosition(0, 1);
-            SetStringPosition("상태보기", 0, true, Cyan);
-            SetStringPosition("플레이어의 상태를 확인할 수 있습니다.", 1);
-            SetStringPosition("각 항목을 선택하면 자세한 정보를 볼 수 있습니다.", 0);
+            Console.SetCursorPosition(2, 1);
+            LeftHiText(Cyan, "상태보기");
+            Console.SetCursorPosition(2, 3);
+            Console.WriteLine("플레이어의 상태를 확인할 수 있습니다.");
+            Console.SetCursorPosition(2, 4);
+            Console.WriteLine("각 항목을 선택하면 자세한 정보를 볼 수 있습니다.");
             ViewStatus(6, 5, 40, 11); // Status BorderLine, Data 출력
             MakeRightBorder(60, 3, 56, 17);
             CurrentEquipment();
@@ -79,7 +81,6 @@ namespace W3_TeamProject
                         break;
                     case 1:
                         Thread.Sleep(300);
-                        StatusSecretNameImage();
                         DetailName();
                         break;
                     case 2:
@@ -100,7 +101,6 @@ namespace W3_TeamProject
                         break;
                     case 6:
                         Thread.Sleep(300);
-                        StatusSecretGoldImage();
                         DetailGold();
                         break;
                     case 7:  // 인벤토리 선택 시 -> Inventory로
@@ -233,7 +233,7 @@ namespace W3_TeamProject
 
             if (Player.EquipDefense != 0)
             {
-                RightHiText(Blue, $"● 방어력 : {totalDefense}", $" (+{Player.EquipDefense}) ");
+                RightHiText(DarkCyan, $"● 방어력 : {totalDefense}", $" (+{Player.EquipDefense}) ");
             }
             else
                 Console.WriteLine($"● 방어력 : {Player.BaseDefense}");
@@ -579,7 +579,7 @@ namespace W3_TeamProject
             Console.SetCursorPosition(100, 12);
             Console.WriteLine(Armor);
             Console.SetCursorPosition(96 + EALength, 13);
-            LeftHiText(Blue, EquipArmor);
+            LeftHiText(DarkCyan, EquipArmor);
             Console.SetCursorPosition(100, 15);
             Console.WriteLine(Accessory);
             Console.SetCursorPosition(96 + ECLength, 16);
@@ -600,9 +600,9 @@ namespace W3_TeamProject
             Console.SetCursorPosition(65, 7);
             Console.WriteLine("   ㅇ    ㅇ    ㅇ    ㅇ");
             Console.SetCursorPosition(65, 8);
-            Console.WriteLine("   ㅇ       ＜       ㅇ");
+            Console.WriteLine("   ㅇ                ㅇ");
             Console.SetCursorPosition(65, 9);
-            Console.WriteLine("     ㅇ    ㅡㅡ    ㅇ");
+            Console.WriteLine("     ㅇ            ㅇ");
             Console.SetCursorPosition(65, 10);
             Console.WriteLine("       ㅇㅇㅇㅇㅇㅇ");
             Console.SetCursorPosition(65, 11);
@@ -621,72 +621,6 @@ namespace W3_TeamProject
             Console.WriteLine("       ㅇ  ㅇㅇ  ㅇ");
             Console.SetCursorPosition(65, 18);
             Console.WriteLine("       ㅇㅇ    ㅇㅇ");
-        }
-        public static void StatusSecretNameImage()
-        {
-            Console.SetCursorPosition(61, 4);
-            Console.WriteLine("⠀⠀⠀⠀⢐⣽⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠇⠀⠀⠀⠀");
-            Console.SetCursorPosition(61, 5);
-            Console.WriteLine("⠀⠀⠀⠀⠀⢿⣿⢿⣟⢿⣿⣟⣿⣿⢻⢟⢟⢟⢿⣿⣻⣿⣿⣻⣿⢿⣻⣿⣟⣟⠀⠀⠀⠀⠀");
-            Console.SetCursorPosition(61, 6);
-            Console.WriteLine("⠀⠀⠀⠀⠀⢘⡿⡹⡸⡱⣸⢸⢢⢫⡪⡪⡣⡫⡪⡲⡱⡱⣸⢸⡸⡱⡍⣟⣿⠀⠀⠀⠀⠀⠀");
-            Console.SetCursorPosition(61, 7);
-            Console.WriteLine("⠀⠀⠀⠀⠀⠀⡯⡺⡸⡱⣓⢷⢷⣣⡣⡫⡪⡣⡫⣪⡮⣷⡷⢵⢕⢕⡕⣕⡿⡁⠀⠀⠀⠀⠀");
-            Console.SetCursorPosition(61, 8);
-            Console.WriteLine("⠀⠀⠀⠀⠀⠀⢕⢕⢝⡜⡼⡸⡱⡱⡱⡹⡸⡱⡹⡸⡱⣱⢹⢸⢜⢕⢕⢵⢹⠀⠀⠀⠀⠀⠀");
-            Console.SetCursorPosition(61, 9);
-            Console.WriteLine("⠀⠀⠀⠀⠀⠀⢘⢜⢕⢕⡕⡵⡹⡸⡪⡣⡫⡪⡣⡫⣪⢪⡪⡣⡣⡳⡹⡸⡂⠀⠀⠀⠀⠀⠀");
-            Console.SetCursorPosition(61, 10);
-            Console.WriteLine("⠀⠀⠀⠀⠀⠀⠀⡣⡫⣪⢪⡪⡺⡸⡪⡪⡣⡫⡪⡣⣣⢣⡣⡫⣪⢺⢸⠊⠀⠀⠀⠀⠀⠀⠀");
-            Console.SetCursorPosition(61, 11);
-            Console.WriteLine("⠀⠀⠀⠀⠀⠀⠀⠸⡸⡜⣜⢜⢎⢞⢜⢇⢏⢞⢇⢏⢎⢎⢮⢪⡪⡎⡎⣇⢏⢇⢗⢔⢤⢠⡠");
-            Console.SetCursorPosition(61, 12);
-            Console.WriteLine("⠀⠀⠀⠀⠀⠀⠀⠀⡇⡧⡣⣣⢳⢱⢣⢫⡪⡎⡮⡪⡣⡳⡱⡕⣕⢕⢝⢜⢜⢎⢇⢗⢕⢵⢱");
-            Console.SetCursorPosition(61, 13);
-            Console.WriteLine("⠀⠀⠀⣀⢔⢴⢱⡹⡸⡜⡎⣎⢮⢺⡼⣵⢵⡵⡧⡷⡝⡜⡎⣎⢎⡎⡇⡗⡕⡇⡗⣕⢝⢜⡜");
-            Console.SetCursorPosition(61, 14);
-            Console.WriteLine("⡠⡠⡕⣕⢕⢵⢱⢕⢵⢱⢕⢕⢕⡕⣕⢕⡕⣝⢜⢎⢇⢗⢭⢪⢾⡗⡝⡜⡎⡞⣜⢜⢜⢕⢕");
-            Console.SetCursorPosition(61, 15);
-            Console.WriteLine("⡪⡎⡮⡪⡪⡎⡮⡪⡎⡮⡪⡣⣣⢣⡣⣣⢣⡣⡣⡳⡱⡕⡵⣵⣟⢎⢞⢜⢎⢮⢪⡪⡣⡳⡹");
-            Console.SetCursorPosition(61, 16);
-            Console.WriteLine("⢕⢕⢵⢹⢸⢪⡪⡎⡮⡪⡺⡸⡜⣜⢜⡜⣜⢜⢎⢇⢧⡳⡻⡾⡱⣝⢜⢕⢵⢱⢕⢕⢝⢜⢎");
-            Console.SetCursorPosition(61, 17);
-            Console.WriteLine("⡵⡹⡸⡜⡎⣎⢎⢎⢮⢺⢸⢪⡪⡪⡣⣫⢺⢺⢺⢩⢇⡯⡟⡕⡽⣸⢸⢱⡱⡕⡵⡹⡸⡱⡱");
-            Console.SetCursorPosition(61, 18);
-            Console.WriteLine("⣣⢳⡱⣕⢵⢵⢧⢯⢮⡮⡾⡾⢾⢾⢷⣷⣿⡿⣿⣿⣟⣾⣧⢿⣯⣾⠾⣷⢵⡵⣵⢵⡽⡼⡵");
-        }
-        public static void StatusSecretGoldImage()
-        {
-            Console.SetCursorPosition(65, 4);
-            Console.WriteLine("       ㅡㅡㅡㅡㅡㅡ");
-            Console.SetCursorPosition(65, 5);
-            Console.WriteLine("     ㅣ            ㅣ");
-            Console.SetCursorPosition(65, 6);
-            Console.WriteLine("   ㅣ                ㅣ");
-            Console.SetCursorPosition(65, 7);
-            Console.WriteLine("   ㅣ    ㅇ    ㅇ    ㅣ");
-            Console.SetCursorPosition(65, 8);
-            Console.WriteLine("   ㅣ       ＜       ㅣ");
-            Console.SetCursorPosition(65, 9);
-            Console.WriteLine("     ㅣ    ㅡㅡ    ㅣ");
-            Console.SetCursorPosition(65, 10);
-            Console.WriteLine("       ㅡㅡㅡㅡㅡㅡ");
-            Console.SetCursorPosition(65, 11);
-            Console.WriteLine("     ㅣ            ㅣ");
-            Console.SetCursorPosition(65, 12);
-            Console.WriteLine("   ㅣ                ㅣ");
-            Console.SetCursorPosition(65, 13);
-            Console.WriteLine("   ㅣ  ㅣ        ㅣ  ㅣ");
-            Console.SetCursorPosition(65, 14);
-            Console.WriteLine("   ㅣ  ㅣ        ㅣ  ㅣ");
-            Console.SetCursorPosition(65, 15);
-            Console.WriteLine("     ㅇㅣ        ㅣㅇ");
-            Console.SetCursorPosition(65, 16);
-            Console.WriteLine("       ㅣ        ㅣ");
-            Console.SetCursorPosition(65, 17);
-            Console.WriteLine("       ㅣ  ㅣㅣ  ㅣ");
-            Console.SetCursorPosition(65, 18);
-            Console.WriteLine("       ㅣㅇㅣㅣㅇㅣ");
         }
 
         /// <summary>
@@ -756,7 +690,7 @@ namespace W3_TeamProject
         /// </summary>
         public static void StatusArmorImage()
         {
-            Console.ForegroundColor = Blue;
+            Console.ForegroundColor = DarkCyan;
             Console.SetCursorPosition(70, 10);
             Console.WriteLine("ㅁㅁㅁ    ㅁㅁㅁ");
             Console.SetCursorPosition(70, 11);
@@ -809,9 +743,8 @@ namespace W3_TeamProject
             return (c >= '가' && c <= '힣') || (c >= 'ㄱ' && c <= 'ㅣ') || (c >= 'ㅏ' && c <= 'ㅣ');
         }
 
-
         /// <summary>
-        /// 오른쪽 아래 UI 표시용 상태창 -> UI 파일에 만들어서 주석처리
+        /// UI 오른쪽 아래 데이터를 상시 표시하는 함수입니다 -> UI에서 사용함으로 주석처리
         /// </summary>
         //public void UnderBarUIStatus()
         //{

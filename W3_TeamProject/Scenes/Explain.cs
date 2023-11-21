@@ -118,14 +118,15 @@ namespace W3_TeamProject
                 }
                 Thread.Sleep(500); // msec 지연
                 charColorBlink++;
-
                 if (Console.KeyAvailable)
                 {
-                    Console.ReadKey(false);
+                    while (Console.KeyAvailable) Console.ReadKey(false);
                     charColorBlink = 0;
                     break;
                 }
                 
+
+
             }
             
             nextState = SceneState.Start; // 다음스테이지(캐릭터 설명화면)으로 넘어갑니다.
@@ -136,9 +137,9 @@ namespace W3_TeamProject
 
 		public override SceneState ExitScene()
 		{
-			// EnterScene에서 바꾼 nextState를 SceneManager에게 반환하는 작업이라고 보시면 됩니다.
-			return nextState;
-		}
+            // EnterScene에서 바꾼 nextState를 SceneManager에게 반환하는 작업이라고 보시면 됩니다.
+            return nextState;
+        }
 
 		// 추가적으로 해당 장면에 필요한 메서드나 클래스 등이 있다면 자유롭게 작성하시면 됩니다.
 	}

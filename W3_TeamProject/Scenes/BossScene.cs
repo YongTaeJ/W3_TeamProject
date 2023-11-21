@@ -30,11 +30,13 @@ namespace W3_TeamProject
 			bool isTurn = false;
 			InitSkillController();
 			InitItemController();
+			Init();
 
 			while (endPoint == 0)
 			{
+				UI.MakeASCII();
 				bias = 1;
-				Init();
+				
 				MakeMainChoicePanel();
 				int input = mainController.InputLoop();
 				switch(input)
@@ -83,12 +85,18 @@ namespace W3_TeamProject
 			if(endPoint == 1)
 			{
 				// 플레이어 승리
-				nextState = SceneState.FinalWin;
+				WriteComment("사장님과의 논쟁에서 승리했습니다! (아무 키나 눌러 다음으로...)");
+				UI.MakeASCII(ConsoleColor.Yellow);
+				Console.ReadKey(true);
+				nextState = SceneState.EndingWin;
 			}
 			else
 			{
 				// 플레이어 패배
-				nextState = SceneState.FinalLose;
+				WriteComment("사장님의 압도적인 언변에 당해 패배했습니다 ㅠㅠ  (아무 키나 눌러 다음으로...)");
+				UI.MakeASCII(ConsoleColor.Yellow);
+				Console.ReadKey(true);
+				nextState = SceneState.EndingLose;
 			}
 		}
 		private void Init()
@@ -97,18 +105,21 @@ namespace W3_TeamProject
 			UI.MakeUI();
 			MakeCommentBorder();
 			MakeBossHPMP();
-			UI.MakeASCII();
+
 			boss.UpdateHPbar();
 			boss.UpdateMPbar();
-			//WriteComment("당신은 사장실의 문 앞에 도달했습니다.");
-			//Thread.Sleep(1700);
-			//WriteComment("문을 열고 들어가자, 사장님의 모습이 보입니다....");
-			//Thread.Sleep(1700);
-			//WriteComment("그는 이미 당신의 소식을 들었고, 언뜻 보기에 타협의 여지는 없어 보입니다.");
-			//Thread.Sleep(1700);
-			//WriteComment("순간, 당신은 격렬한 언쟁을 예감합니다....");
-			//Thread.Sleep(2000);
-			//WriteComment();
+
+			WriteComment("당신은 사장실의 문 앞에 도달했습니다.");
+			Thread.Sleep(1700);
+			WriteComment("문을 열고 들어가자, 사장님의 모습이 보입니다....");
+			Thread.Sleep(1700);
+			WriteComment("그는 이미 당신의 소식을 들었고, 언뜻 보기에 타협의 여지는 없어 보입니다.");
+			Thread.Sleep(1700);
+			WriteComment("순간, 당신은 격렬한 언쟁을 예감합니다....");
+			Thread.Sleep(2000);
+			WriteComment();
+
+			UI.MakeASCII();
 		}
 
 		private void InitMainController()
@@ -197,7 +208,7 @@ namespace W3_TeamProject
 				}
 				else if (skillState == SkillState.OK) // 스킬 사용 성공
 				{
-					int damage = currentSkill.FixedDamage + currentSkill.VariableDamage * Player.Level;
+					int damage = currentSkill.FixedDamage + currentSkill.VariableDamage * (Player.BaseAttack+Player.EquipAttack);
 					endPoint = boss.GetDamage(damage);
 					WriteComment($"{currentSkill.SkillComment} 사장님께 {damage}만큼의 데미지를 입혔습니다!");
 					UI.MakeASCII(ConsoleColor.Red);
