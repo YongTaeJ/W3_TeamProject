@@ -40,7 +40,7 @@ namespace W3_TeamProject
 		private static int equipMana = 0;
 
 		// 총 체력과 현재 체력을 구분하기 위해 만들었습니다.
-		private static int currentHeatlh = 0;
+		private static int currentHealth = 0;
 		private static int currentMana = 0;
 
 		private static int healthPotionCount = 0;
@@ -59,13 +59,13 @@ namespace W3_TeamProject
 		public static int RequiredExp {  get { return requiredExp; } }
 		public static int CurrentExp {  get { return currentExp; } }
 		public static string PlayerName { get {  return playerName; } }
-		public static int CurrentHealth { get { return currentHeatlh; } set { currentHeatlh = value; } }
+		public static int CurrentHealth { get { return currentHealth; } set { currentHealth = value; } }
 		public static int CurrentMana {  get { return currentMana; } }
 		public static int HealthPotionCount { get { return healthPotionCount; } }
 		public static int ManaPotionCount { get { return manaPotionCount; } }
 		public static int BaseAttack { get { return baseAttack; } }
 		public static int BaseDefense { get {  return baseDefense; } } 
-		public static int BaseHealth { get { return baseHealth; } set { currentHeatlh = value; } }//체력이 올라가면 같이 베이스 체력도 같이 올림
+		public static int BaseHealth { get { return baseHealth; } set { currentHealth = value; } }//체력이 올라가면 같이 베이스 체력도 같이 올림
         public static int BaseMana {  get { return baseMana; } }
 		public static int EquipAttack { get { return equipAttack; } set { equipAttack = value; } }
 		public static int EquipDefense {  get { return equipDefense; } set { equipDefense = value; } }
@@ -77,18 +77,18 @@ namespace W3_TeamProject
 
 		public static void ChangeHP(int value)
 		{
-			if(baseHealth + equipHealth < currentHeatlh + value)
+			if(baseHealth + equipHealth < currentHealth + value)
 			{
-				currentHeatlh = baseHealth + equipHealth;
+				currentHealth = baseHealth + equipHealth;
 			}
 			else
 			{
-				currentHeatlh += value;
+				currentHealth += value;
 			}
 
-			if(currentHeatlh <= 0)
+			if(currentHealth <= 0)
 			{
-				currentHeatlh = 0;
+				currentHealth = 0;
 				isDie = true;
 			}
 
@@ -114,7 +114,9 @@ namespace W3_TeamProject
 			baseAttack = 10;
 			baseDefense = 5;
 			baseHealth = 100;
-			currentHeatlh = baseHealth;
+			baseMana = 50;
+			currentHealth = baseHealth;
+			currentMana = baseMana;
 			gold = 1500;
 			playerSkillList = new PlayerSkillList();
 		}
@@ -168,19 +170,27 @@ namespace W3_TeamProject
 		{
 			if(requiredExp <= currentExp + value)
 			{
-				// 경험치 초과분은 다 사라짐!!
-				level++;
-				currentExp = 0;
-				requiredExp = level * 10;
-				// 이하는 UI 변경 필요(레벨 변경)
+				LevelUp();
 			}
 			else
 			{
-				// 현재 경험치 증가
 				currentExp += value;
 			}
-			
 		}
+
+		private static void LevelUp()
+		{
+			// 경험치 초과분은 다 사라짐!!
+			level++;
+			currentExp = 0;
+			requiredExp = level * 10;
+			baseAttack += 3;
+			baseDefense += 2;
+			baseHealth += 20;
+			baseMana += 10;
+			playerSkillList.availableCheck(level);
+		}
+
 		public static void GetGold(int value)
 		{
 			gold += value;
@@ -237,7 +247,10 @@ namespace W3_TeamProject
 		// skillData.Add(new TestSkill());
 		private void Init()
 		{
-			availableSkill.Add(new TestSkill());
+			skillData.Add(new Presentation());
+			skillData.Add(new ResignationThrow());
+			skillData.Add(new HearthAttack());
+			skillData.Add(new Ultimate());
 		}
 	}
 }
