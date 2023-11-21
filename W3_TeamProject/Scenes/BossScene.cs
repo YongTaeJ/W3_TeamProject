@@ -100,6 +100,7 @@ namespace W3_TeamProject
 			UI.MakeASCII();
 			boss.UpdateHPbar();
 			boss.UpdateMPbar();
+
 			//WriteComment("당신은 사장실의 문 앞에 도달했습니다.");
 			//Thread.Sleep(1700);
 			//WriteComment("문을 열고 들어가자, 사장님의 모습이 보입니다....");
