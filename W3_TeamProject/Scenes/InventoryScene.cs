@@ -34,7 +34,7 @@ namespace W3_TeamProject
                 SceneBase(true);
                 SetStringPosition("인벤토리", 0,true);
                 SetStringPosition("보유 중인 아이템을 관리할 수 있습니다.", 1);
-                SetStringPosition("★ 장 착 장 비 ★", 1, true, ConsoleColor.Blue);
+                SetStringPosition("★ 장 착 장 비 ★", 1, true, ConsoleColor.Magenta);
                 SetStringPosition("[ - 장비 - ]", 1,true);
                 PlayerEquipConsole(ItemType.Weapon);
                 SetStringPosition("[ - 방어구 - ]", 0, true);
