@@ -118,8 +118,7 @@ namespace W3_TeamProject
                 switch (userInput)
                 {
                     case 0: // 공격
-                        NormalAttack(); // NomalAttack 안에 enemyListForStage.Count() 지움.
-                        isPlayerTurn = false;
+                        isPlayerTurn = NormalAttack();
                         break;
                     case 1: // 방어
                         NormalDefense();
@@ -254,12 +253,9 @@ namespace W3_TeamProject
             Thread.Sleep(1500);
         }
 
-        private void NormalAttack() // NormalAttack 함수 안에 int _index 지움.
+        private bool NormalAttack()
         {
-            int damage = Player.BaseAttack + Player.EquipAttack;
             WriteComment(" 공격하고 싶은 적을 선택하세요");
-            // 공격하고 싶은 적을 선택.
-            // 적의 HP 깎아야함.
 
             Controller selectEnemyController = new Controller(); // 콘트롤러가 전역이면 그 전값이 살아있음 지역으로 옮겨서 값 초기화 - 박정혁
 
@@ -270,14 +266,36 @@ namespace W3_TeamProject
             }
 
             userInput = selectEnemyController.InputLoop(); // 몬스터를 선택하기 위한 화살표
-            enemyListForStage[userInput].GetDamage(10);
 
             if (enemyListForStage[userInput].IsDie)
             {
-                WriteComment("몬스터는 이미 죽었습니다");
+                WriteComment("선택하신 적은 이미 죽었습니다. 다른 적을 선택해주세요");
+                Thread.Sleep(1000);
+                return true;
+            }
+            
+            enemyListForStage[userInput].GetDamage(10);
+
+            //
+            // 몬스터 다 죽었으면 endPoint = 1
+            //
+            int countIsDie = 0;
+            for(int i = 0; i < enemyListForStage.Count; i++)
+            {
+                if (enemyListForStage[i].IsDie == true)
+                {
+                    countIsDie++;
+                }
+            }
+            if (countIsDie == enemyListForStage.Count)
+            {
+                endPoint = 1;
             }
 
 
+            return false;
+
+            // 아래 내용 지우자 !
             // --------- 정혁님 작성파트 ------------
             //Controller controller = new Controller(); //몬스터의 리스트의 크기를 받아와 해당하는 크기만큼 열림
             //if (_index >= 1)
@@ -319,20 +337,9 @@ namespace W3_TeamProject
         private void DrawStage()
         {
             UI.MakeUI(); // UI 그리기
-            MakeRightBoarderInsideUI(); // UI 내부 오른쪽 세로선 그리기
             MakeCommentBoarder(); // 말풍선 그리기
             MakeMiddleBar(); // 화면 중간 세로선 그리기
             MakeMainChoicePanel(); // UI 내 선택옵션 그리기
-                                   // UI 내 오른쪽 부분에 Status 도 연동할 것 !
-        }
-
-        private static void MakeRightBoarderInsideUI() // UI 내부 오른쪽 세로선 그리기
-        {
-            for (int i = 0; i < 8; i++)
-            {
-                Console.SetCursorPosition(90, 21 + i);
-                Console.Write('|');
-            }
         }
 
         private static void MakeMiddleBar() // 화면 중간 세로선 그리기
@@ -414,78 +421,6 @@ namespace W3_TeamProject
                 Console.SetCursorPosition(31, 21 + i);
                 Console.Write(clearChoosePanelString);
             }
-        }
-
-
-        private static void ShowEnemy4()
-        {
-            Console.SetCursorPosition(98, 10);
-            Console.WriteLine("---------------");
-            Console.SetCursorPosition(98, 11);
-            Console.WriteLine("     ENEMY4    ");
-            Console.SetCursorPosition(98, 12);
-            Console.WriteLine("---------------");
-            Console.SetCursorPosition(98, 13);
-            Console.WriteLine(" 공:    방:    ");
-            Console.SetCursorPosition(98, 14);
-            Console.WriteLine("---------------");
-            Console.SetCursorPosition(98, 15);
-            Console.WriteLine("HP | //////////");
-            Console.SetCursorPosition(98, 16);
-            Console.WriteLine("---------------");
-        }
-        private static void ShowEnemy3()
-        {
-            Console.SetCursorPosition(73, 9);
-            Console.WriteLine("---------------");
-            Console.SetCursorPosition(73, 10);
-            Console.WriteLine("     ENEMY3    ");
-            Console.SetCursorPosition(73, 11);
-            Console.WriteLine("---------------");
-            Console.SetCursorPosition(73, 12);
-            Console.WriteLine(" 공:    방:    ");
-            Console.SetCursorPosition(73, 13);
-            Console.WriteLine("---------------");
-            Console.SetCursorPosition(73, 14);
-            Console.WriteLine("HP | //////////");
-            Console.SetCursorPosition(73, 15);
-            Console.WriteLine("---------------");
-        }
-
-        private static void ShowEnemy2()
-        {
-            Console.SetCursorPosition(95, 2);
-            Console.WriteLine("---------------");
-            Console.SetCursorPosition(95, 3);
-            Console.WriteLine("     ENEMY2    ");
-            Console.SetCursorPosition(95, 4);
-            Console.WriteLine("---------------");
-            Console.SetCursorPosition(95, 5);
-            Console.WriteLine(" 공:    방:    ");
-            Console.SetCursorPosition(95, 6);
-            Console.WriteLine("---------------");
-            Console.SetCursorPosition(95, 7);
-            Console.WriteLine(" HP |          ");
-            Console.SetCursorPosition(95, 8);
-            Console.WriteLine("---------------");
-        }
-
-        private static void ShowEnemy1()
-        {
-            Console.SetCursorPosition(70, 1);
-            Console.WriteLine("---------------");
-            Console.SetCursorPosition(70, 2);
-            Console.WriteLine("     ENEMY1    ");
-            Console.SetCursorPosition(70, 3);
-            Console.WriteLine("---------------");
-            Console.SetCursorPosition(70, 4);
-            Console.WriteLine(" 공:    방:    ");
-            Console.SetCursorPosition(70, 5);
-            Console.WriteLine("---------------");
-            Console.SetCursorPosition(70, 6);
-            Console.WriteLine(" HP |          ");
-            Console.SetCursorPosition(70, 7);
-            Console.WriteLine("---------------");
         }
 
         private static void ShowPlayer()
