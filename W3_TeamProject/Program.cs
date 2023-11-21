@@ -18,7 +18,7 @@ namespace W3_TeamProject
 
 			// 맨 처음 시작화면은 StartScene으로 만들어주세요
 			Player.Init();
-			SceneState sceneState = SceneState.Explain;
+			SceneState sceneState = SceneState.Inventory;
 
 			while(sceneState != SceneState.None)
 			{

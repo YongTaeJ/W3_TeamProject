@@ -12,7 +12,7 @@ namespace W3_TeamProject
         protected override void Init()
         {
             name = "빨간 포션";
-            description = "체력을 올려주지만 맛은 보장할 수 없다.";
+            description = "최대체력의 절반이 찬다";
             cost = 20;
             effectValue = 20;
             isEquip = false;
