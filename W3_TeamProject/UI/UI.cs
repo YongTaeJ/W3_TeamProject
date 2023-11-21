@@ -19,9 +19,7 @@ namespace W3_TeamProject
 			MakeHPMPPart();
 			UpdateHPBar();
 			UpdateMPBar();
-			UnderBarUIStatus();
-
-        }
+		}
 		public static void MakeBorder()
 		{
 			// UI의 전체적인 테두리를 그리는 기능입니다.
@@ -173,55 +171,6 @@ namespace W3_TeamProject
 			Console.ResetColor();
 			
 		}
-
-        private static BaseItem statusWeapon;
-        private static BaseItem statusArmor;
-        private static BaseItem statusAccessory;
-
-
-		/// <summary>
-		/// UI 오른쪽 하단 플레이어 상태 표시용 함수입니다.
-		/// </summary>
-        public static void UnderBarUIStatus()
-        {
-            for (int i = 0; i < 8; i++)
-            {
-                Console.SetCursorPosition(90, 21 + i);
-                Console.Write('|');
-            }
-
-            int totalAtk = Player.EquipAttack + Player.BaseAttack;
-            int totalDef = Player.EquipDefense + Player.BaseDefense;
-
-            Console.SetCursorPosition(97, 21);
-            Console.WriteLine("레  벨");
-            Console.SetCursorPosition(111 - Player.Level.ToString().Length, 22);
-			HilightedText(ConsoleColor.Cyan, $"{Player.Level}");
-            Console.SetCursorPosition(97, 23);
-            Console.WriteLine("공격력");
-            Console.SetCursorPosition(111 - totalAtk.ToString().Length, 24);
-            HilightedText(ConsoleColor.Red, $"{totalAtk}");
-            Console.SetCursorPosition(97, 25);
-            Console.WriteLine("방어력");
-            Console.SetCursorPosition(111 - totalDef.ToString().Length, 26);
-            HilightedText(ConsoleColor.DarkCyan, $"{totalDef}");
-            Console.SetCursorPosition(97, 27);
-            Console.WriteLine("소지금");
-            Console.SetCursorPosition(111 - Player.Gold.ToString().Length, 28);
-            HilightedText(ConsoleColor.Yellow, $"{Player.Gold}");
-        }
-
-		/// <summary>
-		/// UnderBarUIStatus 용 글씨 색 변경하는 함수입니다.
-		/// </summary>
-		/// <param name="col"></param>
-		/// <param name="text"></param>
-        public static void HilightedText(ConsoleColor col, string text)
-        {
-            Console.ForegroundColor = col;
-            Console.Write(text);
-            Console.ResetColor();
-        }
-    }
+	}
 
 }

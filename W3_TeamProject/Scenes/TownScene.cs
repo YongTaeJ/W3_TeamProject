@@ -12,7 +12,6 @@ namespace W3_TeamProject
 		{
             UI.MakeUI(); // UI 기본 틀 가져오기
             TownTitle(); //마을 제목
-            #region 마을 그림 구성
             Console.SetCursorPosition(5, 8);  // 마을화면 속 상점
             int x = 5;
             int y = 8;
@@ -107,7 +106,7 @@ namespace W3_TeamProject
                        "\n         ↙ ↘ ↙↘"+
                        "\n           Battle";
 
-            
+
 
             foreach (char letter in sentence)
             {
@@ -123,35 +122,29 @@ namespace W3_TeamProject
                     x++; // 다음 문자 위치로 이동
                 }
             }
-            #endregion
 
-            Controller controller = new Controller();
-            controller.AddRotation(3, 11);
-            controller.AddRotation(33, 11);
-            controller.AddRotation(63, 11);
-            controller.AddRotation(93, 11);
 
-            int userInput;
-            userInput = controller.InputLoop();
+            Console.SetCursorPosition(54, 20);
+            int userInput = int.Parse(Console.ReadLine());
             
             switch (userInput)
             {
-                case 0:
+                case 1:
                     nextState = SceneState.Store;
                     break;
-                case 1:
-                    nextState = SceneState.Status;
-                    break;
                 case 2:
-                    nextState = SceneState.Inventory;
+                    nextState = SceneState.Status;
                     break;
                 case 3:
                     nextState = SceneState.Battle;
                     break;
+                case 4:
+                    nextState = SceneState.Inventory;
+                    break;
             }
         }
 
-        private void TownTitle() // TOWN 글자 애니메이션
+        private void TownTitle()
         {
             Console.SetCursorPosition(3, 1);
             int x = 3;
@@ -298,7 +291,10 @@ namespace W3_TeamProject
 
         public override SceneState ExitScene()
 		{
+			// EnterScene에서 바꾼 nextState를 SceneManager에게 반환하는 작업이라고 보시면 됩니다.
 			return nextState;
 		}
-    }
+
+		// 추가적으로 해당 장면에 필요한 메서드나 클래스 등이 있다면 자유롭게 작성하시면 됩니다.
+	}
 }
