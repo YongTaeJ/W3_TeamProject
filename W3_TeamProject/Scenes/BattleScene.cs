@@ -12,10 +12,12 @@ namespace W3_TeamProject
 
         Controller itemController = new Controller();
         Controller skillController = new Controller();
-        Controller selectEnemyController = new Controller();
+        
         Random random = new Random();
 
         BattleUtility battleUtility = new BattleUtility();
+
+        List<BaseEnemy>? enemyListForFirstStage;
 
         public override void EnterScene()
         {
@@ -93,7 +95,7 @@ namespace W3_TeamProject
                 case 2: // 1층 스테이지 입장
                     WriteComment(" 1층으로 입장합니다.");
                     Thread.Sleep(1000);
-                    EnterFirstStage();
+                    EnterFirstStage(1);
                     break;
                 case 3: // 마을로 돌아가기
                     nextState = SceneState.Town;
@@ -101,18 +103,26 @@ namespace W3_TeamProject
             }
         }
 
-        private void EnterFirstStage()
+        private void EnterFirstStage(int _index)
         {
+
             DrawStage(); // 스테이지 화면 그리기 (UI, 말풍선, 중간 세로선, )
 
+            Controller selectEnemyController = new Controller();
+
             Console.SetCursorPosition(0, 0);
-            Console.WriteLine("[1층]");
-
-			    ShowPlayer();
-
-
+            Console.WriteLine($"[{_index}층]");
+            
+            ShowPlayer();
+            if (enemyListForFirstStage != null) //리스트 초기화 
+            {
+                for (int i = enemyListForFirstStage.Count() - 1; i >= 0; i--)
+                {
+                    enemyListForFirstStage.RemoveAt(i);
+                }
+            }
             // 적 랜덤 출현
-            List<BaseEnemy> enemyListForFirstStage = battleUtility.GetEnemyList();
+            enemyListForFirstStage = battleUtility.GetEnemyList();
 
             for (int i = 0; i < enemyListForFirstStage.Count; i++)
             {
@@ -124,30 +134,8 @@ namespace W3_TeamProject
             {
                 selectEnemyController.AddRotation(enemyListForFirstStage[i].X - 3, enemyListForFirstStage[i].Y + 1);
             }
-            userInput = selectEnemyController.InputLoop();
-            switch (userInput)
-            {
-                case 0:
-                    enemyListForFirstStage[0].GetDamage(10);
-                    Console.WriteLine(" 1번 적 공격받음");
-                    break;
-                case 1:
-                    enemyListForFirstStage[1].GetDamage(10);
-                    Console.WriteLine(" 2번 적 공격받음");
 
-                    break;
-                case 2:
-                    enemyListForFirstStage[2].GetDamage(10);
-                    Console.WriteLine(" 3번 적 공격받음");
-
-                    break;
-                case 3:
-                    enemyListForFirstStage[3].GetDamage(10);
-                    Console.WriteLine(" 4번 적 공격받음");
-
-                    break;
-            }
-
+            userInput = selectEnemyController.InputLoop(); // 몬스터 선택
 
             WriteComment(" 원하시는 행동을 선택하세요.");
 
@@ -161,6 +149,7 @@ namespace W3_TeamProject
                 mainController.AddRotation(62, 23);
                 mainController.AddRotation(34, 26);
                 mainController.AddRotation(62, 26);
+                mainController.AddRotation(62, 1);
 
                 ClearChoosePanel();
                 MakeMainChoicePanel();
@@ -184,6 +173,15 @@ namespace W3_TeamProject
                     case 3: // 아이템 목록
                         isPlayerTurn = ShowItemList(); // 구현 not yet
                         break;
+                    case 4: // 아이템 목록
+                        nextState = SceneState.Town;
+                        break;
+                }
+                if (nextState != SceneState.None)
+                {
+                    Console.WriteLine(enemyListForFirstStage.Count());
+                    Thread.Sleep(1000);
+                    break;
                 }
 
                 if (endPoint != 0)
