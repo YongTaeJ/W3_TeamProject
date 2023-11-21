@@ -134,6 +134,7 @@ namespace W3_TeamProject
             {
                 selectEnemyController.AddRotation(enemyListForFirstStage[i].X - 3, enemyListForFirstStage[i].Y + 1);
             }
+
             userInput = selectEnemyController.InputLoop(); // 몬스터 선택
 
             WriteComment(" 원하시는 행동을 선택하세요.");
