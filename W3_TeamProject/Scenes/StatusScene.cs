@@ -208,8 +208,8 @@ namespace W3_TeamProject
             ViewHP();
             Console.SetCursorPosition(startXpos + 10, startYpos + 6);
             ViewMP();
-            Console.SetCursorPosition(startXpos + 10, startYpos + 7);
-            Console.WriteLine($"● 소지금 : {Player.Gold}");
+            Console.SetCursorPosition(startXpos + 10, startYpos + 7); 
+            RightHiText(Yellow, "● 소지금 : ", $"{Player.Gold}");
             Console.WriteLine();
         }
 
@@ -454,7 +454,7 @@ namespace W3_TeamProject
         /// <param name="color"></param>
         /// <param name="text1"></param>
         /// <param name="text2"></param>
-        public static void RightHiText(ConsoleColor col, string text1, string text2 = "")
+        public static void RightHiText(ConsoleColor col, string text1 = " ", string text2 = " ")
         {
             Console.Write(text1);
             Console.ForegroundColor = col;
@@ -547,14 +547,14 @@ namespace W3_TeamProject
             string EquipAccessory = "없  음";
 
             // 해당 장비를 착용 중이면, 이름 불러오기
-            if (statusArmor != null && statusArmor.ItemType == ItemType.Armor)
-            {
-                if (statusArmor != null && statusArmor.IsEquip == true)
-                    EquipWeapon = statusWeapon.Name;
-            }
             if (statusWeapon != null && statusWeapon.ItemType == ItemType.Weapon)
             {
                 if (statusWeapon != null && statusWeapon.IsEquip == true)
+                    EquipWeapon = statusWeapon.Name;
+            }
+            if (statusArmor != null && statusArmor.ItemType == ItemType.Armor)
+            {
+                if (statusArmor != null && statusArmor.IsEquip == true)
                     EquipArmor = statusArmor.Name;
             }
             if (statusAccessory != null && statusAccessory.ItemType == ItemType.Accessory)
@@ -572,15 +572,15 @@ namespace W3_TeamProject
             Console.SetCursorPosition(100, 9);
             Console.WriteLine(Weapon);
             Console.SetCursorPosition(96 + EWLength, 10);
-            LeftHiText(DarkBlue, EquipWeapon);
+            LeftHiText(Red, EquipWeapon);
             Console.SetCursorPosition(100, 12);
             Console.WriteLine(Armor);
             Console.SetCursorPosition(96 + EALength, 13);
-            LeftHiText(DarkGreen, EquipArmor);
+            LeftHiText(Blue, EquipArmor);
             Console.SetCursorPosition(100, 15);
             Console.WriteLine(Accessory);
             Console.SetCursorPosition(96 + ECLength, 16);
-            LeftHiText(Red, EquipAccessory);
+            LeftHiText(Yellow, EquipAccessory);
         }
 
         /// <summary>
@@ -625,7 +625,7 @@ namespace W3_TeamProject
         /// </summary>
         public static void StatusWeaponImage()
         {
-            Console.ForegroundColor = DarkBlue;
+            Console.ForegroundColor = Red;
             Console.SetCursorPosition(65, 10);
             Console.WriteLine("     ㅁ");
             Console.SetCursorPosition(65, 11);
@@ -644,7 +644,7 @@ namespace W3_TeamProject
         public static void StatusWeaponImageSS()
         {
 
-            Console.ForegroundColor = DarkBlue;
+            Console.ForegroundColor = Red;
             Console.SetCursorPosition(65, 10);
             Console.SetCursorPosition(65, 11);
             Console.WriteLine("     ㅁ");
@@ -661,7 +661,7 @@ namespace W3_TeamProject
 
         public static void StatusWeaponImageLS()
         {
-            Console.ForegroundColor = DarkBlue;
+            Console.ForegroundColor = Red;
             Console.SetCursorPosition(65, 8);
             Console.WriteLine("     ㅁ");
             Console.SetCursorPosition(65, 9);
@@ -687,7 +687,7 @@ namespace W3_TeamProject
         /// </summary>
         public static void StatusArmorImage()
         {
-            Console.ForegroundColor = DarkGreen;
+            Console.ForegroundColor = Blue;
             Console.SetCursorPosition(70, 10);
             Console.WriteLine("ㅁㅁㅁ    ㅁㅁㅁ");
             Console.SetCursorPosition(70, 11);
@@ -705,7 +705,7 @@ namespace W3_TeamProject
 
         public static void StatusAccessoryImage()
         {
-            Console.ForegroundColor = Red;
+            Console.ForegroundColor = Yellow;
             Console.SetCursorPosition(86, 14);
             Console.WriteLine("ㅁ");
             Console.ResetColor();
