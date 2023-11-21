@@ -15,8 +15,9 @@ namespace W3_TeamProject
         Controller selectEnemyController = new Controller();
         Random random = new Random();
 
+        BattleUtility battleUtility = new BattleUtility();
 
-		public override void EnterScene()
+        public override void EnterScene()
         {
             Controller controller = new Controller();
             InitSkillController();
@@ -118,28 +119,7 @@ namespace W3_TeamProject
                 enemyListForFirstStage[i].Show(); // 첫번째 스테이지의 적 나타나라 얍
             }
 
-            //
-            // 적 랜덤 출현 구현 thinking..
-            //
-            int enemyCount = random.Next(1, 5); // Enemy 스폰 수( 최소 1 ~ 최대 4 마리 스폰)
-            for (int i = 0; i < enemyCount; i++)
-            {
-                int selectEnemy = random.Next(0, 3); // Enemy 종류 (슬라임, 고블린, 르탄이 중에서) 랜덤 생성
-                switch (selectEnemy)
-                {
-                    case 0: // e.g. Slime
-
-                        break;
-                    case 1: // e.g. Goblin
-
-                        break;
-                    case 2: // Rtan
-
-                        break;
-                }
-            }
-
-
+           // 랜덤 출현과 컨트롤러 연동
             for (int i = 0; i < enemyListForFirstStage.Count; i++)
             {
                 selectEnemyController.AddRotation(enemyListForFirstStage[i].X - 3, enemyListForFirstStage[i].Y + 1);
