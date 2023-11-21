@@ -7,6 +7,7 @@ using System.Xml.Linq;
 
 namespace W3_TeamProject
 {
+    // 사용하지 않는 기능입니다.
     internal class HealthPotion : BaseItem
     {
         protected override void Init()

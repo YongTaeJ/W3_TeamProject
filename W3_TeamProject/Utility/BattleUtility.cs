@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using W3_TeamProject.Enemies;
 
 namespace W3_TeamProject
 {
@@ -28,7 +29,7 @@ namespace W3_TeamProject
 		public void SpawnEnemy(int idx , List<BaseEnemy> enemyList, int _levelValue)
 		{
 			// 생성할 몬스터의 범위와 맞아야 함!!
-			int rng = random.Next(0, 3);
+			int rng = random.Next(0, 5);
 
 			int level;
             if (_levelValue == 1) //1층이면 1 ~ 3렙 몬스터 
@@ -56,6 +57,19 @@ namespace W3_TeamProject
 						enemyList[idx].SetLocation(idx);
 						break;
 					}
+				case 3:
+					{
+						enemyList.Add(new Zombie(level));
+						enemyList[idx].SetLocation(idx);
+						break;
+					}
+				case 4:
+					{
+						enemyList.Add(new Coffee(level));
+						enemyList[idx].SetLocation(idx);
+						break;
+					}
+
 			}
 		}
 	}

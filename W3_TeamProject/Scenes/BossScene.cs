@@ -515,7 +515,7 @@ namespace W3_TeamProject
 			if (temp == 0)
 			{
 				// 일반 공격
-				int damage = 30 / bias; // 계산식 필요!
+				int damage = random.Next(30,60) / bias ;
 				Player.ChangeHP(-damage);
 				WriteComment($"사장님의 공격에 {damage} 만큼의 타격을 입었습니다!!");
 				UI.MakeASCII(ConsoleColor.Blue);
@@ -569,7 +569,7 @@ namespace W3_TeamProject
 
 		public void UseSkill(int index, int bias)
 		{
-			int damage = skillList[index].damage / bias;
+			int damage = skillList[index].damage / bias + random.Next(0,20);
 			Player.ChangeHP(-damage);
 			MP -= skillList[index].cost;
 			UpdateMPbar();
@@ -597,31 +597,6 @@ namespace W3_TeamProject
 			this.cooldown = cooldown;
 			this.isDelay = isDelay;
 			currentcooldown = cooldown;
-		}
-	}
-
-	internal class FinalWinScene : BaseScene
-	{
-		public override void EnterScene()
-		{
-			throw new NotImplementedException();
-		}
-
-		public override SceneState ExitScene()
-		{
-			return SceneState.None;
-		}
-	}
-	internal class FinalLoseScene : BaseScene
-	{
-		public override void EnterScene()
-		{
-			throw new NotImplementedException();
-		}
-
-		public override SceneState ExitScene()
-		{
-			return SceneState.None;
 		}
 	}
 }

@@ -20,7 +20,7 @@ namespace W3_TeamProject
 			this.level = level;
 
 			health = 20 + 5 * level;
-			attack = 7 + 2 * level;
+			attack = 5 + 2 * level;
 			currentHealth = health;
 		}
 	}

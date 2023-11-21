@@ -4,22 +4,23 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace W3_TeamProject
+namespace W3_TeamProject.Enemies
 {
-	internal class Rtan : BaseEnemy
+	internal class Coffee : BaseEnemy
 	{
-		public Rtan(int level) : base(level)
+		public Coffee(int level) : base(level)
 		{
 
 		}
+
 		protected override void Init(int level)
 		{
-			name = "르탄이";
+			name = "커피씨";
 
 			this.level = level;
 
-			health = 40 + 8 * level;
-			attack = 8 + 2 * level;
+			health = 20 + 5 * level;
+			attack = 1 + 0 * level;
 			currentHealth = health;
 		}
 	}
