@@ -12,7 +12,6 @@ namespace W3_TeamProject
 {
     internal class StoreScene : BaseScene
     {
-        
         public override void EnterScene()
         {
             StoreIntro();
@@ -58,13 +57,13 @@ namespace W3_TeamProject
 
                 Controller controller = new Controller();
                 controller.RemoveAll();
-                controller.AddRotation(46, 16);
+                controller.AddRotation(46, 17);
                 controller.AddRotation(46, 10);
                 controller.AddRotation(46, 11);
                 controller.AddRotation(46, 12);
                 controller.AddRotation(46, 13);
                 controller.AddRotation(46, 14);
-                controller.AddRotation(46, 17);
+                controller.AddRotation(46, 15);
                 Console.SetCursorPosition(48, 9);
                 Console.WriteLine("무엇을 찾으시나요?");
                 Console.SetCursorPosition(48, 10);
@@ -77,7 +76,7 @@ namespace W3_TeamProject
                 Console.WriteLine("4.포션 아이템 상점");
                 Console.SetCursorPosition(48, 14);
                 Console.WriteLine("5.아이템 가챠!!(단돈 1000gold)");
-                Console.SetCursorPosition(48, 16);
+                Console.SetCursorPosition(48, 17);
                 Console.WriteLine("0.돌아가기");
                 int select;
                 select = controller.InputLoop();
@@ -232,8 +231,14 @@ namespace W3_TeamProject
         }
         private void ShowSecreetItem()
         {
-            Console.SetCursorPosition(35, 12);
-            Console.Write("버그인듯 하다 아무거나 입력해 돌아가자");
+            Console.SetCursorPosition(50, 1);
+            Console.Write("교육을 언제부터 했지?");
+            Console.SetCursorPosition(12, 2);
+            Console.Write("교육 언제 끝나지?");
+            Console.SetCursorPosition(83, 3);
+            Console.Write("발표.... 언제더라?");
+            Console.SetCursorPosition(22, 12);
+            Console.Write("상점 개발자의 메모장이다. 버그인듯 하니 아무거나 입력해 돌아가자");
             if (int.TryParse(Console.ReadLine(), out int password));
             {
                 if (password == 1030)
@@ -245,6 +250,12 @@ namespace W3_TeamProject
                 else if (password == 0308)
                 {
                     AddItemsToList(new SecreetArmor());
+                    Console.Clear();
+                    ShowItem();
+                }
+                else if(password == 1223)
+                {
+                    AddItemsToList(new SecreetHealthAccessory(), new SecreetManaAccessory());
                     Console.Clear();
                     ShowItem();
                 }
