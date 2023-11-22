@@ -258,14 +258,27 @@ namespace W3_TeamProject
                 RandonItemLine();
                 if (1000 <= Player.Gold)
                 {
-                    Player.Gold -= 1000;
                     Random random = new Random();
-                    
                     List<BaseItem> shuffledList = StoreList.OrderBy(x => random.Next()).ToList(); //리스트 순서를 섞어줌
 
                     BaseItem randomItem = shuffledList.First(); //셔플된 리스트의 첫번째 리스트를 불러옴
+                    List<BaseItem> playerItemList = Inventory.GetItemList(randomItem.ItemType);
+                    
+                    
+
+                    Player.Gold -= 1000;
                     Console.SetCursorPosition(46, 3);
                     Console.WriteLine("1000gold를 지불하셨습니다.");
+
+                    if (playerItemList.Any(item => item.Name == randomItem.Name))
+                    {
+                        Console.SetCursorPosition(46, 14);
+                        Console.WriteLine("왠지 중복된 아이템이 나온듯 하다.");
+                        Thread.Sleep(700);
+                        Console.Clear();
+                        RandonItemLine();
+
+                    }
                     Console.SetCursorPosition(49, 7);
                     Console.ForegroundColor = ConsoleColor.Yellow;
                     Console.WriteLine($"가진 돈:{Player.Gold} gold");
@@ -274,9 +287,9 @@ namespace W3_TeamProject
                     Console.WriteLine($"{randomItem.Name} | {randomItem.Status} + {randomItem.EffectValue} | {randomItem.Description}");
                     // 구매 기능: 아이템을 구매하고 해당 아이템을 인벤토리에 추가
                     Inventory.AddItemToInventory(randomItem);
-                    
+
                 }
-                else 
+                else
                 {
                     Console.SetCursorPosition(46, 14);
                     Console.ForegroundColor = ConsoleColor.DarkRed;
@@ -287,7 +300,7 @@ namespace W3_TeamProject
                 Console.WriteLine("확인");
                 int lotteryCheck;
                 lotteryCheck = controller.InputLoop();
-                if(lotteryCheck == 0) { }
+                if (lotteryCheck == 0) { }
                 Console.Clear();
                 BoarderLine();
                 break;
@@ -469,20 +482,32 @@ namespace W3_TeamProject
                     }
                     else if (chooseNumber == 2)
                     {
-                        if (StoreList[selectNumber - 1].Cost <= Player.Gold)
+                        if (playerItemList.Any(item => item.Name == StoreList[selectNumber - 1].Name))
                         {
                             Console.Clear();
                             BoarderLine();
-                            Player.Gold -= StoreList[selectNumber - 1].Cost;
-                            // 구매 기능: 아이템을 구매하고 해당 아이템을 인벤토리에 추가
-                            Inventory.AddItemToInventory(StoreList[selectNumber - 1]);
+                            Console.SetCursorPosition(46, 14);
+                            Console.WriteLine("아이템이 이미 있습니다!!:");
+                            Thread.Sleep(1000);
                         }
                         else
                         {
-                            Console.Clear();
-                            BoarderLine();
-                            Console.SetCursorPosition(46, 1);
-                            Console.WriteLine("돈이 부족합니다:");
+                            if (StoreList[selectNumber - 1].Cost <= Player.Gold)
+                            {
+                                Console.Clear();
+                                BoarderLine();
+                                Player.Gold -= StoreList[selectNumber - 1].Cost;
+                                // 구매 기능: 아이템을 구매하고 해당 아이템을 인벤토리에 추가
+                                Inventory.AddItemToInventory(StoreList[selectNumber - 1]);
+                            }
+                            else
+                            {
+                                Console.Clear();
+                                BoarderLine();
+                                Console.SetCursorPosition(46, 14);
+                                Console.WriteLine("돈이 부족합니다:");
+                                Thread.Sleep(1000);
+                            }
                         }
                     }
                     else { }
