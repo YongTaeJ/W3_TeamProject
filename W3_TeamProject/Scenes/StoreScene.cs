@@ -210,7 +210,6 @@ namespace W3_TeamProject
                     ShowRandomItem();
                     break;
                 case 6:
-                    AddItemsToList(new SecreetSword());
                     ShowSecreetItem();
                     break;
                    
@@ -239,11 +238,15 @@ namespace W3_TeamProject
             {
                 if (password == 1030)
                 {
-                    for (int i = 0; i < StoreList.Count; i++)
-                    {
-                        Console.Clear();
-                        ShowItem();
-                    }
+                    AddItemsToList(new SecreetSword());
+                    Console.Clear();
+                    ShowItem();
+                }
+                else if (password == 0308)
+                {
+                    AddItemsToList(new SecreetArmor());
+                    Console.Clear();
+                    ShowItem();
                 }
                 else { }
             }
