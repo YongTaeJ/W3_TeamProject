@@ -464,6 +464,8 @@ namespace W3_TeamProject
 
                 if (Player.GetSkill(i) != null)
                 {
+                    Console.SetCursorPosition(14, 9);
+                    Console.WriteLine(new string(' ', 30));
                     Console.SetCursorPosition(14, 9 + i);
                     Console.WriteLine(tempSkill.SkillName);
                 }
