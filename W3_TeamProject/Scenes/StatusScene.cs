@@ -455,6 +455,8 @@ namespace W3_TeamProject
             MakeInnerBorder();
             Console.SetCursorPosition(14, 7);
             Console.WriteLine("보유 중인 스킬");
+            Console.SetCursorPosition(14, 9);
+            Console.WriteLine("보유 중인 스킬이 없다.");
 
             for (int i = 0; i < Player.playerSkillList.SkillCount; i++)
             {
