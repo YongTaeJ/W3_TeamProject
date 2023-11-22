@@ -14,8 +14,10 @@ namespace W3_TeamProject
 			Console.Clear();
             Console.SetCursorPosition(12, 14);
             Console.ForegroundColor = ConsoleColor.Green;
-            Console.WriteLine("[이 게임에 등장하는 모든 인물,이름,사건은 허구이며, 실존하는 것들을 기반으로 하지 않습니다.]");
-            Console.ReadKey();
+            Console.Write("[이 게임에 등장하는 모든 인물,이름,사건은 허구이며, 실존하는 것들을 기반으로 하지 않습니다.]");
+			Console.SetCursorPosition(12, 15);
+			Console.Write(" [조작법 : 커서는 WASD or 화살표로 상하, 혹은 좌우로 이동할 수 있으며, Enter로 결정합니다.]");
+			Console.ReadKey();
             Console.Clear();
             Console.ForegroundColor = ConsoleColor.White;
             Console.SetCursorPosition(0, 0); // 테두리_가로선 맨 윗줄
