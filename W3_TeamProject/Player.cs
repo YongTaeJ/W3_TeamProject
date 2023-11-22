@@ -193,6 +193,7 @@ namespace W3_TeamProject
 			baseHealth += 20;
 			baseMana += 10;
 			playerSkillList.availableCheck(level);
+			ChangeHP(9999);
 		}
 
 		public static void GetGold(int value)
