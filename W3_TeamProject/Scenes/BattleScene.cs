@@ -169,7 +169,7 @@ namespace W3_TeamProject
 						if (!enemyListForStage[i].IsDie) // 살아있으면
 						{
 							// 공격
-							int damage = enemyListForStage[i].Attack * 100 / (100 - Player.BaseDefense - Player.EquipDefense) - random.Next(0, 5);
+							int damage = enemyListForStage[i].Attack * (100 - Player.BaseDefense - Player.EquipDefense) / 100 + random.Next(0, 4);
 							damage /= bias; // 방어하면 데미지 절반!!
 							string comment = $"{enemyListForStage[i].Name}의 설득에 {damage}만큼의 피해를 입었습니다!";
 							WriteComment(comment);
