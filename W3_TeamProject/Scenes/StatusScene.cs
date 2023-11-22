@@ -50,6 +50,7 @@ namespace W3_TeamProject
             }
             controller.AddRotation(16, 16);
             controller.AddRotation(16, 17);
+            controller.AddRotation(16, 18);
 
             // 제목, 상태 표시
             Console.SetCursorPosition(2, 1);
@@ -66,6 +67,8 @@ namespace W3_TeamProject
             Console.SetCursorPosition(18, 16);
             Console.WriteLine("● 인벤토리");
             Console.SetCursorPosition(18, 17);
+            Console.WriteLine("● 스    킬");
+            Console.SetCursorPosition(18, 18);
             Console.WriteLine("● 뒤로가기");
             Console.SetCursorPosition(18, 7);
 
@@ -110,7 +113,11 @@ namespace W3_TeamProject
                         nextState = SceneState.Inventory;
                         Console.Clear();
                         break;
-                    case 8:  // 뒤로가기 선택 시 -> Town으로
+                    case 8:  // 스킬 선택 시 -> 스킬 확인 창
+                        Thread.Sleep(200);
+                        DetailSKill();
+                        break;
+                    case 9:  // 뒤로가기 선택 시 -> Town으로
                         Thread.Sleep(200);
                         nextState = SceneState.Town;
                         Console.Clear();
@@ -438,6 +445,47 @@ namespace W3_TeamProject
             }
         }
 
+        private void DetailSKill()
+        {
+            for (int i = 0; i < Player.playerSkillList.SkillCount; i++)
+            {
+                BaseSkill tempSkill = Player.GetSkill(i);
+            }
+
+            MakeInnerBorder();
+            Console.SetCursorPosition(14, 7);
+            Console.WriteLine("보유 중인 스킬");
+            Console.SetCursorPosition(14, 9);
+            Console.WriteLine("보유 중인 스킬이 없다.");
+
+            for (int i = 0; i < Player.playerSkillList.SkillCount; i++)
+            {
+                BaseSkill tempSkill = Player.GetSkill(i);
+
+                if (Player.GetSkill(i) != null)
+                {
+                    Console.SetCursorPosition(14, 9);
+                    Console.WriteLine(new string(' ', 30));
+                    Console.SetCursorPosition(14, 9 + i);
+                    Console.WriteLine(tempSkill.SkillName);
+                }
+            }
+
+            Console.SetCursorPosition(23, 13);
+            LeftHiText(Red, "▶", " 돌아가기");
+
+            while (true)
+            {
+                ConsoleKeyInfo keyInfo = Console.ReadKey(true);
+                if (keyInfo.Key == ConsoleKey.Enter)
+                {
+                    Console.Clear();
+                    StatusMain();
+                    break;
+                }
+            }
+        }
+
 
         /// <summary>
         /// 선택한 color로 text1를 표시합니다. / using static System.ConsoleColor;
@@ -737,7 +785,7 @@ namespace W3_TeamProject
             Console.SetCursorPosition(65, 17);
             Console.WriteLine("       ㅣ  ㅣㅣ  ㅣ");
             Console.SetCursorPosition(65, 18);
-            Console.WriteLine("       ㅣㅇㅣㅣㅇㅣ");
+            Console.WriteLine("       ㅣㅡㅣㅣㅡㅣ");
         }
 
         /// <summary>

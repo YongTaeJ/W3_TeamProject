@@ -210,7 +210,6 @@ namespace W3_TeamProject
                     ShowRandomItem();
                     break;
                 case 6:
-                    AddItemsToList(new SecreetSword());
                     ShowSecreetItem();
                     break;
                    
@@ -239,11 +238,15 @@ namespace W3_TeamProject
             {
                 if (password == 1030)
                 {
-                    for (int i = 0; i < StoreList.Count; i++)
-                    {
-                        Console.Clear();
-                        ShowItem();
-                    }
+                    AddItemsToList(new SecreetSword());
+                    Console.Clear();
+                    ShowItem();
+                }
+                else if (password == 0308)
+                {
+                    AddItemsToList(new SecreetArmor());
+                    Console.Clear();
+                    ShowItem();
                 }
                 else { }
             }
@@ -313,18 +316,74 @@ namespace W3_TeamProject
             {
                 Controller controller = new Controller();
                 Console.Clear();
+                Console.ResetColor();
                 PotionItemLine();
                 controller.AddRotation(44, 13);
                 controller.AddRotation(3, 11);
                 controller.AddRotation(3, 12);
+                Console.SetCursorPosition(46, 1);
+                Console.Write("인벤토리에 존재하는 아이템");
+                Console.SetCursorPosition(55, 2);
+                Console.ForegroundColor = ConsoleColor.DarkGreen;
+                Console.WriteLine("초록색");
+                Console.ResetColor();
+                Console.SetCursorPosition(49, 3);
+                Console.Write("골드가 부족한 아이템");
+                Console.SetCursorPosition(55, 4);
+                Console.ForegroundColor = ConsoleColor.DarkRed;
+                Console.WriteLine("빨간색");
+                Console.ResetColor();
                 Console.SetCursorPosition(49, 7);
                 Console.ForegroundColor = ConsoleColor.Yellow;
                 Console.WriteLine($"가진 돈:{Player.Gold} gold");
                 Console.ResetColor();
-                Console.SetCursorPosition(5, 11);
-                Console.WriteLine($"1. 빨간 포션 | 현재 {Player.HealthPotionCount}개 | 최대 체력의 절반만큼 회복 |  그다지 맛은 없다...   | 500gold");
-                Console.SetCursorPosition(5, 12);
-                Console.WriteLine($"2. 파란 포션 | 현재 {Player.ManaPotionCount}개 | 최대 마나의 절반만큼 회복 | 빨간 포션 보다는 낫다... | 500gold");
+                if (Player.Gold < 500)
+                {
+                    Console.ForegroundColor = ConsoleColor.DarkRed;
+                    Console.SetCursorPosition(5, 11);
+                    Console.WriteLine($"1. 빨간 포션 | 현재 {Player.HealthPotionCount}개 | 최대 체력의 절반만큼 회복 |  그다지 맛은 없다...   | 500gold");
+                    Console.SetCursorPosition(5, 12);
+                    Console.WriteLine($"2. 파란 포션 | 현재 {Player.ManaPotionCount}개 | 최대 마나의 절반만큼 회복 | 빨간 포션 보다는 낫다... | 500gold");
+                    Console.ResetColor();
+                }
+                else if (Player.HealthPotionCount > 0 && Player.ManaPotionCount > 0)
+                {
+                    Console.ForegroundColor = ConsoleColor.DarkGreen;
+                    Console.SetCursorPosition(5, 11);
+                    Console.WriteLine($"1. 빨간 포션 | 현재 {Player.HealthPotionCount}개 | 최대 체력의 절반만큼 회복 |  그다지 맛은 없다...   | 500gold");
+                    Console.SetCursorPosition(5, 12);
+                    Console.WriteLine($"2. 파란 포션 | 현재 {Player.ManaPotionCount}개 | 최대 마나의 절반만큼 회복 | 빨간 포션 보다는 낫다... | 500gold");
+                    Console.ResetColor();
+                }
+                else if (Player.HealthPotionCount > 0)
+                {
+                    Console.ForegroundColor = ConsoleColor.DarkGreen;
+                    Console.SetCursorPosition(5, 11);
+                    Console.WriteLine($"1. 빨간 포션 | 현재 {Player.HealthPotionCount}개 | 최대 체력의 절반만큼 회복 |  그다지 맛은 없다...   | 500gold");
+                    Console.ResetColor();
+                    Console.SetCursorPosition(5, 12);
+                    Console.WriteLine($"2. 파란 포션 | 현재 {Player.ManaPotionCount}개 | 최대 마나의 절반만큼 회복 | 빨간 포션 보다는 낫다... | 500gold");
+                }
+                else if (Player.ManaPotionCount > 0)
+                {
+
+                    Console.SetCursorPosition(5, 11);
+                    Console.WriteLine($"1. 빨간 포션 | 현재 {Player.HealthPotionCount}개 | 최대 체력의 절반만큼 회복 |  그다지 맛은 없다...   | 500gold");
+                    Console.ForegroundColor = ConsoleColor.DarkGreen;
+                    Console.SetCursorPosition(5, 12);
+                    Console.WriteLine($"2. 파란 포션 | 현재 {Player.ManaPotionCount}개 | 최대 마나의 절반만큼 회복 | 빨간 포션 보다는 낫다... | 500gold");
+                    Console.ResetColor();
+                }
+                
+                else
+                {
+                    Console.SetCursorPosition(5, 11);
+                    Console.WriteLine($"1. 빨간 포션 | 현재 {Player.HealthPotionCount}개 | 최대 체력의 절반만큼 회복 |  그다지 맛은 없다...   | 500gold");
+                    Console.SetCursorPosition(5, 12);
+                    Console.WriteLine($"2. 파란 포션 | 현재 {Player.ManaPotionCount}개 | 최대 마나의 절반만큼 회복 | 빨간 포션 보다는 낫다... | 500gold");
+                }
+
+              
                 Console.SetCursorPosition(46, 13);
                 Console.WriteLine("0. 돌아가기");
 
