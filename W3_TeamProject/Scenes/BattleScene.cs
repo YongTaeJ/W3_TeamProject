@@ -192,6 +192,7 @@ namespace W3_TeamProject
 							Thread.Sleep(1000);
 						}
 					}
+					Player.TurnCooldown();
 					isPlayerTurn = true;
 
                     // 플레이어가 죽으면 endPoint = 2
