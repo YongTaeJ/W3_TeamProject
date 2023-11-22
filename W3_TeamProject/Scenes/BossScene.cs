@@ -109,8 +109,6 @@ namespace W3_TeamProject
 			boss.UpdateHPbar();
 			boss.UpdateMPbar();
 
-			WriteComment("당신은 사장실의 문 앞에 도달했습니다.");
-			Thread.Sleep(1700);
 			WriteComment("문을 열고 들어가자, 사장님의 모습이 보입니다....");
 			Thread.Sleep(1700);
 			WriteComment("그는 이미 당신의 소식을 들었고, 언뜻 보기에 타협의 여지는 없어 보입니다.");

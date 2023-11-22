@@ -15,6 +15,7 @@ namespace W3_TeamProject
         Controller itemController = new Controller();
         Controller skillController = new Controller();
         Controller enterController = new Controller();
+		Controller warningController = new Controller();
         
         Random random = new Random();
 
@@ -26,6 +27,7 @@ namespace W3_TeamProject
 		{
 			InitItemController();
 			InitEnterController();
+			InitWarningController();
 		}
 
 		public override void EnterScene()
@@ -39,12 +41,12 @@ namespace W3_TeamProject
 			userInput = enterController.InputLoop();
             switch (userInput)
             {
-                case 0: // 3층 최종 스테이지 입장
+                case 0: // 1층 입장
 					WriteComment(" 1층으로 입장합니다.");
 					Thread.Sleep(1000);
 					EnterStage(1, 1, ref isFirstClear);
 					break;
-				case 1: // 2층 스테이지 입장
+				case 1: // 2층  입장
                     if (isFirstClear)
                     {
                         WriteComment(" 2층으로 입장합니다.");
@@ -56,15 +58,28 @@ namespace W3_TeamProject
 						WriteComment("2층을 가기 위해 이 전층을 클리어해주세요.");
 						Thread.Sleep(1000);
 						EnterScene();
-						
 					}
 					break;
-				case 2: // 1층 스테이지 입장
+				case 2: // 보스방 입장
 					if (isSecondClear)
 					{
-						WriteComment(" 3층으로 입장합니다.");
-						Thread.Sleep(1000);
-						nextState = SceneState.Boss;
+						UI.MakeUI();
+						MakeCommentBoarder();
+						MakeWarningASCII();
+						WriteComment(" 사장실로 들어가면 다시는 돌아올 수 없습니다. 정말 들어가시겠습니까?");
+						int warninginput = warningController.InputLoop();
+						if (warninginput == 0)
+						{
+							WriteComment("입구로 돌아갑니다.");
+							Thread.Sleep(500);
+							EnterScene();
+						}
+						else
+						{
+							WriteComment("당신은 마음을 다잡고 사장실의 문을 엽니다...");
+							Thread.Sleep(1000);
+							nextState = SceneState.Boss;
+						}
 					}
 					else
 					{
@@ -534,6 +549,12 @@ namespace W3_TeamProject
 			enterController.AddRotation(48, 15);
 		}
 
+		private void InitWarningController()
+		{
+			warningController.AddRotation(58, 7); // Back
+			warningController.AddRotation(18, 7); // Go
+		}
+
 		private void StageClear()
         { 
             int beforeGold = Player.Gold;
@@ -744,6 +765,46 @@ namespace W3_TeamProject
 			x += 2;
 			y += 1;
 			int temp = x;
+			Console.SetCursorPosition(x, y);
+			foreach (char letter in ASCII)
+			{
+				if (letter == '\n') // 새 줄 문자 확인
+				{
+					y = y + 1;
+					x = temp;
+					Console.SetCursorPosition(x, y);
+				}
+				else
+				{
+					Console.Write(letter);
+					x++; // 다음 문자 위치로 이동
+				}
+			}
+		}
+
+		private void MakeWarningASCII()
+		{
+			int x = 20, y = 4, temp = x;
+			string ASCII = "   ####     ###      ##    \r\n  ##  ##   ## ##     ##    \r\n ##       ##   ##    ##    \r\n ##  ###  ##   ##    ##    \r\n ##   ##  ##   ##          \r\n  ## ###   ## ##     ##    \r\n   ### #    ###      ##";
+			Console.SetCursorPosition(x, y);
+			foreach (char letter in ASCII)
+			{
+				if (letter == '\n') // 새 줄 문자 확인
+				{
+					y = y + 1;
+					x = temp;
+					Console.SetCursorPosition(x, y);
+				}
+				else
+				{
+					Console.Write(letter);
+					x++; // 다음 문자 위치로 이동
+				}
+			}
+
+			x = 60; y = 4; temp = x;
+			ASCII = " ## ###     ###      ####   ##  ##  \r\n ###  ##   ## ##    ##  ##  ##  ##  \r\n ##   ##  ##   ##  ##       ## ##   \r\n ######   #######  ##       ####    \r\n ##   ##  ##   ##  ##       ## ##   \r\n ##   ##  ##   ##   ##  ##  ##  ### \r\n ######   ##   ##    ####   ##   ## ";
+
 			Console.SetCursorPosition(x, y);
 			foreach (char letter in ASCII)
 			{
