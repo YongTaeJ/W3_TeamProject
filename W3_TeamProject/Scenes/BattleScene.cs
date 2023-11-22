@@ -42,14 +42,14 @@ namespace W3_TeamProject
             switch (userInput)
             {
                 case 0: // 1층 입장
-					WriteComment(" 1층으로 입장합니다.");
+					WriteComment("1층으로 입장합니다.");
 					Thread.Sleep(1000);
 					EnterStage(1, 1, ref isFirstClear);
 					break;
 				case 1: // 2층  입장
                     if (isFirstClear)
                     {
-                        WriteComment(" 2층으로 입장합니다.");
+                        WriteComment("2층으로 입장합니다.");
                         Thread.Sleep(1000);
                         EnterStage(2, 2, ref isSecondClear);
                     }
@@ -66,7 +66,7 @@ namespace W3_TeamProject
 						UI.MakeUI();
 						MakeCommentBoarder();
 						MakeWarningASCII();
-						WriteComment(" 사장실로 들어가면 다시는 돌아올 수 없습니다. 정말 들어가시겠습니까?");
+						WriteComment("사장실로 들어가면 다시는 돌아올 수 없습니다. 정말 들어가시겠습니까?");
 						int warninginput = warningController.InputLoop();
 						if (warninginput == 0)
 						{
@@ -124,7 +124,7 @@ namespace W3_TeamProject
                 enemyListForStage[i].Show(); // 첫번째 스테이지의 적 나타나라 얍
             }
 
-            WriteComment(" 원하시는 행동을 선택하세요.");
+            WriteComment("원하시는 행동을 선택하세요.");
 
             bool isPlayerTurn = true;
 			endPoint = 0;
@@ -282,7 +282,7 @@ namespace W3_TeamProject
 				}
 				else if (skillState == SkillState.IsCoolDown)
 				{
-					WriteComment(" 현재 쿨타임이 남아있는 스킬입니다.");
+					WriteComment("현재 쿨타임이 남아있는 스킬입니다.");
 					Thread.Sleep(1000);
 					return true;
 				}
@@ -312,7 +312,7 @@ namespace W3_TeamProject
 
 			while (true)
 			{
-				WriteComment(" 공격하고 싶은 적을 선택하세요");
+				WriteComment("공격하고 싶은 적을 선택하세요");
 				userInput = selectEnemyController.InputLoop(); // 몬스터를 선택하기 위한 화살표
 				if (enemyListForStage[userInput].IsDie)
 				{
@@ -326,13 +326,13 @@ namespace W3_TeamProject
 
 		private void NormalDefense()
         {
-            WriteComment(" 최고의 공격은 방어죠 하하");
+            WriteComment("최고의 공격은 방어죠 하하");
             Thread.Sleep(1500);
         }
 
         private bool NormalAttack()
         {
-            WriteComment(" 공격하고 싶은 적을 선택하세요");
+            WriteComment("공격하고 싶은 적을 선택하세요");
 
             Controller selectEnemyController = new Controller(); // 콘트롤러가 전역이면 그 전값이 살아있음 지역으로 옮겨서 값 초기화 - 박정혁
 
@@ -357,44 +357,6 @@ namespace W3_TeamProject
 			Thread.Sleep(1000);
 
             return false;
-
-            // 아래 내용 지우자 !
-            // --------- 정혁님 작성파트 ------------
-            //Controller controller = new Controller(); //몬스터의 리스트의 크기를 받아와 해당하는 크기만큼 열림
-            //if (_index >= 1)
-            //    controller.AddRotation(68, 2);
-            //if (_index >= 2)
-            //    controller.AddRotation(93, 3);
-            //if (_index >= 3)
-            //    controller.AddRotation(71, 10);
-            //if (_index >= 4)
-            //    controller.AddRotation(96, 11);
-            //userInput = controller.InputLoop();
-            //---------------------------------------
-
-            //switch (userInput)
-            //{
-            //    case 0: // ENEMY 1 공격
-            //        // ENEMY 체력 -= damage;
-            //        // ENEMY 의 체력이 공격보다 낮으면 ENEMY DEAD
-            //        // if (ENEMY currentHealth < damage){WriteComment("ENEMY 죽었따.");}
-            //        break;
-            //    case 1: // ENEMY 2 공격
-            //        // ENEMY 체력 -= damage;
-            //        // ENEMY 의 체력이 공격보다 낮으면 ENEMY DEAD
-            //        // if (ENEMY currentHealth < damage){WriteComment("ENEMY 죽었따.");}
-            //        break;
-            //    case 2: // ENEMY 3 공격
-            //        // ENEMY 체력 -= damage;
-            //        // ENEMY 의 체력이 공격보다 낮으면 ENEMY DEAD
-            //        // if (ENEMY currentHealth < damage){WriteComment("ENEMY 죽었따.");}
-            //        break;
-            //    case 3: // ENEMY 4 공격
-            //        // ENEMY 체력 -= damage;
-            //        // ENEMY 의 체력이 공격보다 낮으면 ENEMY DEAD
-            //        // if (ENEMY currentHealth < damage){WriteComment("ENEMY 죽었따.");}
-            //        break;
-            //}
         }
 
         private void DrawStage()
