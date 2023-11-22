@@ -4,7 +4,7 @@ namespace W3_TeamProject
 {
     internal class BattleScene : BaseScene
     {
-        string clearString = "                                                                                                ";
+        string clearString = "                                                                                               ";
         string clearChoosePanelString = "                                                           ";
         int userInput = 0;
         int endPoint = 0; // 0 계속, 1 플레이어 승리, 2 플레이어 패배.(BossScene 과 동일하게)
@@ -350,7 +350,7 @@ namespace W3_TeamProject
                 return true;
             }
 		
-			int damage = random.Next(Player.BaseAttack, Player.BaseAttack + Player.EquipAttack);
+			int damage = random.Next(Player.BaseAttack + Player.EquipAttack / 2, Player.BaseAttack + Player.EquipAttack);
 			WriteComment($"{enemyListForStage[userInput].Name}를 압박하여 {damage}만큼의 피해를 입혔습니다!");
 			enemyListForStage[userInput].GetDamage(damage);
 			Thread.Sleep(1000);
