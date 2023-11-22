@@ -45,4 +45,30 @@ namespace W3_TeamProject
             isEquip = false;
         }
     }
+    internal class SecreetHealthAccessory : BaseItem
+    {
+        protected override void Init()
+        {
+            name = "숨겨진 치유의 반지";
+            description = "우씨!! 다덤벼!!";
+            cost = 10;
+            status = Status.Health;
+            effectValue = 2000;
+            itemType = ItemType.Accessory;
+            isEquip = false;
+        }
+    }
+    internal class SecreetManaAccessory : BaseItem
+    {
+        protected override void Init()
+        {
+            name = "숨겨진 마나의 반지";
+            description = "우씨!! 다덤벼!!";
+            cost = 10;
+            status = Status.Mana;
+            effectValue = 2000;
+            itemType = ItemType.Accessory;
+            isEquip = false;
+        }
+    }
 }
