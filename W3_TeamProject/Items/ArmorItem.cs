@@ -48,4 +48,17 @@ namespace W3_TeamProject
             isEquip = false;
         }
     }
+    internal class SecreetArmor : BaseItem
+    {
+        protected override void Init()
+        {
+            name = "숨겨진 갑옷";
+            description = "우씨!! 다덤벼!!";
+            cost = 10;
+            status = Status.Defense;
+            effectValue = 20000;
+            itemType = ItemType.Armor;
+            isEquip = false;
+        }
+    }
 }
