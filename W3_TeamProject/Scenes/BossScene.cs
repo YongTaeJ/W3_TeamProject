@@ -262,24 +262,24 @@ namespace W3_TeamProject
 
 		private void WriteComment(string comment = "")
 		{
-			Console.SetCursorPosition(11, 17);
+			Console.SetCursorPosition(11, 18);
 			Console.Write(clearCommentString);
-			Console.SetCursorPosition(11, 17);
+			Console.SetCursorPosition(11, 18);
 			Console.Write(comment);
 		}
 
 		private void MakeCommentBorder()
 		{
-			Console.SetCursorPosition(10, 16);
+			Console.SetCursorPosition(10, 17);
 			for(int i=0; i<49; i++)
 			{
 				Console.Write('ㅡ');
 			}
-			Console.SetCursorPosition(10, 17);
-			Console.Write('|');
-			Console.SetCursorPosition(107, 17);
-			Console.Write('|');
 			Console.SetCursorPosition(10, 18);
+			Console.Write('|');
+			Console.SetCursorPosition(107, 18);
+			Console.Write('|');
+			Console.SetCursorPosition(10, 19);
 			for (int i = 0; i < 49; i++)
 			{
 				Console.Write('ㅡ');
@@ -548,9 +548,9 @@ namespace W3_TeamProject
 		}
 		private void WriteComment(string comment = "")
 		{
-			Console.SetCursorPosition(11, 17);
+			Console.SetCursorPosition(11, 18);
 			Console.Write("                                                                                                ");
-			Console.SetCursorPosition(11, 17);
+			Console.SetCursorPosition(11, 18);
 			Console.Write(comment);
 		}
 
