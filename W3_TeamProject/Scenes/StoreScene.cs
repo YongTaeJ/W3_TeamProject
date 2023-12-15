@@ -15,39 +15,6 @@ namespace W3_TeamProject
         public override void EnterScene()
         {
             StoreIntro();
-            /*
-			 * 장면에 대해 연출을 하고, 해당 장면에 대한 연출이 끝나면 nextState로 넘깁니다.
-			 * 예를 들어, 0을 눌러서 뒤로가기 기능을 구현한다고 하면
-			 * switch 혹은 if문을 이용해 0이라는 값을 입력받았을 때, nextState = beforeState로 설정합니다.
-			 * 그리고 특정한 화면(ex. BattleScene으로 전환이 필요하다.)으로 넘어간다고 하면
-			 * SceneManager에 있는 enum을 참고해서 사용하시면 됩니다.
-			 * nextState = SceneState.Battle; 이런 식으로 state의 상태를 바꾼 다음 곧바로 함수를 빠져나오시면 됩니다.
-			 * 단, EnterScene을 완전히 빠져나오지 못하는 상태가 지속되면 무한루프에 빠지거나 게임이 꼬일 수 있으니
-			 * 이 점에 대해서는 주의가 필요합니다.
-			Controller controller = new Controller();
-			controller.AddRotation(1, 0);
-			controller.AddRotation(5, 0);
-			controller.AddRotation(9, 0);
-
-			Console.WriteLine("~~~~~ 텍스트");
-			Console.WriteLine("다음 행동 or 목적지를 선택해주세요.");
-
-			int userInput;
-			userInput = controller.InputLoop();
-
-			switch (userInput)
-			{
-				case 0:
-					nextState = beforeState;
-					break;
-				case 1:
-					nextState = SceneState.Battle;
-					break;
-				case 2:
-					nextState = SceneState.Status;
-					break;
-			}
-			*/
             Console.Clear();
             BoarderLine();
             Console.SetCursorPosition(48, 8);
@@ -94,91 +61,7 @@ namespace W3_TeamProject
                 }
             }
         }
-        public void BoarderLine()
-        {
-            Console.SetCursorPosition(0, 0);
-            Console.Write('┏');
-            Console.SetCursorPosition(1, 0);
-            for (int i = 0; i < 118; i++)
-            {
-                Console.Write('-');
-            }
-            Console.SetCursorPosition(118, 0);
-            Console.Write('┓');
-            for (int i = 0; i < 28; i++)
-            {
-                Console.SetCursorPosition(0, i + 1);
-                Console.Write('|');
-                Console.SetCursorPosition(118, i + 1);
-                Console.Write('|');
-            }
-            Console.SetCursorPosition(0, 29);
-            Console.Write('┗');
-            Console.SetCursorPosition(1, 29);
-            for (int i = 0; i < 118; i++)
-            {
-                Console.Write('-');
-            }
-            Console.SetCursorPosition(118, 29);
-            Console.Write('┛');
-        }
 
-        private void RandonItemLine()
-        {
-            Console.SetCursorPosition(0, 12);
-            Console.Write('┏');
-            Console.SetCursorPosition(1, 12);
-            for (int i = 0; i < 118; i++)
-            {
-                Console.Write('-');
-            }
-            Console.SetCursorPosition(118, 12);
-            Console.Write('┓');
-            for (int i = 0; i < 3; i++)
-            {
-                Console.SetCursorPosition(0, i + 13);
-                Console.Write('|');
-                Console.SetCursorPosition(118, i + 13);
-                Console.Write('|');
-            }
-            Console.SetCursorPosition(0, 16);
-            Console.Write('┗');
-            Console.SetCursorPosition(1, 16);
-            for (int i = 0; i < 118; i++)
-            {
-                Console.Write('-');
-            }
-            Console.SetCursorPosition(118, 16);
-            Console.Write('┛');
-        }
-        private void PotionItemLine()
-        {
-            Console.SetCursorPosition(0, 9);
-            Console.Write('┏');
-            Console.SetCursorPosition(1, 9);
-            for (int i = 0; i < 118; i++)
-            {
-                Console.Write('-');
-            }
-            Console.SetCursorPosition(118, 9);
-            Console.Write('┓');
-            for (int i = 0; i < 5; i++)
-            {
-                Console.SetCursorPosition(0, i + 10);
-                Console.Write('|');
-                Console.SetCursorPosition(118, i + 10);
-                Console.Write('|');
-            }
-            Console.SetCursorPosition(0, 15);
-            Console.Write('┗');
-            Console.SetCursorPosition(1, 15);
-            for (int i = 0; i < 118; i++)
-            {
-                Console.Write('-');
-            }
-            Console.SetCursorPosition(118, 15);
-            Console.Write('┛');
-        }
         private static List<BaseItem> StoreList = new List<BaseItem>(); //상점 아이템 목록이 담기는 리스트
         // StoreList.Add로 목록 추가
         private void ProcessUserInput(int select)
@@ -253,7 +136,7 @@ namespace W3_TeamProject
                     Console.Clear();
                     ShowItem();
                 }
-                else if(password == 1223)
+                else if(password == 1123)
                 {
                     AddItemsToList(new SecreetHealthAccessory(), new SecreetManaAccessory());
                     Console.Clear();
@@ -583,6 +466,91 @@ namespace W3_TeamProject
                     else { }
                 }
             }
+        }
+        public void BoarderLine()
+        {
+            Console.SetCursorPosition(0, 0);
+            Console.Write('┏');
+            Console.SetCursorPosition(1, 0);
+            for (int i = 0; i < 118; i++)
+            {
+                Console.Write('-');
+            }
+            Console.SetCursorPosition(118, 0);
+            Console.Write('┓');
+            for (int i = 0; i < 28; i++)
+            {
+                Console.SetCursorPosition(0, i + 1);
+                Console.Write('|');
+                Console.SetCursorPosition(118, i + 1);
+                Console.Write('|');
+            }
+            Console.SetCursorPosition(0, 29);
+            Console.Write('┗');
+            Console.SetCursorPosition(1, 29);
+            for (int i = 0; i < 118; i++)
+            {
+                Console.Write('-');
+            }
+            Console.SetCursorPosition(118, 29);
+            Console.Write('┛');
+        }
+
+        private void RandonItemLine()
+        {
+            Console.SetCursorPosition(0, 12);
+            Console.Write('┏');
+            Console.SetCursorPosition(1, 12);
+            for (int i = 0; i < 118; i++)
+            {
+                Console.Write('-');
+            }
+            Console.SetCursorPosition(118, 12);
+            Console.Write('┓');
+            for (int i = 0; i < 3; i++)
+            {
+                Console.SetCursorPosition(0, i + 13);
+                Console.Write('|');
+                Console.SetCursorPosition(118, i + 13);
+                Console.Write('|');
+            }
+            Console.SetCursorPosition(0, 16);
+            Console.Write('┗');
+            Console.SetCursorPosition(1, 16);
+            for (int i = 0; i < 118; i++)
+            {
+                Console.Write('-');
+            }
+            Console.SetCursorPosition(118, 16);
+            Console.Write('┛');
+        }
+        private void PotionItemLine()
+        {
+            Console.SetCursorPosition(0, 9);
+            Console.Write('┏');
+            Console.SetCursorPosition(1, 9);
+            for (int i = 0; i < 118; i++)
+            {
+                Console.Write('-');
+            }
+            Console.SetCursorPosition(118, 9);
+            Console.Write('┓');
+            for (int i = 0; i < 5; i++)
+            {
+                Console.SetCursorPosition(0, i + 10);
+                Console.Write('|');
+                Console.SetCursorPosition(118, i + 10);
+                Console.Write('|');
+            }
+            Console.SetCursorPosition(0, 15);
+            Console.Write('┗');
+            Console.SetCursorPosition(1, 15);
+            for (int i = 0; i < 118; i++)
+            {
+                Console.Write('-');
+            }
+            Console.SetCursorPosition(118, 15);
+            Console.Write('┛');
         }
         private void StoreIntro()
         {
